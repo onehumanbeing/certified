@@ -17,6 +17,7 @@
     "pino-pretty": "^11.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.33.3",
     "viem": "1"
   },
   "devDependencies": {
