@@ -1,3 +1,4 @@
+"use client"
 import DynamicConnectButton from "@/components/DynamicModal/walletWidget"
 
 export default function NavBar() {

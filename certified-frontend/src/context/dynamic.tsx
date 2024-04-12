@@ -19,15 +19,14 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
                     onAuthSuccess: async (event) => {
                         const { authToken } = event
 
-                        // const csrfToken = await getCsrfToken()
-                        // console.log("CSRF TOKEN", csrfToken)
+                        const csrfToken = await getCsrfToken()
                         fetch("/api/auth/callback/credentials", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded",
                             },
                             body: `csrfToken=${encodeURIComponent(
-                                "v45vyervtsertse6hbw45y6ws3twvestsertb" as "string" | number | boolean
+                                csrfToken as "string" | number | boolean
                             )}&token=${encodeURIComponent(authToken)}`,
                         })
                             .then((res) => {

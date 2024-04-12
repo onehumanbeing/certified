@@ -4,7 +4,6 @@ export const getKey = (
     headers: any,
     callback: (err: Error | null, key?: Secret) => void
 ): void => {
-    console.log("calling getKey")
 
     const options = {
         method: "GET",
