@@ -13,7 +13,9 @@
     "@web3modal/ethers": "^4.1.7",
     "daisyui": "^4.10.1",
     "ethers": "^6.11.1",
+    "jsonwebtoken": "^9.0.2",
     "next": "14.1.4",
+    "next-auth": "^4.24.7",
     "pino-pretty": "^11.0.0",
     "react": "^18",
     "react-dom": "^18",
@@ -21,6 +23,7 @@
     "viem": "1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
