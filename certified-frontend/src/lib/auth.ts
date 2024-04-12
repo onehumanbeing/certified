@@ -35,6 +35,7 @@ export const config: NextAuthOptions = {
                 }
 
                 const token = credentials.token
+                console.log("Token:", token)
                 const jwtPayload = await validateJWT(token)
                 if (jwtPayload) {
                     // Transform the JWT payload into your user object

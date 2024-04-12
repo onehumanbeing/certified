@@ -4,18 +4,23 @@ import React from "react"
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core"
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum"
 import { getCsrfToken } from "next-auth/react"
+import { useUser } from "./userContext"
 
 interface AppProps {
     children: React.ReactNode
 }
 
 const DynamicProvider: React.FC<AppProps> = ({ children }) => {
+    const { logOut, fetchUser, setUserLogging } = useUser()
     return (
         <DynamicContextProvider
             settings={{
                 environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID!,
                 walletConnectors: [EthereumWalletConnectors],
                 eventsCallbacks: {
+                    onAuthFlowCancel: async () => {
+                        setUserLogging(false)
+                    },
                     onAuthSuccess: async (event) => {
                         const { authToken } = event
 
@@ -39,6 +44,12 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
                             .catch((error) => {
                                 console.error("Error logging in", error)
                             })
+                            .finally(() => {
+                                fetchUser()
+                            })
+                    },
+                    onLogout: async () => {
+                        logOut()
                     },
                 },
             }}

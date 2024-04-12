@@ -44,57 +44,57 @@
     preact "^10.16.0"
     sha.js "^2.4.11"
 
-"@dynamic-labs/ethereum@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/ethereum/-/ethereum-1.4.6.tgz#c5eb9c7873614128708d5db48d856df8d0380035"
-  integrity sha512-NZBMblKCdAMsh7CzCS0K6NwLWh/Y8yhirwrob8r3Ff8gSImrtjuY7zVneEaeT4Bh5yOpY0dgJ+CyUN4TcEtjfw==
+"@dynamic-labs/ethereum@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/ethereum/-/ethereum-1.4.7.tgz#ecfc12b4a854311c8970cf14edc21f534c135049"
+  integrity sha512-WLpYa9eg/BpRviG/vdaa+6TG0aUXKQOEJ+NXB5+/o3SLVCT0l68Y+msiY6POZTlzXTrS3HUjaiqBKVd8jurVfg==
   dependencies:
     "@coinbase/wallet-sdk" "3.9.3"
-    "@dynamic-labs/rpc-providers" "1.4.6"
-    "@dynamic-labs/turnkey" "1.4.6"
-    "@dynamic-labs/types" "1.4.6"
-    "@dynamic-labs/utils" "1.4.6"
-    "@dynamic-labs/viem-utils" "1.4.6"
-    "@dynamic-labs/wallet-book" "1.4.6"
-    "@dynamic-labs/wallet-connector-core" "1.4.6"
+    "@dynamic-labs/rpc-providers" "1.4.7"
+    "@dynamic-labs/turnkey" "1.4.7"
+    "@dynamic-labs/types" "1.4.7"
+    "@dynamic-labs/utils" "1.4.7"
+    "@dynamic-labs/viem-utils" "1.4.7"
+    "@dynamic-labs/wallet-book" "1.4.7"
+    "@dynamic-labs/wallet-connector-core" "1.4.7"
     "@walletconnect/client" "1.8.0"
     "@walletconnect/ethereum-provider" "2.11.2"
     buffer "6.0.3"
     eventemitter3 "5.0.1"
     stream "0.0.2"
 
-"@dynamic-labs/iconic@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/iconic/-/iconic-1.4.6.tgz#0103bf9ab6d032698830f606403e578db8a9e4a3"
-  integrity sha512-5RW0k36B2fYV7vae3Cg5HZNEXTif30T6Y4aVMt2qy3dL4Q4i27wxbybVzVo1ac3/OcnJeWYkbW1MDz82iCBAqQ==
+"@dynamic-labs/iconic@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/iconic/-/iconic-1.4.7.tgz#4cfc3d6eadbd9c30ce6d8b92f7baa6cd0730be9c"
+  integrity sha512-nBj4ZrI0i8YifzSHjLhqw5JzNo+c5LZCHFRVYYG5mAsrmmrYRI0QIxz7jJhTYIkDXQNxa/6V8CDWUbAq0aIj8w==
   dependencies:
-    "@dynamic-labs/logger" "1.4.6"
+    "@dynamic-labs/logger" "1.4.7"
     sharp "0.33.2"
 
-"@dynamic-labs/logger@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/logger/-/logger-1.4.6.tgz#49e0da2ea3746446a7935a58afe90c538f291dd4"
-  integrity sha512-ui9wVrWkIQju4QSd/e0PSQHfsQPGOsQpJ01GyAGqVMf8Kiuw9DsQrQts5A8xMdvObrYEC3c5iiQTHSYJaNZHMg==
+"@dynamic-labs/logger@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/logger/-/logger-1.4.7.tgz#8013ca082a949d6375ec2ee4644abdf0cde41b80"
+  integrity sha512-dfi/93akSVsZ1zCAm6BhlgHI6XBvFhsjeznZx/SgLWiNkSsbTFTJo+28hbstpcK1vxGscwGi/FpNe0ZqUPM5/Q==
 
-"@dynamic-labs/multi-wallet@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/multi-wallet/-/multi-wallet-1.4.6.tgz#4ab958049af56a28c456ca4a5adea046b2049bf9"
-  integrity sha512-oa1eZy/OAFxkLt788QZh7byuLM9J/D7UFFSLZcETsNtGFfnnHUGpxwIl5bRrCpRHNC5tX1nV2grP5B9lmR1fTg==
+"@dynamic-labs/multi-wallet@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/multi-wallet/-/multi-wallet-1.4.7.tgz#8851ed4e97ed216ceaf385a3a4e3303efbab8e4d"
+  integrity sha512-WoMeSCT9wnXgK5bCyf1l6VenqGO0O2X7fiQVZQVXLJv4PAkbJLNmVyngMKpaNEIg/wwl7XGQpxDaAN+kJAKMaw==
   dependencies:
-    "@dynamic-labs/rpc-providers" "1.4.6"
+    "@dynamic-labs/rpc-providers" "1.4.7"
     "@dynamic-labs/sdk-api" "0.0.387"
-    "@dynamic-labs/types" "1.4.6"
-    "@dynamic-labs/utils" "1.4.6"
-    "@dynamic-labs/wallet-book" "1.4.6"
-    "@dynamic-labs/wallet-connector-core" "1.4.6"
+    "@dynamic-labs/types" "1.4.7"
+    "@dynamic-labs/utils" "1.4.7"
+    "@dynamic-labs/wallet-book" "1.4.7"
+    "@dynamic-labs/wallet-connector-core" "1.4.7"
     tslib "2.4.1"
 
-"@dynamic-labs/rpc-providers@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/rpc-providers/-/rpc-providers-1.4.6.tgz#73b2140e026bd8fe3acdc0120b505af7eb4d83f5"
-  integrity sha512-2jN5PIs/z6bGo4o2852hGl4wbZZgGdiqJftY0D4eKnmdMiQpWHrtWIT8oasADWYhJ0Em+cIEaZSFZb9RkNg3Sg==
+"@dynamic-labs/rpc-providers@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/rpc-providers/-/rpc-providers-1.4.7.tgz#b7fb82af95b46deec94acbb6864a5517ab59e19d"
+  integrity sha512-RvXaiXYFLArmIysYm2EolxRVGujJ3j8lieC6sqomipHaua+WbGS2LYtK1NZIYIoer97FiZ3Gggpvm3eTvAjhVw==
   dependencies:
-    "@dynamic-labs/types" "1.4.6"
+    "@dynamic-labs/types" "1.4.7"
     "@solana/web3.js" "1.70.1"
     starknet "5.25.0"
 
@@ -104,21 +104,21 @@
   integrity sha512-l1nuFo+5TptnOxiq1R+FvHn+1UwJhzbkKpEWw92HajmvmJifjNFmddMSjoHqKA432KAOXDuM4UTyPBmv4cLStw==
 
 "@dynamic-labs/sdk-react-core@^1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/sdk-react-core/-/sdk-react-core-1.4.6.tgz#65faf3a39102912d90a4cb430b966a20d503c8d9"
-  integrity sha512-z5UiguCpud8IVyB3Ha3amJEYXec4wl3dtyTB7Hs3HTEeS3dmFyH+9fOf5Ks1lZbN7w3Zoq5tWhjscJGqmu9jRw==
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/sdk-react-core/-/sdk-react-core-1.4.7.tgz#2d90a4dd87813612c2888663e5fd2e802aec1254"
+  integrity sha512-oC1FYuNiOK/6ZHxHp3YYANFFZv0IBqhJOnrVxgH0jI63R6v1woalXgrwy3Aj6EZ5LJvYtewK3PS+rsjKv8if7Q==
   dependencies:
-    "@dynamic-labs/ethereum" "1.4.6"
-    "@dynamic-labs/iconic" "1.4.6"
-    "@dynamic-labs/logger" "1.4.6"
-    "@dynamic-labs/multi-wallet" "1.4.6"
-    "@dynamic-labs/rpc-providers" "1.4.6"
+    "@dynamic-labs/ethereum" "1.4.7"
+    "@dynamic-labs/iconic" "1.4.7"
+    "@dynamic-labs/logger" "1.4.7"
+    "@dynamic-labs/multi-wallet" "1.4.7"
+    "@dynamic-labs/rpc-providers" "1.4.7"
     "@dynamic-labs/sdk-api" "0.0.387"
-    "@dynamic-labs/types" "1.4.6"
-    "@dynamic-labs/utils" "1.4.6"
-    "@dynamic-labs/viem-utils" "1.4.6"
-    "@dynamic-labs/wallet-book" "1.4.6"
-    "@dynamic-labs/wallet-connector-core" "1.4.6"
+    "@dynamic-labs/types" "1.4.7"
+    "@dynamic-labs/utils" "1.4.7"
+    "@dynamic-labs/viem-utils" "1.4.7"
+    "@dynamic-labs/wallet-book" "1.4.7"
+    "@dynamic-labs/wallet-connector-core" "1.4.7"
     "@hcaptcha/react-hcaptcha" "1.4.4"
     country-list "2.3.0"
     eventemitter3 "5.0.1"
@@ -129,18 +129,18 @@
     react-i18next "^13.2.0"
     yup "0.32.11"
 
-"@dynamic-labs/turnkey@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/turnkey/-/turnkey-1.4.6.tgz#397546a64846655ddb6db102a739ca1badcc6f11"
-  integrity sha512-VQRVZC0UmyYXWePAgISqmq+QJqTTjPw8G01qrWM7Zqws1tNydsPlMSlcWqxmqdf2YYnPNNpZ+8ScwumCMvGcgA==
+"@dynamic-labs/turnkey@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/turnkey/-/turnkey-1.4.7.tgz#ad17fd1480cc4817e4d53df94370bbf3e324f685"
+  integrity sha512-NpWo92nlSURu9+WkgRrVaVZD4cVd7FqmR3UhpwHmWYPPBwYehPX0c+oa9amDw6m+6DbbVJqRj37I33djd3Ketw==
   dependencies:
-    "@dynamic-labs/rpc-providers" "1.4.6"
+    "@dynamic-labs/rpc-providers" "1.4.7"
     "@dynamic-labs/sdk-api" "0.0.387"
-    "@dynamic-labs/types" "1.4.6"
-    "@dynamic-labs/utils" "1.4.6"
-    "@dynamic-labs/viem-utils" "1.4.6"
-    "@dynamic-labs/wallet-book" "1.4.6"
-    "@dynamic-labs/wallet-connector-core" "1.4.6"
+    "@dynamic-labs/types" "1.4.7"
+    "@dynamic-labs/utils" "1.4.7"
+    "@dynamic-labs/viem-utils" "1.4.7"
+    "@dynamic-labs/wallet-book" "1.4.7"
+    "@dynamic-labs/wallet-connector-core" "1.4.7"
     "@solana/web3.js" "1.70.1"
     "@turnkey/http" "^2.6.1"
     "@turnkey/iframe-stamper" "^1.0.0"
@@ -149,42 +149,42 @@
     "@turnkey/webauthn-stamper" "^0.4.3"
     tldts "^6.0.16"
 
-"@dynamic-labs/types@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/types/-/types-1.4.6.tgz#097295a789aa317d3a9c3f26b0ef32904d5baac9"
-  integrity sha512-S5ma+sZlLJe0kkPWmGgVKoGIi9CFlQo+USs8wu93ZYWToldqSWkuaUwSRglVM7SZAEpBZ41/wS1SznhGvsocyQ==
+"@dynamic-labs/types@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/types/-/types-1.4.7.tgz#a72ec6a03f9df697bf9dcf131891275718dfd586"
+  integrity sha512-IHboELlxSQo9utkg9zaXWvzZ1z3CwJuwyqN6C8CKNXnaipV4erwIYPQXxMehzPjRcWyDTr4VC70Z9G5xpyEctw==
   dependencies:
     "@dynamic-labs/sdk-api" "0.0.387"
 
-"@dynamic-labs/utils@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/utils/-/utils-1.4.6.tgz#a7c2df86308ff2431c26b4777677722639ddd4b1"
-  integrity sha512-dHabr5kbEPFBxspg7kVB3rVR719KXybaVOXUS3JniHqLZmt+wd7VmkFTlWnZ6Kx/e5mp4mYo8L4ARI3DSjOJMw==
+"@dynamic-labs/utils@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/utils/-/utils-1.4.7.tgz#d1d9152adbfaf08564bf0bc2e39c88edf1651ab1"
+  integrity sha512-kF4zmWehxbO+5PpsRuUzH3y877F2dLHt6/zXy7GaS09zwdw4KqL+AL8VUwulYvmCU8Xco6UwTU5vZwwJVQ85PA==
   dependencies:
-    "@dynamic-labs/logger" "1.4.6"
-    "@dynamic-labs/types" "1.4.6"
+    "@dynamic-labs/logger" "1.4.7"
+    "@dynamic-labs/types" "1.4.7"
     tldts "^6.0.16"
 
-"@dynamic-labs/viem-utils@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/viem-utils/-/viem-utils-1.4.6.tgz#8db58cb4a64bc4eb0bb586864d7440c67503d964"
-  integrity sha512-fZ9Abr33dCzRtMiCo0rdMLlkGtAJ8fTj+7/R2vDGhD7rp/mxGqQpxzckYtcSSEUwenouTQBMBzf7a/Ekuy159w==
+"@dynamic-labs/viem-utils@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/viem-utils/-/viem-utils-1.4.7.tgz#80b4313d2d27a4c72cd6bfb825af10ebb869a03f"
+  integrity sha512-qcannPINpYoPP0CO1tLJ8SXbYeTj2KIzobOAeKS13WldgFMfAuMbVBO+Ai10adIWyTMvTbS3rw3M2JncLBJbzw==
 
-"@dynamic-labs/wallet-book@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/wallet-book/-/wallet-book-1.4.6.tgz#0034c2e67f3f51b05b0af1f2af7a68c884c9d813"
-  integrity sha512-IRuKN5xs/iHf6G5MYSK+aWq4LfmSzMBVdgJYr6ZDsWTQwBaqZXnwU8ByLJ7iEZeKPFeCbkoaf0VaXHvNhb4lxg==
+"@dynamic-labs/wallet-book@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/wallet-book/-/wallet-book-1.4.7.tgz#ad65fdc4eb084b848b33c9e674ecb0fa50204bd2"
+  integrity sha512-uL3YpSUSlyuP2vYbf8dqeSu7RN4YRoglmEODaFqMxbhCWHqznWWm1MddBkiepIfVzEAWgROiIvDi8oJoh81PHA==
   dependencies:
-    "@dynamic-labs/iconic" "1.4.6"
-    "@dynamic-labs/logger" "1.4.6"
-    "@dynamic-labs/utils" "1.4.6"
+    "@dynamic-labs/iconic" "1.4.7"
+    "@dynamic-labs/logger" "1.4.7"
+    "@dynamic-labs/utils" "1.4.7"
     util "0.12.5"
     zod "3.22.4"
 
-"@dynamic-labs/wallet-connector-core@1.4.6":
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/@dynamic-labs/wallet-connector-core/-/wallet-connector-core-1.4.6.tgz#b5d26876d2da6ffe31da97f78d8f3c00e88a3f66"
-  integrity sha512-onWS1CJ4J/iWtbDIUkFaRoqT8sDk/uqaCaWlIQbxqfPtXykkToS3/cKjafI3YT7XgZzYJUHItkmtOKO2Nbbs5Q==
+"@dynamic-labs/wallet-connector-core@1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@dynamic-labs/wallet-connector-core/-/wallet-connector-core-1.4.7.tgz#b255f0722275383bf2078de785023134d64d0667"
+  integrity sha512-lXYfP4DIDlTEieUmKUReA9TTGavZqgHQvUjET3WIyRe4h170A34IxLwLa/JfQL6oQ6uImzJ9FycxKAC/rtOHhA==
 
 "@emnapi/runtime@^0.45.0":
   version "0.45.0"
@@ -703,10 +703,10 @@
     "@motionone/dom" "^10.16.4"
     tslib "^2.3.1"
 
-"@next/env@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/env/-/env-14.1.4.tgz#432e80651733fbd67230bf262aee28be65252674"
-  integrity sha512-e7X7bbn3Z6DWnDi75UWn+REgAbLEqxI8Tq2pkFOFAMpWAWApz/YCUhtWMWn410h8Q2fYiYL7Yg5OlxMOCfFjJQ==
+"@next/env@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/env/-/env-14.2.0.tgz#68f0fcffc3ee65f7917130035e9eb02c00ba46c1"
+  integrity sha512-4+70ELtSbRtYUuyRpAJmKC8NHBW2x1HMje9KO2Xd7IkoyucmV9SjgO+qeWMC0JWkRQXgydv1O7yKOK8nu/rITQ==
 
 "@next/eslint-plugin-next@14.1.4":
   version "14.1.4"
@@ -715,50 +715,50 @@
   dependencies:
     glob "10.3.10"
 
-"@next/swc-darwin-arm64@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-14.1.4.tgz#a3bca0dc4393ac4cf3169bbf24df63441de66bb7"
-  integrity sha512-ubmUkbmW65nIAOmoxT1IROZdmmJMmdYvXIe8211send9ZYJu+SqxSnJM4TrPj9wmL6g9Atvj0S/2cFmMSS99jg==
+"@next/swc-darwin-arm64@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-14.2.0.tgz#bd0e5c3c26c2c89c6e86a9877f46b85ff63f68d1"
+  integrity sha512-kHktLlw0AceuDnkVljJ/4lTJagLzDiO3klR1Fzl2APDFZ8r+aTxNaNcPmpp0xLMkgRwwk6sggYeqq0Rz9K4zzA==
 
-"@next/swc-darwin-x64@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-darwin-x64/-/swc-darwin-x64-14.1.4.tgz#ba3683d4e2d30099f3f2864dd7349a4d9f440140"
-  integrity sha512-b0Xo1ELj3u7IkZWAKcJPJEhBop117U78l70nfoQGo4xUSvv0PJSTaV4U9xQBLvZlnjsYkc8RwQN1HoH/oQmLlQ==
+"@next/swc-darwin-x64@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-darwin-x64/-/swc-darwin-x64-14.2.0.tgz#c32bd01e8f0420358bb860eef9f37211c97854cd"
+  integrity sha512-HFSDu7lb1U3RDxXNeKH3NGRR5KyTPBSUTuIOr9jXoAso7i76gNYvnTjbuzGVWt2X5izpH908gmOYWtI7un+JrA==
 
-"@next/swc-linux-arm64-gnu@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-14.1.4.tgz#3519969293f16379954b7e196deb0c1eecbb2f8b"
-  integrity sha512-457G0hcLrdYA/u1O2XkRMsDKId5VKe3uKPvrKVOyuARa6nXrdhJOOYU9hkKKyQTMru1B8qEP78IAhf/1XnVqKA==
+"@next/swc-linux-arm64-gnu@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-14.2.0.tgz#07f33e5ce4dc095d1de1bac5cdf849bc59e28c07"
+  integrity sha512-iQsoWziO5ZMxDWZ4ZTCAc7hbJ1C9UDj/gATSqTaMjW2bJFwAsvf9UM79AKnljBl73uPZ+V0kH4rvnHTco4Ps2w==
 
-"@next/swc-linux-arm64-musl@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-14.1.4.tgz#4bb3196bd402b3f84cf5373ff1021f547264d62f"
-  integrity sha512-l/kMG+z6MB+fKA9KdtyprkTQ1ihlJcBh66cf0HvqGP+rXBbOXX0dpJatjZbHeunvEHoBBS69GYQG5ry78JMy3g==
+"@next/swc-linux-arm64-musl@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-14.2.0.tgz#a8ceb07eefd96c6f9d2058986f249ddf48ff457a"
+  integrity sha512-0JOk2uzLUt8fJK5LpsKKZa74zAch7bJjjgJzR9aOMs231AlE4gPYzsSm430ckZitjPGKeH5bgDZjqwqJQKIS2w==
 
-"@next/swc-linux-x64-gnu@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-14.1.4.tgz#1b3372c98c83dcdab946cdb4ee06e068b8139ba3"
-  integrity sha512-BapIFZ3ZRnvQ1uWbmqEGJuPT9cgLwvKtxhK/L2t4QYO7l+/DxXuIGjvp1x8rvfa/x1FFSsipERZK70pewbtJtw==
+"@next/swc-linux-x64-gnu@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-14.2.0.tgz#be578a741e068f80d6065a6f99ee49b93ef8463b"
+  integrity sha512-uYHkuTzX0NM6biKNp7hdKTf+BF0iMV254SxO0B8PgrQkxUBKGmk5ysHKB+FYBfdf9xei/t8OIKlXJs9ckD943A==
 
-"@next/swc-linux-x64-musl@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-14.1.4.tgz#8459088bdc872648ff78f121db596f2533df5808"
-  integrity sha512-mqVxTwk4XuBl49qn2A5UmzFImoL1iLm0KQQwtdRJRKl21ylQwwGCxJtIYo2rbfkZHoSKlh/YgztY0qH3wG1xIg==
+"@next/swc-linux-x64-musl@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-14.2.0.tgz#e56e3d62a843ae0a9fded8ab93730360e3acd167"
+  integrity sha512-paN89nLs2dTBDtfXWty1/NVPit+q6ldwdktixYSVwiiAz647QDCd+EIYqoiS+/rPG3oXs/A7rWcJK9HVqfnMVg==
 
-"@next/swc-win32-arm64-msvc@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-14.1.4.tgz#84280a08c00cc3be24ddd3a12f4617b108e6dea6"
-  integrity sha512-xzxF4ErcumXjO2Pvg/wVGrtr9QQJLk3IyQX1ddAC/fi6/5jZCZ9xpuL9Tzc4KPWMFq8GGWFVDMshZOdHGdkvag==
+"@next/swc-win32-arm64-msvc@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-14.2.0.tgz#142b06ce79a2092c9fc675f12d603128afc31917"
+  integrity sha512-j1oiidZisnymYjawFqEfeGNcE22ZQ7lGUaa4pGOCVWrWeIDkPSj8zYgS9TzMNlg17Q3wSWCQC/F5uJAhSh7qcA==
 
-"@next/swc-win32-ia32-msvc@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-14.1.4.tgz#23ff7f4bd0a27177428669ef6fa5c3923c738031"
-  integrity sha512-WZiz8OdbkpRw6/IU/lredZWKKZopUMhcI2F+XiMAcPja0uZYdMTZQRoQ0WZcvinn9xZAidimE7tN9W5v9Yyfyw==
+"@next/swc-win32-ia32-msvc@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-14.2.0.tgz#9c7c16972815927e2eea24c6067cbd13d99786bd"
+  integrity sha512-6ff6F4xb+QGD1jhx/dOT9Ot7PQ/GAYekV9ykwEh2EFS/cLTyU4Y3cXkX5cNtNIhpctS5NvyjW9gIksRNErYE0A==
 
-"@next/swc-win32-x64-msvc@14.1.4":
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-14.1.4.tgz#bccf5beccfde66d6c66fa4e2509118c796385eda"
-  integrity sha512-4Rto21sPfw555sZ/XNLqfxDUNeLhNYGO2dlPqsnuCg8N8a2a9u1ltqBOPQ4vj1Gf7eJC0W2hHG2eYUHuiXgY2w==
+"@next/swc-win32-x64-msvc@14.2.0":
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-14.2.0.tgz#f4ef56bd240d5c0312ef884de94f259cda50f01b"
+  integrity sha512-09DbG5vXAxz0eTFSf1uebWD36GF3D5toynRkgo2AlSrxwGZkWtJ1RhmrczRYQ17eD5bdo4FZ0ibiffdq5kc4vg==
 
 "@noble/curves@1.2.0", "@noble/curves@~1.2.0":
   version "1.2.0"
@@ -1164,11 +1164,17 @@
     "@stablelib/random" "^1.0.2"
     "@stablelib/wipe" "^1.0.1"
 
-"@swc/helpers@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.2.tgz#85ea0c76450b61ad7d10a37050289eded783c27d"
-  integrity sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==
+"@swc/counter@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@swc/counter/-/counter-0.1.3.tgz#cc7463bd02949611c6329596fccd2b0ec782b0e9"
+  integrity sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==
+
+"@swc/helpers@0.5.5":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.5.tgz#12689df71bfc9b21c4f4ca00ae55f2f16c8b77c0"
+  integrity sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==
   dependencies:
+    "@swc/counter" "^0.1.3"
     tslib "^2.4.0"
 
 "@turnkey/api-key-stamper@0.4.0":
@@ -2172,9 +2178,9 @@ camelcase@^5.0.0:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001579, caniuse-lite@^1.0.30001587, caniuse-lite@^1.0.30001599:
-  version "1.0.30001608"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001608.tgz#7ae6e92ffb300e4b4ec2f795e0abab456ec06cc0"
-  integrity sha512-cjUJTQkk9fQlJR2s4HMuPMvTiRggl0rAVMtthQuyOlDWuqHXqN8azLq+pi8B2TjwKJ32diHjUqRIKeFX4z1FoA==
+  version "1.0.30001609"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001609.tgz#fc34fad75c0c6d6d6303bdbceec2da8f203dabd6"
+  integrity sha512-JFPQs34lHKx1B5t1EpQpWH4c+29zIyn/haGsbpfq3suuV9v56enjFt23zqijxGTMwy1p/4H2tjnQMY+p1WoAyA==
 
 chalk@^4.0.0:
   version "4.1.2"
@@ -4331,28 +4337,28 @@ next-auth@^4.24.7:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
-next@14.1.4:
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/next/-/next-14.1.4.tgz#203310f7310578563fd5c961f0db4729ce7a502d"
-  integrity sha512-1WTaXeSrUwlz/XcnhGTY7+8eiaFvdet5z9u3V2jb+Ek1vFo0VhHKSAIJvDWfQpttWjnyw14kBeq28TPq7bTeEQ==
+next@14.2.0:
+  version "14.2.0"
+  resolved "https://registry.yarnpkg.com/next/-/next-14.2.0.tgz#ed80b21375ccd43a69ea8088cbace731966def52"
+  integrity sha512-2T41HqJdKPqheR27ll7MFZ3gtTYvGew7cUc0PwPSyK9Ao5vvwpf9bYfP4V5YBGLckHF2kEGvrLte5BqLSv0s8g==
   dependencies:
-    "@next/env" "14.1.4"
-    "@swc/helpers" "0.5.2"
+    "@next/env" "14.2.0"
+    "@swc/helpers" "0.5.5"
     busboy "1.6.0"
     caniuse-lite "^1.0.30001579"
     graceful-fs "^4.2.11"
     postcss "8.4.31"
     styled-jsx "5.1.1"
   optionalDependencies:
-    "@next/swc-darwin-arm64" "14.1.4"
-    "@next/swc-darwin-x64" "14.1.4"
-    "@next/swc-linux-arm64-gnu" "14.1.4"
-    "@next/swc-linux-arm64-musl" "14.1.4"
-    "@next/swc-linux-x64-gnu" "14.1.4"
-    "@next/swc-linux-x64-musl" "14.1.4"
-    "@next/swc-win32-arm64-msvc" "14.1.4"
-    "@next/swc-win32-ia32-msvc" "14.1.4"
-    "@next/swc-win32-x64-msvc" "14.1.4"
+    "@next/swc-darwin-arm64" "14.2.0"
+    "@next/swc-darwin-x64" "14.2.0"
+    "@next/swc-linux-arm64-gnu" "14.2.0"
+    "@next/swc-linux-arm64-musl" "14.2.0"
+    "@next/swc-linux-x64-gnu" "14.2.0"
+    "@next/swc-linux-x64-musl" "14.2.0"
+    "@next/swc-win32-arm64-msvc" "14.2.0"
+    "@next/swc-win32-ia32-msvc" "14.2.0"
+    "@next/swc-win32-x64-msvc" "14.2.0"
 
 node-addon-api@^2.0.0:
   version "2.0.2"

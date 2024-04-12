@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import DynamicProvider from "@/context/dynamic"
 import NavBar from "@/components/Navbar/navBar"
+import { UserProvider } from "@/context/userContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,10 +20,12 @@ export default function RootLayout({
     return (
         <html lang="en" data-theme="cupcake" className="text-info-content">
             <body className={inter.className}>
-                <DynamicProvider>
-                    <NavBar />
-                    {children}
-                </DynamicProvider>
+                <UserProvider>
+                    <DynamicProvider>
+                        <NavBar />
+                        {children}
+                    </DynamicProvider>
+                </UserProvider>
             </body>
         </html>
     )
