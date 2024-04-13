@@ -1,12 +1,10 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import DynamicProvider from "@/context/dynamic"
 import NavBar from "@/components/Navbar/navBar"
 import { UserProvider } from "@/context/userContext"
 import { Analytics } from "@vercel/analytics/next"
-
-const inter = Inter({ subsets: ["latin"] })
+import ThemeDropDown from "@/components/Navbar/themeDropDown"
 
 export const metadata: Metadata = {
     title: "Certified App",
@@ -19,12 +17,13 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en" data-theme="cupcake" className="text-info-content">
-            <body className={inter.className}>
+        <html lang="en" data-theme="cupcake">
+            <body>
                 <UserProvider>
                     <DynamicProvider>
                         <NavBar />
                         {children}
+                        <ThemeDropDown />
                         <Analytics />
                     </DynamicProvider>
                 </UserProvider>

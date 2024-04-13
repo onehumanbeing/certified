@@ -2,9 +2,9 @@
 import DynamicConnectButton from "@/components/DynamicModal/walletWidget"
 import { validateJWT } from "@/lib/authHelpers"
 import { authUser } from "@/lib/request"
+import ThemeDropDown from "./themeDropDown"
 
 export default function NavBar() {
-    
     return (
         <div className="navbar bg-base-100 fixed">
             <div
