@@ -12,6 +12,40 @@ interface AppProps {
 
 const DynamicProvider: React.FC<AppProps> = ({ children }) => {
     const { logOut, fetchUser, setUserLogging } = useUser()
+
+    const fetchUserWithRetry = async (maxAttempts = 5): Promise<void> => {
+        let attempts = 0
+
+        const executeFetch = async (): Promise<boolean> => {
+            attempts++
+            setUserLogging(true)
+
+            try {
+                const result = await fetchUser()
+                if (result) {
+                    console.log("User fetched successfully.")
+                    return true
+                } else {
+                    throw new Error("Failed to fetch user")
+                }
+            } catch (error) {
+                console.error(`Attempt ${attempts}:`, error)
+                if (attempts < maxAttempts) {
+                    console.log(`Retrying... (${attempts}/${maxAttempts})`)
+                    await new Promise((resolve) => setTimeout(resolve, 1000))
+                    return executeFetch()
+                } else {
+                    console.log("Max attempts reached, failed to fetch user, please refresh page.")
+                    return false
+                }
+            } finally {
+                setUserLogging(false)
+            }
+        }
+
+        await executeFetch()
+    }
+
     return (
         <DynamicContextProvider
             settings={{
@@ -36,7 +70,7 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
                         })
                             .then((res) => {
                                 if (res.ok) {
-                                    console.log("LOGGED IN", res)
+                                    console.log("LOGGED IN")
                                 } else {
                                     console.error("Failed to log in")
                                 }
@@ -45,7 +79,7 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
                                 console.error("Error logging in", error)
                             })
                             .finally(() => {
-                                fetchUser()
+                                fetchUserWithRetry()
                             })
                     },
                     onLogout: async () => {

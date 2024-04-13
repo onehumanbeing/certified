@@ -35,7 +35,7 @@ export const config: NextAuthOptions = {
                 }
 
                 const token = credentials.token
-                console.log("Token:", token)
+                // console.log("Token:", token)
                 const jwtPayload = await validateJWT(token)
                 if (jwtPayload) {
                     // Transform the JWT payload into your user object
@@ -47,7 +47,7 @@ export const config: NextAuthOptions = {
                     }
 
                     console.log("User ID:", user.id)
-                    console.log("User Email:", user.email)
+                    // console.log("User Email:", user.email)
 
                     return user
                 } else {

@@ -14,7 +14,7 @@ const UserContext = createContext<{
     setUser: React.Dispatch<React.SetStateAction<UserType | null | undefined>>
     authorized: boolean
     logOut: () => void
-    fetchUser: () => Promise<void>
+    fetchUser: () => Promise<boolean>
     userLogging: boolean
     setUserLogging: React.Dispatch<React.SetStateAction<boolean>>
 }>({
@@ -22,7 +22,7 @@ const UserContext = createContext<{
     setUser: () => {},
     authorized: false,
     logOut: () => {},
-    fetchUser: async () => {},
+    fetchUser: async () => false,
     userLogging: false,
     setUserLogging: () => {},
 })
@@ -38,21 +38,29 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [authorized, setAuthorized] = useState<boolean>(false)
     const [userLogging, setUserLogging] = useState<boolean>(false)
     const fetchUser = async () => {
-        authUser()
-            .then((data) => {
-                if (data) {
-                    setUser(data.user)
-                    if (data.user.id) {
-                        setAuthorized(true)
-                    }
+        try {
+            const data = await authUser()
+            if (data) {
+                setUser(data.user)
+                if (data.user.id) {
+                    setAuthorized(true)
+                    return true
                 } else {
                     setUser(null)
                     setAuthorized(false)
+                    return false
                 }
-            })
-            .finally(() => {
-                setUserLogging(false)
-            })
+            } else {
+                setUser(null)
+                setAuthorized(false)
+                return false
+            }
+        } catch (error) {
+            console.error("Authentication failed:", error)
+            setUser(null)
+            setAuthorized(false)
+            return false
+        }
     }
 
     const logOut = () => {
