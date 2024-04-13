@@ -4,6 +4,7 @@ import "./globals.css"
 import DynamicProvider from "@/context/dynamic"
 import NavBar from "@/components/Navbar/navBar"
 import { UserProvider } from "@/context/userContext"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
                     <DynamicProvider>
                         <NavBar />
                         {children}
+                        <Analytics />
                     </DynamicProvider>
                 </UserProvider>
             </body>
