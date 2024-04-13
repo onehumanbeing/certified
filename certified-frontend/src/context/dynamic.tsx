@@ -23,10 +23,9 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
             try {
                 const result = await fetchUser()
                 if (result) {
-                    console.log("User fetched successfully.")
                     return true
                 } else {
-                    throw new Error("Failed to fetch user")
+                    throw new Error("Failed to authenticate user")
                 }
             } catch (error) {
                 console.error(`Attempt ${attempts}:`, error)
@@ -35,7 +34,7 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
                     await new Promise((resolve) => setTimeout(resolve, 1000))
                     return executeFetch()
                 } else {
-                    console.log("Max attempts reached, failed to fetch user, please refresh page.")
+                    console.log("Max attempts reached, failed to authenticate user, please refresh page.")
                     return false
                 }
             } finally {
