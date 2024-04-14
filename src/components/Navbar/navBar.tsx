@@ -4,7 +4,7 @@ import DynamicConnectButton from "@/components/DynamicModal/walletWidget"
 import { validateJWT } from "@/lib/authHelpers"
 import { authUser } from "@/lib/request"
 import ThemeDropDown from "./themeDropDown"
-import { createCertification, createCertificationForUser, getCertificationTypeFromIndexService, getCertificationFromIndexService } from "@/lib/sign"
+import { createCertificationType, createCertificationForUser, getCertificationTypeFromIndexService, getCertificationFromIndexService } from "@/lib/sign"
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 
 export default function NavBar() {
