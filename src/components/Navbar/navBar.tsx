@@ -1,10 +1,14 @@
 "use client"
+import { useEffect } from 'react';
 import DynamicConnectButton from "@/components/DynamicModal/walletWidget"
 import { validateJWT } from "@/lib/authHelpers"
 import { authUser } from "@/lib/request"
 import ThemeDropDown from "./themeDropDown"
+import { createCertification, createCertificationForUser, getCertificationTypeFromIndexService, getCertificationFromIndexService } from "@/lib/sign"
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 
 export default function NavBar() {
+    const { primaryWallet } = useDynamicContext();
     return (
         <div className="navbar bg-base-100 fixed">
             <div
@@ -53,7 +57,7 @@ export default function NavBar() {
                         </li>
                     </ul>
                 </div> */}
-                <a className="btn btn-ghost text-xl">The Certified</a>
+                <a className="btn btn-ghost text-xl" onClick={() => {createCertificationForUser(primaryWallet)}}>The Certified</a>
             </div>
             {/* <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

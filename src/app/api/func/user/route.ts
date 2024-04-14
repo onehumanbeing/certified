@@ -50,6 +50,7 @@ export async function GET(request: Request) {
                 },
             })
         } catch (error) {
+            console.log(error);
             return new Response(JSON.stringify({ error: "Invalid user info format" }), {
                 status: 400,
                 headers: {
