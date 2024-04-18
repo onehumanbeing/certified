@@ -19,9 +19,6 @@ export default function NavBar() {
         <div className="navbar bg-base-100 h-auto fixed">
             <div
                 className="navbar-start flex items-center"
-                onClick={() => {
-                    authUser()
-                }}
             >
                 {/* <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,11 +63,8 @@ export default function NavBar() {
                 <Image
                     src="/certified_logo.png"
                     alt="Logo"
-                    style={{ maxWidth: "150px" }}
-                    onClick={() => {
-                        if (!primaryWallet) return
-                        // createCertificationType("name", primaryWallet)
-                    }}
+                    width={150}
+                    height={50}
                 />
             </div>
             {/* <div className="navbar-center hidden lg:flex">

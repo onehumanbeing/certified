@@ -159,6 +159,9 @@ export default function Certification() {
                     <div className="w-full">
                         {ownedCertifications.length === 0 ? (
                             <div>
+                                <div className="flex justify-center">
+                                    <img src="/landing_page_2.png" alt="Certified" className="w-64 h-64" />
+                                </div>                               
                                 <h1 className="text-lg font-bold">
                                     You don{"'"}t have any certification ready to be issued.
                                 </h1>
