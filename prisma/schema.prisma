@@ -21,5 +21,20 @@ model User {
   createdAt   DateTime @default(now())
   lastSeemAt  DateTime @updatedAt @map(name: "updated_at")
   dynamic_id  String   @default(uuid())
+
+  signProtocols   SignProtocalSchema[]
+  
   @@map(name: "users")
+}
+
+model SignProtocalSchema {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  schemaId  String   @unique
+  schema    Json
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map(name: "user_schemas")
 }

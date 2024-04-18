@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" data-theme="cupcake">
-            <body>
+            <body className="">
                 <UserProvider>
                     <DynamicProvider>
                         <NavBar />

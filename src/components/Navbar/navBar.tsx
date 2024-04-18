@@ -1,16 +1,21 @@
 "use client"
-import { useEffect } from 'react';
+import { useEffect } from "react"
 import DynamicConnectButton from "@/components/DynamicModal/walletWidget"
 import { validateJWT } from "@/lib/authHelpers"
 import { authUser } from "@/lib/request"
 import ThemeDropDown from "./themeDropDown"
-import { createCertificationType, createCertificationForUser, getCertificationTypeFromIndexService, getCertificationFromIndexService } from "@/lib/sign"
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import {
+    createCertificationType,
+    createCertificationForUser,
+    getCertificationTypeFromIndexService,
+    getCertificationFromIndexService,
+} from "@/lib/sign"
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core"
 
 export default function NavBar() {
-    const { primaryWallet } = useDynamicContext();
+    const { primaryWallet } = useDynamicContext()
     return (
-        <div className="navbar bg-base-100 fixed">
+        <div className="navbar bg-base-100 h-auto fixed">
             <div
                 className="navbar-start"
                 onClick={() => {
@@ -57,7 +62,15 @@ export default function NavBar() {
                         </li>
                     </ul>
                 </div> */}
-                <a className="btn btn-ghost text-xl" onClick={() => {createCertificationForUser(primaryWallet)}}>The Certified</a>
+                <a
+                    className="btn btn-ghost text-xl"
+                    onClick={() => {
+                        if (!primaryWallet) return
+                        createCertificationType("name", primaryWallet)
+                    }}
+                >
+                    The Certified
+                </a>
             </div>
             {/* <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
