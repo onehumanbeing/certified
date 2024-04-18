@@ -63,10 +63,15 @@ export default function NavBar() {
                         </li>
                     </ul>
                 </div> */}
-                    <img src="/certified_logo.png" alt="Logo" style={{ maxWidth: '150px' }} onClick={() => {
+                <Image
+                    src="/certified_logo.png"
+                    alt="Logo"
+                    style={{ maxWidth: "150px" }}
+                    onClick={() => {
                         if (!primaryWallet) return
-                        createCertificationType("name", primaryWallet)
-                    }}/>
+                        // createCertificationType("name", primaryWallet)
+                    }}
+                />
             </div>
             {/* <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

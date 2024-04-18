@@ -44,7 +44,12 @@ export async function POST(request: Request) {
 
             if (!userObject) {
                 console.log("No user found with the given identifier")
-                return null
+                return new Response(JSON.stringify({ error: "Invalid user info format" }), {
+                    status: 400,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
             }
 
             try {
