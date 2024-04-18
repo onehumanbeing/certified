@@ -7,8 +7,8 @@ import { Analytics } from "@vercel/analytics/next"
 import ThemeDropDown from "@/components/Navbar/themeDropDown"
 
 export const metadata: Metadata = {
-    title: "Certified App",
-    description: "Certified Web App",
+    title: "Certified",
+    description: "Making Certification Simple",
 }
 
 export default function RootLayout({

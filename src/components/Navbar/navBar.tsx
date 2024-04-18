@@ -16,8 +16,13 @@ import Image from "next/image"
 export default function NavBar() {
     const { primaryWallet } = useDynamicContext()
     return (
-        <div className="navbar bg-base-100 h-auto fixed z-10">
-            <div className="navbar-start">
+        <div className="navbar bg-base-100 h-auto fixed">
+            <div
+                className="navbar-start flex items-center"
+                onClick={() => {
+                    authUser()
+                }}
+            >
                 {/* <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                         <svg
@@ -58,15 +63,10 @@ export default function NavBar() {
                         </li>
                     </ul>
                 </div> */}
-                <a className="btn btn-ghost text-xl">
-                    <Image
-                        className="w-[110px] h-auto"
-                        src="/assets/certified_logo.png"
-                        width={549}
-                        height={201}
-                        alt="the certified logo"
-                    />
-                </a>
+                    <img src="/certified_logo.png" alt="Logo" style={{ maxWidth: '150px' }} onClick={() => {
+                        if (!primaryWallet) return
+                        createCertificationType("name", primaryWallet)
+                    }}/>
             </div>
             {/* <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
