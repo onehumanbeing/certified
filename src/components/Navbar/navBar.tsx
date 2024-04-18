@@ -17,7 +17,7 @@ export default function NavBar() {
     return (
         <div className="navbar bg-base-100 h-auto fixed">
             <div
-                className="navbar-start"
+                className="navbar-start flex items-center"
                 onClick={() => {
                     authUser()
                 }}
@@ -62,15 +62,10 @@ export default function NavBar() {
                         </li>
                     </ul>
                 </div> */}
-                <a
-                    className="btn btn-ghost text-xl"
-                    onClick={() => {
+                    <img src="/certified_logo.png" alt="Logo" style={{ maxWidth: '150px' }} onClick={() => {
                         if (!primaryWallet) return
                         createCertificationType("name", primaryWallet)
-                    }}
-                >
-                    The Certified
-                </a>
+                    }}/>
             </div>
             {/* <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

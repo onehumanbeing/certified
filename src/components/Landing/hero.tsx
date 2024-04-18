@@ -7,7 +7,7 @@ export default function Hero() {
         <div className="hero-content text-center">
             <div className="max-w-md">
                 <h1 className="text-5xl font-bold "></h1>
-                <p className="py-6">Welcome on aboard</p>
+                <p className="py-6">Making Certification Simple</p>
                 <button
                     className="btn btn-primary"
                     onClick={() => {
