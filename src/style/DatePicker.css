@@ -1,0 +1,79 @@
+.react-date-picker {
+    display: inline-flex;
+    position: relative;
+    width: 100%; /* Set width to 100% */
+}
+
+.react-date-picker *,
+.react-date-picker *:before,
+.react-date-picker *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.react-date-picker--disabled {
+    background-color: #f0f0f0;
+    color: #6d6d6d;
+}
+
+.react-date-picker__wrapper {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    border: none; /* Remove border */
+    width: 100%; /* Ensure the wrapper also spans 100% width */
+}
+
+.react-date-picker__inputGroup {
+    min-width: calc((4px * 3) + 0.54em * 8 + 0.217em * 2);
+    flex-grow: 1;
+    padding: 0 2px;
+    box-sizing: content-box;
+}
+
+.react-date-picker__inputGroup__divider,
+.react-date-picker__inputGroup__leadingZero {
+    display: inline-block;
+}
+
+.react-date-picker__inputGroup__input {
+    min-width: 0.54em;
+    height: 100%;
+    position: relative;
+    padding: 0 1px;
+    border: 0;
+    background: none;
+    color: currentColor;
+    font: inherit;
+    box-sizing: content-box;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.react-date-picker__inputGroup__input::-webkit-outer-spin-button,
+.react-date-picker__inputGroup__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.react-date-picker__button {
+    border: 0;
+    background: transparent;
+    padding: 4px 6px;
+}
+
+.react-date-picker__calendar {
+    width: 100%; /* Adjust calendar width to 100% */
+    max-width: 100vw;
+    z-index: 1;
+}
+
+.react-date-picker__calendar--closed {
+    display: none;
+}
+
+.react-date-picker__calendar .react-calendar {
+    border-width: thin;
+}

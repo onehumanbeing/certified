@@ -35,7 +35,6 @@ export const getSignClient = (primaryWallet: any) => {
                         }
                         // const { primaryWallet } = useDynamicContext();
                         if (!primaryWallet) return
-                        console.log("primaryWallet", primaryWallet)
                         const signer: any = await primaryWallet.connector.getSigner()
                         if (!signer) return
                         const signature = await signer.signTypedData({
@@ -59,38 +58,56 @@ export const getSignClient = (primaryWallet: any) => {
 }
 
 export const createCertificationType = async (certifcationName: string, primaryWallet: any) => {
-    console.log("createCertificationType", certifcationName, primaryWallet)
     const client = getSignClient(primaryWallet)
-    console.log("client")
     const res = await client.createSchema({
-        name: "License",
-        data: [{ name: "signer", type: "address" }],
+        name: certifcationName,
+        data: [
+            { name: "certifcationName", type: "string" },
+            { name: "issuedTo", type: "string" },
+            { name: "issuedToWallet", type: "address" },
+            { name: "issuedBy", type: "string" },
+            { name: "issuedDate", type: "number" },
+            { name: "expirationDate", type: "number" },
+        ],
     })
-    console.log(res)
-    return res
+    return res.schemaId
     // {schemaId: 'SPS_kCoVw8Qo_1s4IZKE7eEZT'}schemaId: "SPS_kCoVw8Qo_1s4IZKE7eEZT"[[Prototype]]: Object
     // for users: https://scan.sign.global/schema/SPS_kCoVw8Qo_1s4IZKE7eEZT
 }
 
-export const createCertificationForUser = async (primaryWallet: any): Promise<any> => {
+export const createCertificationForUser = async (
+    primaryWallet: any,
+    schemaId: string,
+    name: string,
+    certifcationName: string,
+    ceritifcationOrganization: string,
+    IssuedToWallet: string,
+    expirationDate: Date
+): Promise<any> => {
     const client = getSignClient(primaryWallet)
     let txHash: string | null = null
 
     //create attestation
     const attestationInfo = await client.createAttestation({
-        schemaId: "SPS_kCoVw8Qo_1s4IZKE7eEZT", //schemaInfo.schemaId or other schemaId
-        data: { signer: "henryyuan" },
+        schemaId: schemaId, //schemaInfo.schemaId or other schemaId
+        data: {
+            certifcationName: certifcationName,
+            issuedTo: name,
+            issuedToWallet: IssuedToWallet,
+            issuedBy: ceritifcationOrganization,
+            issuedDate: Math.floor(Date.now() / 1000),
+            expirationDate: Math.floor(expirationDate.getTime() / 1000),
+        },
         indexingValue: primaryWallet.address.toLowerCase(),
     })
-    console.log(attestationInfo)
     // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
-    return attestationInfo
+    console.log(attestationInfo)
+    return attestationInfo.attestationId
 }
 
 export async function getCertificationTypeFromIndexService() {
     const indexService = new IndexService("mainnet")
     const res = await indexService.querySchema("SPS_kCoVw8Qo_1s4IZKE7eEZT")
-    console.log(res)
     /* 
     {
         id: 'SPS_kCoVw8Qo_1s4IZKE7eEZT',

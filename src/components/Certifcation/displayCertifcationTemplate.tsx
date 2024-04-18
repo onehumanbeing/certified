@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 interface DisplayCertificationTemplateProps {
     certificationName: string
     note: string
@@ -12,10 +14,10 @@ const DisplayCertificationTemplate: React.FC<DisplayCertificationTemplateProps> 
     organizationName,
 }) => {
     return (
-        <div className="bg-white p-10 rounded-lg shadow-xl text-center h-full w-full flex flex-col justify-center align-middle">
+        <div className="bg-white p-20 rounded-lg shadow-2xl text-center h-full w-full flex flex-col justify-center align-middle relative max-w-[900px]">
             <div className="mb-4">
                 <div className="flex justify-center"></div>
-                <h2 className="text-3xl font-bold text-blue-900">
+                <h2 className="text-3xl font-bold text-blue-900 whitespace-pre">
                     {certificationName ? certificationName : "Project Management Institute"}
                 </h2>
             </div>
@@ -45,6 +47,16 @@ const DisplayCertificationTemplate: React.FC<DisplayCertificationTemplateProps> 
                         <p className="text-sm text-gray-900">{new Date().toLocaleDateString()}</p>
                     </div>
                 </div>
+            </div>
+            <div className="absolute bottom-5 right-5">
+                <Image
+                    className="w-[90px] h-auto  "
+                    src="/assets/certified_logo.png"
+                    width={549}
+                    height={201}
+                    alt="the certified logo"
+                />
+                <p className="text-[6px]">https://www.thecertified.xyz/</p>
             </div>
         </div>
     )

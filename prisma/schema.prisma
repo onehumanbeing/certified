@@ -1,40 +1,52 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
-  id          String   @id @default(uuid())
-  username    String?  @unique
-  email       String   @unique
-  createdAt   DateTime @default(now())
-  lastSeemAt  DateTime @updatedAt @map(name: "updated_at")
-  dynamic_id  String   @default(uuid())
+  id            String               @id @default(uuid())
+  username      String?              @unique
+  email         String               @unique
+  createdAt     DateTime             @default(now())
+  lastSeemAt    DateTime             @updatedAt @map("updated_at")
+  dynamic_id    String               @default(uuid())
+  signProtocols SignProtocalSchema[]
 
-  signProtocols   SignProtocalSchema[]
-  
-  @@map(name: "users")
+  @@map("users")
 }
 
 model SignProtocalSchema {
-  id        String   @id @default(uuid())
-  userId    String   @unique
-  schemaId  String   @unique
-  schema    Json
-  createdAt DateTime @default(now())
+  id           String              @id @default(uuid())
+  userId       String
+  schemaId     String              @unique
+  schema       Json
+  createdAt    DateTime            @default(now())
+  template     String
+  attestations attestationRecord[] @relation("SignProtocalToAttestation")
+  user         User                @relation(fields: [userId], references: [id])
 
-  user      User     @relation(fields: [userId], references: [id])
+  @@map("user_schemas")
+}
 
-  @@map(name: "user_schemas")
+model attestationRecord {
+  id                 Int                @id @default(autoincrement())
+  name               String
+  email              String
+  walletAddress      String
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  expirationAt       DateTime
+  schemaId           String
+  schema             Json
+  template           String
+  
+  attestationId      String             @unique
+  signProtocalSchema SignProtocalSchema @relation("SignProtocalToAttestation", fields: [schemaId], references: [schemaId])
+
+  @@map("attestation_records")
 }

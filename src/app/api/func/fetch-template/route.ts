@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic"
 import { UserType } from "@/context/userContext"
 import prisma from "@/lib/prisma/db"
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
     try {
         const userInfoCookie = request.headers
             .get("cookie")
@@ -22,15 +22,38 @@ export async function POST(request: Request) {
         const userInfo = decodeURIComponent(userInfoCookie)
         try {
             const user: UserType = JSON.parse(userInfo)
+            const userWithSchemas = await prisma.user.findUnique({
+                where: {
+                    email: user.email,
+                },
+                include: {
+                    signProtocols: true,
+                },
+            })
 
-            return new Response(JSON.stringify({ user }), {
+            if (!userWithSchemas) {
+                return new Response(JSON.stringify({ schemas: [] }), {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            }
+
+            const schemas = userWithSchemas.signProtocols.map((protocol) => ({
+                schema: protocol.schema,
+                schemaId: protocol.schemaId,
+                template: protocol.template,
+            }))
+
+            return new Response(JSON.stringify({ schemas }), {
                 status: 200,
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
         } catch (error) {
-            return new Response(JSON.stringify({ error: "Invalid user info format" }), {
+            return new Response(JSON.stringify({ error: "error" }), {
                 status: 400,
                 headers: {
                     "Content-Type": "application/json",

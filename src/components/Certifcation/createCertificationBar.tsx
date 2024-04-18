@@ -17,7 +17,7 @@ const CreateCertification: React.FC<DisplayCertificationProps> = ({
     setOrganizationName,
 }) => {
     return (
-        <div className="w-1/4 h-full flex flex-col gap-4">
+        <div className="w-1/4 h-full flex flex-col">
             <label className="form-control">
                 <div className="label">
                     <span className="label-text">Certification Name</span>
@@ -27,6 +27,7 @@ const CreateCertification: React.FC<DisplayCertificationProps> = ({
                     onChange={(e) => setCertificationName(e.target.value)}
                     className="textarea textarea-bordered h-24"
                     placeholder="Project Management Institute"
+                    maxLength={35}
                 ></textarea>
                 <div className="label"></div>
             </label>
@@ -39,6 +40,7 @@ const CreateCertification: React.FC<DisplayCertificationProps> = ({
                     onChange={(e) => setNote(e.target.value)}
                     className="textarea textarea-bordered h-24"
                     placeholder="Has been formally recognized for their knowledge ..."
+                    maxLength={1350}
                 ></textarea>
                 <div className="label"></div>
             </label>
@@ -51,6 +53,7 @@ const CreateCertification: React.FC<DisplayCertificationProps> = ({
                     onChange={(e) => setOrganizationName(e.target.value)}
                     className="textarea textarea-bordered h-24"
                     placeholder="University of California, Irvine"
+                    maxLength={100}
                 ></textarea>
                 <div className="label"></div>
             </label>
