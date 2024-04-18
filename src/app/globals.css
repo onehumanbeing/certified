@@ -11,3 +11,41 @@ body {
     --dynamic-text-primary: transprent;
     --dynamic-text-size-button-primary: 14px;
 }
+
+::-webkit-scrollbar-track {
+    background-color: rgba(239, 234, 230, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(239, 234, 230, 1);
+    border-radius: 100px;
+    border: 3px solid white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(227, 196, 228, 1);
+}
+
+::-webkit-scrollbar-track:hover {
+    background-color: rgba(239, 234, 230, 0.4);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar {
+    background-color: white;
+    width: 10px;
+    height: 6px;
+}
+
+::selection {
+    background-color: #4e4df4 !important;
+    color: white !important;
+}
+
+::-moz-selection {
+    background-color: #4e4df4 !important;
+    color: white !important;
+}

@@ -14,7 +14,7 @@ const DisplayCertification: React.FC<DisplayCertificationProps> = ({
     organizationName,
 }) => {
     return (
-        <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[670px] cursor-pointer">
+        <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[670px] cursor-pointer hover:scale-105 transition duration-300 ease-in-out">
             <div className="mb-4">
                 <div className="flex justify-center"></div>
                 <h2 className="text-3xl font-bold text-blue-900 whitespace-pre">

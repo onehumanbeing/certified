@@ -95,7 +95,7 @@ export const createCertificationForUser = async (
             issuedTo: name,
             issuedToWallet: IssuedToWallet,
             issuedBy: ceritifcationOrganization,
-            issuedDate: Math.floor(Date.now() / 1000),
+            issuedDate: Math.floor(Date.now()),
             expirationDate: Math.floor(expirationDate.getTime() / 1000),
         },
         indexingValue: primaryWallet.address.toLowerCase(),
@@ -105,9 +105,10 @@ export const createCertificationForUser = async (
     return attestationInfo.attestationId
 }
 
-export async function getCertificationTypeFromIndexService() {
+export async function getCertificationTypeFromIndexService(schemaId: string) {
     const indexService = new IndexService("mainnet")
-    const res = await indexService.querySchema("SPS_kCoVw8Qo_1s4IZKE7eEZT")
+    const res = await indexService.querySchema(schemaId)
+    return res
     /* 
     {
         id: 'SPS_kCoVw8Qo_1s4IZKE7eEZT',
@@ -128,10 +129,10 @@ export async function getCertificationTypeFromIndexService() {
     */
 }
 
-export async function getCertificationFromIndexService() {
+export async function getCertificationFromIndexService(attestationId: string) {
     // https://scan.sign.global/attestation/SPA_I10BpEk7iwT4Yfo-YENQj
     const indexService = new IndexService("mainnet")
-    const res = await indexService.queryAttestation("SPA_I10BpEk7iwT4Yfo-YENQj")
+    const res = await indexService.queryAttestation(attestationId)
     console.log(res)
     /*
     {
