@@ -23,7 +23,7 @@ export default function RootLayout({
                     <DynamicProvider>
                         <NavBar />
                         {children}
-                        <ThemeDropDown />
+                        {/* <ThemeDropDown /> */}
                         <Analytics />
                     </DynamicProvider>
                 </UserProvider>
