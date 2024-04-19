@@ -9,6 +9,7 @@ import DisplayCertification from "../Certifcation/displayCertifcation"
 import IssuesCertification from "../Certifcation/IssueCertifcation"
 import { AttestationRecordInput } from "@/app/api/func/issue-certificate/route"
 import DynamicConnectButton from "../DynamicModal/walletWidget"
+import { useUser } from "@/context/userContext"
 
 type CertificationType = {
     certificationName: string
@@ -32,14 +33,13 @@ export default function Certification() {
     const [ownedCertifications, setOwnedCertifications] = useState<
         CertificationContentType[] | null
     >(null)
-    const [needLogin, setNeedLogin] = useState<boolean>(false)
+    const { authorized } = useUser()
     const [selectedCertification, setSelectedCertification] =
         useState<CertificationContentType | null>(null)
 
     const handleGetCertifications = async () => {
         const userToken = localStorage.getItem("dynamic_authentication_token")
         if (!userToken) {
-            setNeedLogin(true)
             return null
         }
         try {
@@ -52,9 +52,7 @@ export default function Certification() {
             })
             const res = await response.json()
             setOwnedCertifications(res.schemas)
-        } catch {
-            setNeedLogin(true)
-        }
+        } catch {}
     }
 
     const handleCreateCertification = async (template: string) => {
@@ -72,8 +70,6 @@ export default function Certification() {
             schema: JSON.stringify({ certificationName, note, organizationName }),
             template,
         }
-
-        console.log(data)
 
         const response = await fetch("/api/func/create-template", {
             method: "POST",
@@ -126,8 +122,6 @@ export default function Certification() {
             schemaId,
         }
 
-        console.log(data)
-
         const response = await fetch("/api/func/issue-certificate", {
             method: "POST",
             headers: {
@@ -145,10 +139,10 @@ export default function Certification() {
     }
 
     useEffect(() => {
-        if (activeButton === "OwnedCertifications") {
+        if (activeButton === "OwnedCertifications" && authorized) {
             handleGetCertifications()
         }
-    }, [activeButton])
+    }, [activeButton, authorized])
     return (
         <>
             <div className="toast toast-top toast-center z-50">
@@ -165,9 +159,8 @@ export default function Certification() {
                     </div>
                 )}
                 {alert === "issued sucess" && (
-                    <div className="alert alert-info flex justify-center items-center">
-                        <span>Creating, please wait...</span>
-                        <span className="loading loading-infinity loading-lg"></span>
+                    <div className="alert alert-success">
+                        <span>Certification issued successfully.</span>
                     </div>
                 )}
                 {alert === "sucess" && (
@@ -176,7 +169,7 @@ export default function Certification() {
                     </div>
                 )}
             </div>
-            {needLogin === true ? (
+            {!authorized ? (
                 <div>
                     <DynamicConnectButton />
                 </div>
@@ -306,17 +299,19 @@ export default function Certification() {
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
+                                width="24"
+                                height="24"
                                 viewBox="0 0 24 24"
+                                fill="none"
                                 stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="lucide lucide-badge-plus"
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2 a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                                />
+                                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                                <line x1="12" x2="12" y1="8" y2="16" />
+                                <line x1="8" x2="16" y1="12" y2="12" />
                             </svg>
                             <span className="btm-nav-label">Create Certificate Template</span>
                         </button>

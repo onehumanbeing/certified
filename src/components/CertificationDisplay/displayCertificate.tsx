@@ -1,8 +1,6 @@
 "use client"
 import { AttestationDisplayRecord } from "@/app/look-up-certification/[id]/page"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 
 interface DisplayCertificateProps {
     attestationRecord: AttestationDisplayRecord
@@ -28,7 +26,7 @@ const DisplayCertificate: React.FC<DisplayCertificateProps> = ({ attestationReco
                 <div className="flex justify-between items-center">
                     <div>
                         <p className="text-sm text-gray-600">Given by:</p>
-                        <p className="text-sm text-gray-900">
+                        <p className="text-lg text-gray-900 font-whisper font-bold">
                             {attestationRecord.schema?.organizationName as string}
                         </p>
                     </div>

@@ -43,7 +43,6 @@ export async function POST(request: Request) {
             })
 
             if (!userObject) {
-                console.log("No user found with the given identifier")
                 return new Response(JSON.stringify({ error: "Invalid user info format" }), {
                     status: 400,
                     headers: {
@@ -61,7 +60,6 @@ export async function POST(request: Request) {
                         template,
                     },
                 })
-                console.log(newSchema)
             } catch (error) {
                 console.error("Error saving SignProtocalSchema:", error)
                 throw error
@@ -74,7 +72,6 @@ export async function POST(request: Request) {
                 },
             })
         } catch (error) {
-            console.log("Error parsing user info:", error)
             return new Response(JSON.stringify({ error: "Invalid user info format" }), {
                 status: 400,
                 headers: {

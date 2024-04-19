@@ -21,7 +21,6 @@ const DisplayCertificationTemplate: React.FC<DisplayCertificationTemplateProps> 
                     {certificationName ? certificationName : "Project Management Institute"}
                 </h2>
             </div>
-
             <div className="mb-8">
                 <h1 className="text-4xl text-gray-700">xxx xxxx</h1>
                 <div className="mt-2 mb-4 h-1 bg-blue-300 mx-auto w-36"></div>
@@ -31,12 +30,11 @@ const DisplayCertificationTemplate: React.FC<DisplayCertificationTemplateProps> 
                         : "Through this achievement, has demonstrated a commitment to professional development and has acquired valuable skills that are essential for effective project management in a variety of professional settings."}
                 </p>
             </div>
-
             <div className="text-left">
                 <div className="flex justify-between items-center">
                     <div>
                         <p className="text-sm text-gray-600">Given by:</p>
-                        <p className="text-sm text-gray-900">
+                        <p className="text-lg text-gray-900 font-whisper font-bold">
                             {organizationName
                                 ? organizationName
                                 : "University of California, Irvine"}

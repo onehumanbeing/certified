@@ -43,7 +43,6 @@ export async function POST(request: Request) {
                 })
             }
 
-            console.log("Sign Protocol Schema:", signProtocolSchema)
             const schemaData: Prisma.InputJsonValue = JSON.parse(
                 JSON.stringify(signProtocolSchema.schema)
             )
@@ -64,7 +63,6 @@ export async function POST(request: Request) {
                 },
             })
 
-            console.log("New Attestation Record Created:", newAttestationRecord)
             return new Response(JSON.stringify(newAttestationRecord), {
                 status: 201,
                 headers: {

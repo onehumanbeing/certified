@@ -4,7 +4,7 @@ import DisplayCertificatePage from "@/components/CertificationDisplay/displayCer
 import prisma from "@/lib/prisma/db"
 import { JsonValue } from "@prisma/client/runtime/library"
 
-type SchemaDetails = {
+export type SchemaDetails = {
     note: JsonValue | undefined
     organizationName: JsonValue | undefined
     certificationName: JsonValue | undefined

@@ -101,7 +101,7 @@ export const createCertificationForUser = async (
         indexingValue: primaryWallet.address.toLowerCase(),
     })
     // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
-    console.log(attestationInfo)
+    // console.log(attestationInfo)
     return attestationInfo.attestationId
 }
 
@@ -133,7 +133,7 @@ export async function getCertificationFromIndexService(attestationId: string) {
     // https://scan.sign.global/attestation/SPA_I10BpEk7iwT4Yfo-YENQj
     const indexService = new IndexService("mainnet")
     const res = await indexService.queryAttestation(attestationId)
-    console.log(res)
+    // console.log(res)
     /*
     {
     "id": "SPA_I10BpEk7iwT4Yfo-YENQj",
