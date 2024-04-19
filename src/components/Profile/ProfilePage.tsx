@@ -90,7 +90,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
 
     return (
         <>
-            {attestationRecord && (
+            {attestationRecord ? (
                 <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[850px] cursor-default">
                     {attestationRecord.walletAddress === primaryWallet?.address && (
                         <ul className="menu bg-base-300 rounded-box absolute -right-20">
@@ -250,6 +250,23 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                         />
                         <p className="text-[6px]">https://www.thecertified.xyz/</p>
                     </div>
+                </div>
+            ) : (
+                <div>
+                    <div className="flex justify-center">
+                        <img
+                            src="/assets/landing_page_2.png"
+                            alt="Certified"
+                            className="w-64 h-64"
+                        />
+                    </div>
+                    <h1 className="text-lg font-bold text-center">
+                        this user don{"'"}t have any certification issued.
+                    </h1>
+                    <br />
+                    <p className="text-md text-center">
+                        contact your organization to issue a certification to you.
+                    </p>
                 </div>
             )}
 

@@ -24,7 +24,7 @@ export type AttestationDisplayRecord = {
     attestationId: string
 }
 
-async function getItem(id: string): Promise<AttestationDisplayRecord> {
+async function getItem(id: string): Promise<AttestationDisplayRecord | null> {
     const res = await prisma.attestationRecord.findUnique({
         where: {
             id: Number(id),
@@ -32,7 +32,7 @@ async function getItem(id: string): Promise<AttestationDisplayRecord> {
     })
 
     if (!res) {
-        throw new Error("Item not found")
+        return null
     }
 
     if (
@@ -69,15 +69,39 @@ async function getItem(id: string): Promise<AttestationDisplayRecord> {
         }
         return attestationRecord
     } else {
-        throw new Error("Schema data is invalid or missing required fields")
+        return null
     }
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const attestationRecord: AttestationDisplayRecord = await getItem(params.id)
+    const attestationRecord: AttestationDisplayRecord | null = await getItem(params.id)
     return (
-        <div className="hero min-h-screen bg-base-200 w-full overflow-auto px-[50px]">
-            <DisplayCertificatePage attestationRecord={attestationRecord} />
-        </div>
+        <>
+            {attestationRecord !== null ? (
+                <div className="hero min-h-screen bg-base-200 text-[12px] w-full overflow-auto px-[50px]">
+                    <DisplayCertificatePage attestationRecord={attestationRecord} />
+                </div>
+            ) : (
+                <div className="hero min-h-screen bg-base-200 text-[12px] w-full overflow-auto px-[50px] flex justify-center gap-4 text-xl font-bold">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-circle-x"
+                    >
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="m15 9-6 6" />
+                        <path d="m9 9 6 6" />
+                    </svg>
+                    Certification not exist...
+                </div>
+            )}
+        </>
     )
 }

@@ -10,8 +10,8 @@ const DisplayCertificatePage: React.FC<DisplayCertificatePageProps> = ({ attesta
     return (
         <>
             <DisplayCertificate attestationRecord={attestationRecord} />
-            <div className="fixed bottom-10 flex gap-4 w-full justify-center items-center">
-                Copyright reserved by Certified @{new Date().getFullYear()}
+            <div className="fixed bottom-5 flex gap-4 w-full justify-center items-center">
+                Copyright © {new Date().getFullYear()} Certified. All rights reserved.
             </div>
         </>
     )
