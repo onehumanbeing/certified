@@ -1,5 +1,6 @@
 "use client"
 import { AttestationDisplayRecord } from "@/app/look-up-certification/[id]/page"
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
@@ -13,7 +14,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
         null
     )
     const totalPages = attestationRecords.length
-
+    const { primaryWallet } = useDynamicContext()
     const handleChangePage = (newPage: number) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setAttestationPage(newPage)
@@ -56,82 +57,85 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
         <>
             {attestationRecord && (
                 <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[850px] cursor-default">
-                    <ul className="menu bg-base-300 rounded-box absolute -right-20">
-                        <li>
-                            <button
-                                className="tooltip tooltip-right"
-                                data-tip="Notate on LinkedIn"
-                                onClick={() => {
-                                    openCertificationWindowWithParams(
-                                        "certification-name",
-                                        attestationRecord.schema?.certificationName as string,
-                                        attestationRecord.schema?.organizationName as string,
-                                        new Date(attestationRecord.createdAt).getFullYear(),
-                                        new Date(attestationRecord.createdAt).getMonth() + 1,
-                                        new Date(attestationRecord.expirationAt).getFullYear(),
-                                        new Date(attestationRecord.expirationAt).getMonth() + 1,
-                                        `https://scan.sign.global/attestation/${attestationRecord.attestationId}`,
-                                        attestationRecord.id.toString()
-                                    )
-                                }}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="lucide lucide-linkedin"
+                    {attestationRecord.walletAddress === primaryWallet?.address && (
+                        <ul className="menu bg-base-300 rounded-box absolute -right-20">
+                            <li>
+                                <button
+                                    className="tooltip tooltip-right"
+                                    data-tip="Notate on LinkedIn"
+                                    onClick={() => {
+                                        openCertificationWindowWithParams(
+                                            "certification-name",
+                                            attestationRecord.schema?.certificationName as string,
+                                            attestationRecord.schema?.organizationName as string,
+                                            new Date(attestationRecord.createdAt).getFullYear(),
+                                            new Date(attestationRecord.createdAt).getMonth() + 1,
+                                            new Date(attestationRecord.expirationAt).getFullYear(),
+                                            new Date(attestationRecord.expirationAt).getMonth() +
+                                                1,
+                                            `https://scan.sign.global/attestation/${attestationRecord.attestationId}`,
+                                            attestationRecord.id.toString()
+                                        )
+                                    }}
                                 >
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                                    <rect width="4" height="12" x="2" y="9" />
-                                    <circle cx="4" cy="4" r="2" />
-                                </svg>
-                            </button>
-                        </li>
-                        <li>
-                            <a className="tooltip tooltip-right" data-tip="Share on twitter">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="lucide lucide-twitter"
-                                >
-                                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a className="tooltip tooltip-right" data-tip="Share">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="lucide lucide-share"
-                                >
-                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                                    <polyline points="16 6 12 2 8 6" />
-                                    <line x1="12" x2="12" y1="2" y2="15" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-linkedin"
+                                    >
+                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                        <rect width="4" height="12" x="2" y="9" />
+                                        <circle cx="4" cy="4" r="2" />
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <a className="tooltip tooltip-right" data-tip="Share on twitter">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-twitter"
+                                    >
+                                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a className="tooltip tooltip-right" data-tip="Share">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-share"
+                                    >
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                                        <polyline points="16 6 12 2 8 6" />
+                                        <line x1="12" x2="12" y1="2" y2="15" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    )}
                     <div className="mb-4">
                         <div className="flex justify-center"></div>
                         <h2 className="text-3xl font-bold text-blue-900 whitespace-pre">
