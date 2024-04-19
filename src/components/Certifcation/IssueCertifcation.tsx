@@ -4,7 +4,7 @@ import Image from "next/image"
 import { CertificationContentType } from "../Landing/certification"
 import { useEffect, useState } from "react"
 import DatePicker from "react-date-picker"
-import "../../style/datepicker.css"
+import "../../style/DatePicker.css"
 import "react-calendar/dist/Calendar.css"
 import { getCertificationTypeFromIndexService } from "@/lib/sign"
 
