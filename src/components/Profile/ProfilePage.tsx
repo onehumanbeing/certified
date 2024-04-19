@@ -53,6 +53,41 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
         window.open(fullUrl, "_blank")
     }
 
+    function openTwitterIntent({
+        text = "",
+        url = "",
+        hashtags = "",
+    }: {
+        text?: string
+        url?: string
+        hashtags?: string
+    }) {
+        const baseUrl: string = "https://twitter.com/intent/tweet"
+        let queryParams: string[] = []
+
+        if (text) queryParams.push(`text=${encodeURIComponent(text)}`)
+        if (url) queryParams.push(`url=${encodeURIComponent(url)}`)
+        if (hashtags) queryParams.push(`hashtags=${encodeURIComponent(hashtags)}`)
+        const fullUrl: string = `${baseUrl}?${queryParams.join("&")}`
+
+        window.open(fullUrl, "_blank")
+    }
+
+    const copyToClipboard = async (text: string): Promise<boolean> => {
+        if (!navigator.clipboard) {
+            console.error("Clipboard not supported on this browser")
+            return false
+        }
+        try {
+            await navigator.clipboard.writeText(text)
+            alert("Copied to clipboard")
+            return true
+        } catch (error) {
+            console.error("Failed to copy text: ", error)
+            return false
+        }
+    }
+
     return (
         <>
             {attestationRecord && (
@@ -73,7 +108,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                                             new Date(attestationRecord.expirationAt).getFullYear(),
                                             new Date(attestationRecord.expirationAt).getMonth() +
                                                 1,
-                                            `https://scan.sign.global/attestation/${attestationRecord.attestationId}`,
+                                            `https://www.thecertified.xyz/look-up-certification/${attestationRecord.id}`,
                                             attestationRecord.id.toString()
                                         )
                                     }}
@@ -97,7 +132,17 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                                 </button>
                             </li>
                             <li>
-                                <a className="tooltip tooltip-right" data-tip="Share on twitter">
+                                <button
+                                    className="tooltip tooltip-right"
+                                    data-tip="Share on twitter"
+                                    onClick={() => {
+                                        openTwitterIntent({
+                                            text: `I'm thrilled to share with everyone that I have earned my ${attestationRecord.schema?.certificationName} certification, issued by ${attestationRecord.schema?.organizationName} on Certified!`,
+                                            url: `https://www.thecertified.xyz/look-up-certification/${attestationRecord.id}`,
+                                            hashtags: "thecertified,blockchain,certification",
+                                        })
+                                    }}
+                                >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -112,10 +157,18 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                                     >
                                         <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                                     </svg>
-                                </a>
+                                </button>
                             </li>
                             <li>
-                                <a className="tooltip tooltip-right" data-tip="Share">
+                                <button
+                                    className="tooltip tooltip-right"
+                                    data-tip="Share"
+                                    onClick={() => {
+                                        copyToClipboard(
+                                            `https://www.thecertified.xyz/look-up-certification/${attestationRecord.id}`
+                                        )
+                                    }}
+                                >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -132,7 +185,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                                         <polyline points="16 6 12 2 8 6" />
                                         <line x1="12" x2="12" y1="2" y2="15" />
                                     </svg>
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     )}
