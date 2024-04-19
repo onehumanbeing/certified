@@ -1,8 +1,6 @@
 "use client"
 import { AttestationDisplayRecord } from "@/app/look-up-certification/[id]/page"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 
 interface DisplayCertificateProps {
     attestationRecord: AttestationDisplayRecord

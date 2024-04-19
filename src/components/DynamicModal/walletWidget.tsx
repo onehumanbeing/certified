@@ -8,7 +8,9 @@ export default function DynamicConnectButton() {
     const { user, authorized, userLogging, setUserLogging } = useUser()
     const { setShowAuthFlow } = useDynamicContext()
     const { primaryWallet } = useDynamicContext()
+
     const router = useRouter()
+
     return (
         <>
             {user === null && (
@@ -29,7 +31,7 @@ export default function DynamicConnectButton() {
             {authorized && (
                 <>
                     <button
-                        className="btn btn-active h-3 mr-4 text-sm hidden lg:block"
+                        className="btn btn-active h-3 mr-4 text-sm hidden lg:block btn-sm"
                         onClick={() => {
                             router.push(`/user/${primaryWallet?.address}`)
                         }}

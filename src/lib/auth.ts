@@ -46,7 +46,6 @@ export const config: NextAuthOptions = {
                         // Map other fields as needed
                     }
 
-                    console.log("User ID:", user.id)
                     // console.log("User Email:", user.email)
 
                     return user
