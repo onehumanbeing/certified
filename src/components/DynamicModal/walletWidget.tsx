@@ -33,10 +33,18 @@ export default function DynamicConnectButton() {
                     <button
                         className="btn btn-active h-3 mr-4 text-sm hidden lg:block btn-sm"
                         onClick={() => {
+                            router.push(`/certification`)
+                        }}
+                    >
+                        Issue certificates
+                    </button>
+                    <button
+                        className="btn btn-active h-3 mr-4 text-sm hidden lg:block btn-sm"
+                        onClick={() => {
                             router.push(`/user/${primaryWallet?.address}`)
                         }}
                     >
-                        view my certificate
+                        My certificates
                     </button>
                     <DynamicWidget />
                 </>

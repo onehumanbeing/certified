@@ -14,7 +14,7 @@ export default function NavBar() {
                         router.push("/")
                     }}
                 >
-                    <Image src="/assets/certified_logo.png" width={130} height={39} alt="Logo" />
+                    <Image src="/assets/certified_logo.png" width={130} height={39} alt="Logo" className="pl-4" />
                 </div>
             </div>
             {/* <div className="navbar-center hidden lg:flex">
