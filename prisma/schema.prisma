@@ -11,8 +11,8 @@ datasource db {
 model User {
   id            String               @id @default(uuid())
   username      String?              @unique
-  email         String               @unique
-  walletAddress String?              @unique
+  email         String?              @unique
+  walletAddress String               @unique
   createdAt     DateTime             @default(now())
   lastSeemAt    DateTime             @updatedAt @map("updated_at")
   dynamic_id    String               @default(uuid())

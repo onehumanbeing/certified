@@ -69,7 +69,6 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
                         })
                             .then((res) => {
                                 if (res.ok) {
-                                    console.log("LOGGED IN")
                                 } else {
                                     console.error("Failed to log in")
                                 }

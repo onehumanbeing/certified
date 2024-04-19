@@ -23,17 +23,15 @@ export async function GET(request: Request) {
         const userInfo = decodeURIComponent(userInfoCookie)
         try {
             const user: User = JSON.parse(userInfo)
-
             await prisma.user.upsert({
-                where: { email: user.email },
+                where: { walletAddress: user.walletAddress },
                 create: {
-                    email: user.email,
+                    email: user.email ? user.email : null,
                     walletAddress: user.walletAddress,
                     username: null,
                     dynamic_id: user.id,
                 },
                 update: {
-                    walletAddress: user.walletAddress,
                     lastSeemAt: new Date(),
                 },
                 select: {
