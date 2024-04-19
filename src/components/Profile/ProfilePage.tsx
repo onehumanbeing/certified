@@ -206,7 +206,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                         <div className="flex justify-between items-center">
                             <div>
                                 <p className="text-sm text-gray-600">Given by:</p>
-                                <p className="text-sm text-gray-900">
+                                <p className="text-lg text-gray-900 font-whisper font-bold">
                                     {attestationRecord.schema?.organizationName as string}
                                 </p>
                             </div>

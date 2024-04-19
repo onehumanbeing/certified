@@ -49,3 +49,11 @@ body {
     background-color: #4e4df4 !important;
     color: white !important;
 }
+
+@font-face {
+    font-family: "WhisperRegular";
+    src: url("/fonts/Whisper-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

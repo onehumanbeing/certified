@@ -11,8 +11,7 @@ const DisplayCertificatePage: React.FC<DisplayCertificatePageProps> = ({ attesta
         <>
             <DisplayCertificate attestationRecord={attestationRecord} />
             <div className="fixed bottom-10 flex gap-4 w-full justify-center items-center">
-                <button>share on twitter</button>
-                <button>add to linkedIn</button>
+                Copyright reserved by Certified @{new Date().getFullYear()}
             </div>
         </>
     )

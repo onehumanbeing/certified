@@ -34,7 +34,7 @@ const DisplayCertificationTemplate: React.FC<DisplayCertificationTemplateProps> 
                 <div className="flex justify-between items-center">
                     <div>
                         <p className="text-sm text-gray-600">Given by:</p>
-                        <p className="text-sm text-gray-900">
+                        <p className="text-lg text-gray-900 font-whisper font-bold">
                             {organizationName
                                 ? organizationName
                                 : "University of California, Irvine"}
