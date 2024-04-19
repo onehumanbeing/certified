@@ -1,6 +1,6 @@
-
 export const dynamic = "force-dynamic"
 import { UserType } from "@/context/userContext"
+import { User } from "@/lib/auth"
 import prisma from "@/lib/prisma/db"
 
 export async function GET(request: Request) {
@@ -22,16 +22,18 @@ export async function GET(request: Request) {
 
         const userInfo = decodeURIComponent(userInfoCookie)
         try {
-            const user: UserType = JSON.parse(userInfo)
+            const user: User = JSON.parse(userInfo)
 
             await prisma.user.upsert({
                 where: { email: user.email },
                 create: {
                     email: user.email,
+                    walletAddress: user.walletAddress,
                     username: null,
                     dynamic_id: user.id,
                 },
                 update: {
+                    walletAddress: user.walletAddress,
                     lastSeemAt: new Date(),
                 },
                 select: {

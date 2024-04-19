@@ -3,11 +3,11 @@ import Credentials from "next-auth/providers/credentials"
 import { validateJWT } from "./authHelpers"
 import { JWT } from "next-auth/jwt"
 
-type User = {
+export type User = {
     id: string
     name: string
     email: string
-    // Add other fields as needed
+    walletAddress: string
 }
 
 interface Auth {
@@ -37,16 +37,16 @@ export const config: NextAuthOptions = {
                 const token = credentials.token
                 // console.log("Token:", token)
                 const jwtPayload = await validateJWT(token)
+
                 if (jwtPayload) {
                     // Transform the JWT payload into your user object
                     const user: User = {
-                        id: jwtPayload.sub ? jwtPayload.sub : "", // Assuming 'sub' is the user ID
-                        name: jwtPayload.name || "", // Replace with actual field from JWT payload
-                        email: jwtPayload.email || "", // Replace with actual field from JWT payload
+                        id: jwtPayload.sub ? jwtPayload.sub : "",
+                        name: jwtPayload.name || "",
+                        email: jwtPayload.email || "",
+                        walletAddress: jwtPayload.verified_credentials[0]["address"] || "",
                         // Map other fields as needed
                     }
-
-                    // console.log("User Email:", user.email)
 
                     return user
                 } else {

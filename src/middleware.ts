@@ -58,6 +58,7 @@ export async function middleware(req: NextRequest) {
             id: decoded.sub,
             name: decoded.name || "",
             email: decoded.email || "",
+            walletAddress: decoded.verified_credentials[0]["address"] || "",
         }),
         {
             httpOnly: true,
