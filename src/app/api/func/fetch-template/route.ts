@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"
-import { UserType } from "@/context/userContext"
+import { User } from "@/lib/auth"
 import prisma from "@/lib/prisma/db"
 
 export async function GET(request: Request) {
@@ -21,10 +21,10 @@ export async function GET(request: Request) {
 
         const userInfo = decodeURIComponent(userInfoCookie)
         try {
-            const user: UserType = JSON.parse(userInfo)
+            const user: User = JSON.parse(userInfo)
             const userWithSchemas = await prisma.user.findUnique({
                 where: {
-                    email: user.email,
+                    walletAddress: user.walletAddress,
                 },
                 include: {
                     signProtocols: true,

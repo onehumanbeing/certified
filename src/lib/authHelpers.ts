@@ -1,10 +1,10 @@
 import jwt, { JwtPayload, Secret, VerifyErrors } from "jsonwebtoken"
+import { isValidAddress } from "ethereumjs-util"
 
 export const getKey = (
     headers: any,
     callback: (err: Error | null, key?: Secret) => void
 ): void => {
-
     const options = {
         method: "GET",
         headers: {
@@ -53,4 +53,13 @@ export const validateJWT = async (token: string): Promise<JwtPayload | null> => 
         console.error("Invalid token:", error)
         return null
     }
+}
+
+export const isEthereumWalletAddress = (address: string): boolean => {
+    return isValidAddress(address)
+}
+
+export const isValidEmail = (email: string): boolean => {
+    const emailRegex = /.+@.+\..+/
+    return emailRegex.test(email)
 }

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import DatePicker from "react-date-picker"
 import "../../style/DatePicker.css"
 import "react-calendar/dist/Calendar.css"
+import { isEthereumWalletAddress, isValidEmail } from "@/lib/authHelpers"
 
 interface IssuesCertificationProps {
     selectedCertification: CertificationContentType
@@ -191,7 +192,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                     <label className="input input-bordered flex items-center gap-2">
                         Email
                         <input
-                            type="text"
+                            type="email"
                             className="grow"
                             placeholder="example@site.com"
                             onChange={(e) => {
@@ -203,7 +204,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                         key to look up
                     </span>
                     <label className="input input-bordered flex items-center gap-2">
-                        Wallet Address
+                        EVM Wallet Address
                         <input
                             type="text"
                             className="grow"
@@ -229,6 +230,14 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                             !issueToEmail || !issueToWallet || !issueToName || !expirationDate
                         }
                         onClick={async () => {
+                            if (isValidEmail(issueToEmail) === false) {
+                                alert("Invalid email address")
+                                return
+                            }
+                            if (isEthereumWalletAddress(issueToWallet) === false) {
+                                alert("Invalid wallet address")
+                                return
+                            }
                             const expirationDate = formateDate()
                             handleIssueCertification(
                                 selectedCertification.schemaId,

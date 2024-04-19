@@ -1,4 +1,6 @@
 export const dynamic = "force-dynamic"
+import { User } from "@/lib/auth"
+import { isEthereumWalletAddress, isValidEmail } from "@/lib/authHelpers"
 import prisma from "@/lib/prisma/db"
 import { Prisma } from "@prisma/client"
 
@@ -43,10 +45,50 @@ export async function POST(request: Request) {
                 })
             }
 
+            const userInfo = decodeURIComponent(userInfoCookie)
+            const user: User = JSON.parse(userInfo)
+
+            const userObject = await prisma.user.findUnique({
+                where: { walletAddress: user.walletAddress },
+            })
+
+            if (!userObject) {
+                return new Response(JSON.stringify({ error: "User not found" }), {
+                    status: 404,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            }
+
+            if (userObject.id !== signProtocolSchema.userId) {
+                return new Response(JSON.stringify({ error: "User not authorized" }), {
+                    status: 401,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            }
+
             const schemaData: Prisma.InputJsonValue = JSON.parse(
                 JSON.stringify(signProtocolSchema.schema)
             )
-
+            if (isValidEmail(input.email) === false) {
+                return new Response(JSON.stringify({ error: "Invalid email address" }), {
+                    status: 401,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            }
+            if (isEthereumWalletAddress(input.walletAddress) === false) {
+                return new Response(JSON.stringify({ error: "Invalid wallet address" }), {
+                    status: 401,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+            }
             // Create a new attestation record using the fetched schema and template
             const newAttestationRecord = await prisma.attestationRecord.create({
                 data: {

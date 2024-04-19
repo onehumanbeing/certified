@@ -30,11 +30,11 @@ const DynamicProvider: React.FC<AppProps> = ({ children }) => {
             } catch (error) {
                 console.error(`Attempt ${attempts}:`, error)
                 if (attempts < maxAttempts) {
-                    console.log(`Retrying... (${attempts}/${maxAttempts})`)
+                    // console.log(`Retrying... (${attempts}/${maxAttempts})`)
                     await new Promise((resolve) => setTimeout(resolve, 1000))
                     return executeFetch()
                 } else {
-                    console.log("Max attempts reached, failed to authenticate user, please refresh page.")
+                    // console.log("Max attempts reached, failed to authenticate user, please refresh page.")
                     return false
                 }
             } finally {

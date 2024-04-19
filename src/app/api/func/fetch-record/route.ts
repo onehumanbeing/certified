@@ -21,9 +21,7 @@ export async function POST(request: Request) {
             })
         }
 
-        const userInfo = decodeURIComponent(userInfoCookie)
         try {
-            const user: UserType = JSON.parse(userInfo)
             try {
                 const records = await prisma.attestationRecord.findMany({
                     where: {
