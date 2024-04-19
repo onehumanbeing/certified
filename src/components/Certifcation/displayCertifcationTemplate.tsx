@@ -43,7 +43,7 @@ const DisplayCertificationTemplate: React.FC<DisplayCertificationTemplateProps> 
                         </p>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-600">Date:</p>
+                        <p className="text-sm text-gray-600">Issued Date:</p>
                         <p className="text-sm text-gray-900">{new Date().toLocaleDateString()}</p>
                     </div>
                 </div>

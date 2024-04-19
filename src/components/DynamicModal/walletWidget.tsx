@@ -2,10 +2,13 @@
 
 import { useUser } from "@/context/userContext"
 import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core"
+import { useRouter } from "next/navigation"
 
 export default function DynamicConnectButton() {
     const { user, authorized, userLogging, setUserLogging } = useUser()
     const { setShowAuthFlow } = useDynamicContext()
+    const { primaryWallet } = useDynamicContext()
+    const router = useRouter()
     return (
         <>
             {user === null && (
@@ -23,7 +26,19 @@ export default function DynamicConnectButton() {
                     )}
                 </button>
             )}
-            {authorized && <DynamicWidget />}
+            {authorized && (
+                <>
+                    <button
+                        className="btn btn-active h-3 mr-4 text-sm hidden lg:block"
+                        onClick={() => {
+                            router.push(`/user/${primaryWallet?.address}`)
+                        }}
+                    >
+                        view my certificate
+                    </button>
+                    <DynamicWidget />
+                </>
+            )}
         </>
     )
 }

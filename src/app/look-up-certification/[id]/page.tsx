@@ -1,6 +1,8 @@
+"use server"
+
+import DisplayCertificatePage from "@/components/CertificationDisplay/displayCertificatePage"
 import prisma from "@/lib/prisma/db"
 import { JsonValue } from "@prisma/client/runtime/library"
-import { Suspense } from "react"
 
 type SchemaDetails = {
     note: JsonValue | undefined
@@ -8,21 +10,21 @@ type SchemaDetails = {
     certificationName: JsonValue | undefined
 }
 
-type AttestationRecord = {
+export type AttestationDisplayRecord = {
     id: number
     name: string
     email: string
     walletAddress: string
-    createdAt: Date
+    createdAt: string
     updatedAt: Date
-    expirationAt: Date
+    expirationAt: string
     schemaId: string
     schema: SchemaDetails | null
     template: string
     attestationId: string
 }
 
-async function getItem(id: string): Promise<AttestationRecord> {
+async function getItem(id: string): Promise<AttestationDisplayRecord> {
     const res = await prisma.attestationRecord.findUnique({
         where: {
             id: Number(id),
@@ -40,8 +42,25 @@ async function getItem(id: string): Promise<AttestationRecord> {
         "organizationName" in res.schema &&
         "certificationName" in res.schema
     ) {
-        const attestationRecord: AttestationRecord = {
+        const formattedCreatedAt = res.createdAt
+            ? new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+              }).format(new Date(res.createdAt))
+            : ""
+
+        const formattedExpirationAt = res.expirationAt
+            ? new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+              }).format(new Date(res.expirationAt))
+            : ""
+        const attestationRecord: AttestationDisplayRecord = {
             ...res,
+            createdAt: formattedCreatedAt,
+            expirationAt: formattedExpirationAt,
             schema: {
                 note: res.schema.note,
                 organizationName: res.schema.organizationName,
@@ -55,10 +74,10 @@ async function getItem(id: string): Promise<AttestationRecord> {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const attestationRecord: AttestationRecord = await getItem(params.id)
+    const attestationRecord: AttestationDisplayRecord = await getItem(params.id)
     return (
-        <main className="p-4 md:p-10 mx-auto max-w-7xl">
-            <Suspense></Suspense> <div>{attestationRecord.walletAddress}</div>
-        </main>
+        <div className="hero min-h-screen bg-base-200 w-full overflow-auto px-[50px]">
+            <DisplayCertificatePage attestationRecord={attestationRecord} />
+        </div>
     )
 }

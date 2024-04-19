@@ -43,7 +43,7 @@ const DisplayCertification: React.FC<DisplayCertificationProps> = ({
                         </p>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-600">Date:</p>
+                        <p className="text-sm text-gray-600">Issued Date:</p>
                         <p className="text-sm text-gray-900">{new Date().toLocaleDateString()}</p>
                     </div>
                 </div>
@@ -55,6 +55,7 @@ const DisplayCertification: React.FC<DisplayCertificationProps> = ({
                     width={549}
                     height={201}
                     alt="the certified logo"
+                    priority
                 />
                 <p className="text-[6px]">https://www.thecertified.xyz/</p>
             </div>

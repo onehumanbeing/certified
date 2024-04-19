@@ -41,7 +41,7 @@ body {
 }
 
 ::selection {
-    background-color: #4e4df4 !important;
+    background-color: black !important;
     color: white !important;
 }
 

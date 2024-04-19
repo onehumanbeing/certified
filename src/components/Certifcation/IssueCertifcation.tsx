@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 import DatePicker from "react-date-picker"
 import "../../style/DatePicker.css"
 import "react-calendar/dist/Calendar.css"
-import { getCertificationTypeFromIndexService } from "@/lib/sign"
 
 interface IssuesCertificationProps {
     selectedCertification: CertificationContentType
@@ -159,7 +158,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                                 </p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600">Date:</p>
+                                <p className="text-sm text-gray-600">Issued Date:</p>
                                 <p className="text-sm text-gray-900">
                                     {new Date().toLocaleDateString()}
                                 </p>
@@ -255,7 +254,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                 </div>
             </div>
             {/* record */}
-            {records && (
+            {records != null && records.length != 0 && (
                 <>
                     <div className="flex relative justify-center items-center">
                         <p className="text-lg font-semibold">Certification Issuing History</p>
@@ -281,6 +280,9 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                                         className={`cursor-pointer ${
                                             index / 2 === 0 && "bg-base-300"
                                         }`}
+                                        onClick={() => {
+                                            window.open(`/look-up-certification/${record.id}`)
+                                        }}
                                     >
                                         <th>{index + 1}</th>
                                         <td>{record.name}</td>

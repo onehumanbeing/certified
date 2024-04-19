@@ -1,15 +1,5 @@
 "use client"
-import { useEffect } from "react"
 import DynamicConnectButton from "@/components/DynamicModal/walletWidget"
-import { validateJWT } from "@/lib/authHelpers"
-import { authUser } from "@/lib/request"
-import ThemeDropDown from "./themeDropDown"
-import {
-    createCertificationType,
-    createCertificationForUser,
-    getCertificationTypeFromIndexService,
-    getCertificationFromIndexService,
-} from "@/lib/sign"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -51,6 +41,7 @@ export default function NavBar() {
                 </ul>
             </div> */}
             <div className="navbar-end">
+                
                 <DynamicConnectButton />
             </div>
         </div>
