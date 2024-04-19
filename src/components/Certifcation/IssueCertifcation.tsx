@@ -2,10 +2,11 @@
 
 import Image from "next/image"
 import { CertificationContentType } from "../Landing/certification"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import DatePicker from "react-date-picker"
-import "../../style/datepicker.css"
+import "../../style/DatePicker.css"
 import "react-calendar/dist/Calendar.css"
+
 interface IssuesCertificationProps {
     selectedCertification: CertificationContentType
     setSelectedCertification: React.Dispatch<React.SetStateAction<CertificationContentType | null>>
@@ -16,8 +17,29 @@ interface IssuesCertificationProps {
         ceritifcationOrganization: string,
         IssuedToWallet: string,
         expirationDate: Date,
-        email: string
+        email: string,
+        handleGetCertificationRecord: (schemaId: string) => void
     ) => void
+}
+
+interface AttestationRecordSchema {
+    note: string
+    organizationName: string
+    certificationName: string
+}
+
+interface AttestationRecord {
+    id: number
+    name: string
+    email: string
+    walletAddress: string
+    createdAt: string // ISO 8601 formatted date string
+    updatedAt: string // ISO 8601 formatted date string
+    expirationAt: string // ISO 8601 formatted date string
+    schemaId: string
+    schema: AttestationRecordSchema
+    template: string
+    attestationId: string
 }
 
 const IssuesCertification: React.FC<IssuesCertificationProps> = ({
@@ -29,13 +51,74 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
     const [issueToEmail, setIssueToEmail] = useState<string>("")
     const [issueToWallet, setIssueToWallet] = useState<string>("")
     const [expirationDate, setExpirationDate] = useState<any>(null)
+    const [records, setRecords] = useState<AttestationRecord[] | null>(null)
 
     const formateDate = () => {
         return new Date(expirationDate)
     }
 
+    function formatToLocalTimeWithOptions(
+        dateString: string,
+        createdAt: boolean,
+        expirationAt: boolean
+    ) {
+        const date = new Date(dateString)
+        if (createdAt) {
+            return date.toLocaleString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            })
+        } else if (expirationAt) {
+            return date.toLocaleString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            })
+        }
+    }
+
+    const handleGetCertificationRecord = async (schemaId: string) => {
+        try {
+            const userToken = localStorage.getItem("dynamic_authentication_token")
+            if (!userToken) {
+                return null
+            }
+
+            let data = {
+                schemaId,
+            }
+
+            const response = await fetch("/api/func/fetch-record", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${JSON.parse(userToken)}`,
+                },
+                body: JSON.stringify(data),
+            })
+            const res = await response.json()
+            setRecords(res.records)
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+        } catch (error) {
+            console.error("Error fetching certification record", error)
+        }
+    }
+
+    useEffect(() => {
+        if (selectedCertification) {
+            handleGetCertificationRecord(selectedCertification.schemaId)
+        }
+    }, [selectedCertification])
+
     return (
         <div className="flex flex-col gap-6">
+            {/* top bar */}
             <div className="flex relative h-[50px] justify-center items-center">
                 <button
                     className="btn btn-active btn-ghost w-24 absolute left-0"
@@ -47,6 +130,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                 </button>
                 <p className="text-lg font-semibold">You are issuing this certification to</p>
             </div>
+            {/* issuing */}
             <div className="flex gap-20 justify-between relative">
                 <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-3/5">
                     <div className="mb-4">
@@ -74,7 +158,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                                 </p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-600">Date:</p>
+                                <p className="text-sm text-gray-600">Issued Date:</p>
                                 <p className="text-sm text-gray-900">
                                     {new Date().toLocaleDateString()}
                                 </p>
@@ -144,7 +228,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                         disabled={
                             !issueToEmail || !issueToWallet || !issueToName || !expirationDate
                         }
-                        onClick={() => {
+                        onClick={async () => {
                             const expirationDate = formateDate()
                             handleIssueCertification(
                                 selectedCertification.schemaId,
@@ -153,7 +237,8 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                                 selectedCertification.schema.organizationName,
                                 issueToWallet,
                                 expirationDate,
-                                issueToEmail
+                                issueToEmail,
+                                handleGetCertificationRecord
                             )
                         }}
                     >
@@ -168,6 +253,63 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                     </a>
                 </div>
             </div>
+            {/* record */}
+            {records != null && records.length != 0 && (
+                <>
+                    <div className="flex relative justify-center items-center">
+                        <p className="text-lg font-semibold">Certification Issuing History</p>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="table">
+                            {/* head */}
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Issued to wallet</th>
+                                    <th>Issued at</th>
+                                    <th>Expiration at</th>
+                                    <th>Cert id</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {records?.map((record, index) => (
+                                    <tr
+                                        key={record.id}
+                                        className={`cursor-pointer ${
+                                            index / 2 === 0 && "bg-base-300"
+                                        }`}
+                                        onClick={() => {
+                                            window.open(`/look-up-certification/${record.id}`)
+                                        }}
+                                    >
+                                        <th>{index + 1}</th>
+                                        <td>{record.name}</td>
+                                        <td>{record.email}</td>
+                                        <td>{record.walletAddress}</td>
+                                        <td>
+                                            {formatToLocalTimeWithOptions(
+                                                record.createdAt,
+                                                true,
+                                                false
+                                            )}
+                                        </td>
+                                        <td>
+                                            {formatToLocalTimeWithOptions(
+                                                record.expirationAt,
+                                                false,
+                                                true
+                                            )}
+                                        </td>
+                                        <td>{record.id}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            )}
         </div>
     )
 }

@@ -14,7 +14,7 @@ const DisplayCertification: React.FC<DisplayCertificationProps> = ({
     organizationName,
 }) => {
     return (
-        <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[670px] cursor-pointer">
+        <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[670px] cursor-pointer hover:scale-105 transition duration-300 ease-in-out">
             <div className="mb-4">
                 <div className="flex justify-center"></div>
                 <h2 className="text-3xl font-bold text-blue-900 whitespace-pre">
@@ -43,7 +43,7 @@ const DisplayCertification: React.FC<DisplayCertificationProps> = ({
                         </p>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-600">Date:</p>
+                        <p className="text-sm text-gray-600">Issued Date:</p>
                         <p className="text-sm text-gray-900">{new Date().toLocaleDateString()}</p>
                     </div>
                 </div>
@@ -55,6 +55,7 @@ const DisplayCertification: React.FC<DisplayCertificationProps> = ({
                     width={549}
                     height={201}
                     alt="the certified logo"
+                    priority
                 />
                 <p className="text-[6px]">https://www.thecertified.xyz/</p>
             </div>
