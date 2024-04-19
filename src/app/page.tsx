@@ -1,7 +1,7 @@
 "ued server"
 import Hero from "@/components/Landing/hero"
-import { formatISO, startOfDay, endOfDay } from "date-fns"
-
+import { startOfDay, endOfDay } from "date-fns"
+export const dynamic = "force-dynamic"
 import prisma from "@/lib/prisma/db"
 
 export type recordType = {
