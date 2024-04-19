@@ -33,7 +33,6 @@ export default function Certification() {
     const [ownedCertifications, setOwnedCertifications] = useState<
         CertificationContentType[] | null
     >(null)
-    const [needLogin, setNeedLogin] = useState<boolean>(false)
     const { authorized } = useUser()
     const [selectedCertification, setSelectedCertification] =
         useState<CertificationContentType | null>(null)

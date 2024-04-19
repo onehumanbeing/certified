@@ -24,13 +24,57 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
             setAttestationRecord(attestationRecords[attestationPage - 1])
         }
     }, [attestationPage])
+
+    function openCertificationWindowWithParams(
+        startTask: string,
+        name: string,
+        organizationName: string,
+        issueYear: number,
+        issueMonth: number,
+        expirationYear: number,
+        expirationMonth: number,
+        certUrl: string,
+        certId: string
+    ) {
+        const baseUrl: string = "https://www.linkedin.com/profile/add"
+        const queryParams: string =
+            `startTask=${encodeURIComponent(startTask)}` +
+            `&name=${encodeURIComponent(name)}` +
+            `&organizationName=${encodeURIComponent(organizationName)}` +
+            `&issueYear=${issueYear}` +
+            `&issueMonth=${issueMonth}` +
+            `&expirationYear=${expirationYear}` +
+            `&expirationMonth=${expirationMonth}` +
+            `&certUrl=${encodeURIComponent(certUrl)}` +
+            `&certId=${encodeURIComponent(certId)}`
+        const fullUrl: string = `${baseUrl}?${queryParams}`
+
+        window.open(fullUrl, "_blank")
+    }
+
     return (
         <>
             {attestationRecord && (
                 <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[850px] cursor-default">
                     <ul className="menu bg-base-300 rounded-box absolute -right-20">
                         <li>
-                            <a className="tooltip tooltip-right" data-tip="Notate on LinkedIn">
+                            <button
+                                className="tooltip tooltip-right"
+                                data-tip="Notate on LinkedIn"
+                                onClick={() => {
+                                    openCertificationWindowWithParams(
+                                        "certification-name",
+                                        attestationRecord.schema?.certificationName as string,
+                                        attestationRecord.schema?.organizationName as string,
+                                        new Date(attestationRecord.createdAt).getFullYear(),
+                                        new Date(attestationRecord.createdAt).getMonth() + 1,
+                                        new Date(attestationRecord.expirationAt).getFullYear(),
+                                        new Date(attestationRecord.expirationAt).getMonth() + 1,
+                                        `https://scan.sign.global/attestation/${attestationRecord.attestationId}`,
+                                        attestationRecord.id.toString()
+                                    )
+                                }}
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -47,7 +91,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
                                     <rect width="4" height="12" x="2" y="9" />
                                     <circle cx="4" cy="4" r="2" />
                                 </svg>
-                            </a>
+                            </button>
                         </li>
                         <li>
                             <a className="tooltip tooltip-right" data-tip="Share on twitter">
