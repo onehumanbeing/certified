@@ -57,7 +57,7 @@ const Hero: React.FC<HeroProps> = ({ record }) => {
                                 </svg>
                             </div>
                             <div className="stat-title">License Issued</div>
-                            <div className="stat-value">{record.allSignProtocalSchemasCount}</div>
+                            <div className="stat-value">{record.allAttestationRecordsCount}</div>
                             <div className="stat-desc">{getIssuedRangeDate()}</div>
                         </div>
 
