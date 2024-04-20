@@ -67,7 +67,7 @@ async function getItem(walletAddress: string): Promise<AttestationDisplayRecord[
 }
 
 export default async function Page({ params }: { params: { wallet: string } }) {
-    const attestationRecords = await getItem(params.wallet)
+    const attestationRecords = await getItem(params.wallet.toLowerCase())
     return (
         <div className="hero min-h-screen bg-base-200 w-full overflow-auto px-[50px]">
             <ProfilePage attestationRecords={attestationRecords} />

@@ -94,7 +94,7 @@ export async function POST(request: Request) {
                 data: {
                     name: input.name,
                     email: input.email,
-                    walletAddress: input.walletAddress,
+                    walletAddress: input.walletAddress.toLowerCase(),
                     createdAt: new Date(),
                     updatedAt: new Date(),
                     expirationAt: input.expirationAt,
