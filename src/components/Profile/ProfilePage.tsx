@@ -92,7 +92,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ attestationRecords }) => {
         <>
             {attestationRecord ? (
                 <div className="bg-white p-20 rounded-lg shadow-lg text-center h-auto flex flex-col justify-center align-middle relative w-[850px] cursor-default">
-                    {attestationRecord.walletAddress === primaryWallet?.address && (
+                    {attestationRecord.walletAddress === primaryWallet?.address.toLower() && (
                         <ul className="menu bg-base-300 rounded-box absolute -right-20">
                             <li>
                                 <button
