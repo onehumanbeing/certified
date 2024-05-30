@@ -193,11 +193,16 @@ export async function getCertificationFromIndexService(attestationId: string) {
 // TODO: revoke attestation
 
 
-
 // initialize one schema for creation of all certificate templates
-export const ensureSingleSchema = async (primaryWallet: any) => {
+export const ensureSingleSchema = async () => {
+
     if (!schemaId) {
-        const client = getSignClient(primaryWallet)
+        const client = signClient
+
+        if (!client) {
+            throw new Error("Failed to initialize sign client");
+        }
+        
         const res = await client.createSchema({
             name: "theSchema",
             data: [
@@ -214,7 +219,16 @@ export const createCertificateAttestation = async (
     primaryWallet: any,
     templateInJsonString: string,
 ): Promise<any> => {
-    const client = getSignClient(primaryWallet)
+    
+    const client = signClient
+
+    if (!client) {
+        throw new Error("Failed to initialize sign client");
+    }
+
+    if (!schemaId) {
+        throw new Error("Schema ID is not initialized");
+    }
 
     //create attestation
     const attestationInfo = await client.createAttestation({
