@@ -51,3 +51,11 @@ model attestationRecord {
 
   @@map("attestation_records")
 }
+
+
+ model CertificateTemplate {
+  id             String   @id @default(uuid())
+  templateString String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
