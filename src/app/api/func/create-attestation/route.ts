@@ -71,7 +71,8 @@ export async function POST(request: Request) {
 
 
         if (templateId) {
-            // If templateId is provided, fetch the template from the database
+
+            // If templateId is provided, fetch the template from the DB
             const existingTemplate = await prisma.certificateTemplate.findUnique({
                 where: { id: templateId },
             });
@@ -86,8 +87,9 @@ export async function POST(request: Request) {
             }
 
             jsonString = existingTemplate.templateString;
+        
         } else {
-            // If no templateId, create a new template and store it in the database
+            // If no templateId, create a new template and store it in the DB
             jsonString = JSON.stringify({
                 artworkTitle,
                 artistName,

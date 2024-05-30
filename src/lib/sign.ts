@@ -194,7 +194,7 @@ export async function getCertificationFromIndexService(attestationId: string) {
 
 
 
-// initialize only one schema for creation of all certificate templates
+// initialize one schema for creation of all certificate templates
 export const ensureSingleSchema = async (primaryWallet: any) => {
     if (!schemaId) {
         const client = getSignClient(primaryWallet)
@@ -209,12 +209,10 @@ export const ensureSingleSchema = async (primaryWallet: any) => {
     return schemaId
 }
 
-
-
-
+// Create a certificate attestation using the template information from the DB
 export const createCertificateAttestation = async (
     primaryWallet: any,
-    jsonString: string,
+    templateInJsonString: string,
 ): Promise<any> => {
     const client = getSignClient(primaryWallet)
 
@@ -222,11 +220,9 @@ export const createCertificateAttestation = async (
     const attestationInfo = await client.createAttestation({
         schemaId: schemaId, //schemaInfo.schemaId or other schemaId
         data: {
-            extra: jsonString
+            extra: templateInJsonString
         },
         indexingValue: primaryWallet.address.toLowerCase(),
     })
-    // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
-    // console.log(attestationInfo)
     return attestationInfo.attestationId
 }
