@@ -1,6 +1,8 @@
 import { SignProtocolClient, SpMode, OffChainSignType, IndexService } from "@ethsign/sp-sdk"
 
 let signClient: SignProtocolClient | null = null
+let schemaId: string | null = null
+
 
 export const getSignClient = (primaryWallet: any) => {
     // for primary wallet: https://docs.dynamic.xyz/react-sdk/examples/sign-a-message
@@ -8,7 +10,7 @@ export const getSignClient = (primaryWallet: any) => {
     if (!signClient) {
         const originalClient = new SignProtocolClient(SpMode.OffChain, {
             signType: OffChainSignType.EvmEip712,
-        })
+        })   // + private key 
 
         originalClient.client = new Proxy(originalClient.client, {
             get: function (target, propKey, receiver) {
@@ -189,3 +191,42 @@ export async function getCertificationFromIndexService(attestationId: string) {
 }
 
 // TODO: revoke attestation
+
+
+
+// initialize only one schema for creation of all certificate templates
+export const ensureSingleSchema = async (primaryWallet: any) => {
+    if (!schemaId) {
+        const client = getSignClient(primaryWallet)
+        const res = await client.createSchema({
+            name: "theSchema",
+            data: [
+                { name: "extra", type: "string" },
+            ],
+        })
+        schemaId = res.schemaId
+    }
+    return schemaId
+}
+
+
+
+
+export const createCertificateAttestation = async (
+    primaryWallet: any,
+    jsonString: string,
+): Promise<any> => {
+    const client = getSignClient(primaryWallet)
+
+    //create attestation
+    const attestationInfo = await client.createAttestation({
+        schemaId: schemaId, //schemaInfo.schemaId or other schemaId
+        data: {
+            extra: jsonString
+        },
+        indexingValue: primaryWallet.address.toLowerCase(),
+    })
+    // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
+    // console.log(attestationInfo)
+    return attestationInfo.attestationId
+}
