@@ -1,8 +1,7 @@
 export const dynamic = "force-dynamic";
 import { UserType } from "@/context/userContext";
 import prisma from "@/lib/prisma/db";
-import { ensureSingleSchema, createCertificateAttestation } from "@/api/func/sign";
-import { getPrimaryWallet } from "@/utils/wallet"; // Assume a utility function to get the primary wallet
+import { ensureSingleSchema, createCertificateAttestation, getSignClient } from "@/lib/sign";
 
 export async function POST(request: Request) {
     try {
@@ -41,18 +40,13 @@ export async function POST(request: Request) {
             });
         }
 
-        // Get the primary wallet of the user
-        const primaryWallet = await getPrimaryWallet(userObject.id); // You need to implement this function
+        const { artworkTitle, artistName, yearOfCompletion, templateId, primaryWallet } = await request.json();
 
-
-
-
-
+        // Initialize the wallet of the client
+        await getSignClient(primaryWallet);
 
         // Initilaize the only schema used for storing all the certificate template
-        await ensureSingleSchema(primaryWallet);
-
-        const { artworkTitle, artistName, yearOfCompletion, templateId } = await request.json();
+        await ensureSingleSchema();
 
         if (!artworkTitle || !artistName || !yearOfCompletion) {
             return new Response(JSON.stringify({ error: "Invalid request" }), {
@@ -122,7 +116,6 @@ export async function POST(request: Request) {
         }
     } catch (error) {
         console.error("Error processing request:", error);
-        
         
         
         return new Response(JSON.stringify({ error: "Internal Server Error" }), {
