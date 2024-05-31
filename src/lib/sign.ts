@@ -1,4 +1,5 @@
-import { SignProtocolClient, SpMode, OffChainSignType, IndexService } from "@ethsign/sp-sdk"
+import { metadata } from "@/app/layout"
+import { SignProtocolClient, SpMode, OffChainSignType, IndexService, Attestation, DataLocationOffChain } from "@ethsign/sp-sdk"
 
 let signClient: SignProtocolClient | null = null
 
@@ -46,7 +47,8 @@ export const getSignClient = (primaryWallet: any) => {
                             signature,
                         }
                     }
-                } else {
+                } 
+                else {
                     return Reflect.get(target, propKey, receiver)
                 }
             },
@@ -57,6 +59,82 @@ export const getSignClient = (primaryWallet: any) => {
     return signClient
 }
 
+export const createAttestationSignature = async function (attestation: Attestation, primaryWallet: any) {
+    const client = getSignClient(primaryWallet)
+    const publicKey = primaryWallet.address;
+    const signType = 'eip712';
+    const chain = SpMode.OffChain;
+    const { schemaId, linkedAttestationId, validUntil, recipients, indexingValue, data, dataLocation = DataLocationOffChain.ARWEAVE, } = attestation;
+    const attestationObj = {
+        schemaId,
+        linkedAttestationId: linkedAttestationId || '',
+        validUntil: validUntil || 0,
+        recipients: recipients || [],
+        indexingValue,
+        dataLocation,
+        data: JSON.stringify(data),
+    };
+    const attestationString = JSON.stringify(attestationObj);
+    const schema = await client.getSchema(schemaId);
+    const schemaData = schema?.data;
+    if (!schema) {
+        throw new Error('schema not found');
+    }
+    const signer: any = await primaryWallet.connector.getSigner();
+    const signedData = {
+        domain: {
+            name: "sign.global",
+            version: "1",
+        },
+        message: attestationObj,
+        primaryType: 'Data',
+        types: {
+            EIP712Domain: [
+                { name: "name", type: "string" },
+                { name: "version", type: "string" },
+            ],
+            ...{
+                AttestationData: schemaData,
+                Data: [
+                    { name: 'schemaId', type: 'string' },
+                    { name: 'linkedAttestationId', type: 'string' },
+                    { name: 'data', type: 'string' },
+                    { name: 'validUntil', type: 'uint32' },
+                    { name: 'recipients', type: 'string[]' },
+                    {
+                        name: 'indexingValue',
+                        type: 'address',
+                    },
+                ],
+            }
+        },
+    }
+    const signature = await signer.signTypedData({
+        account: primaryWallet.address,
+        ...signedData,
+    })   
+    const message = JSON.stringify(signedData); 
+    return JSON.stringify({
+        signType: 'evm-eip712',
+        publicKey,
+        signature,
+        message,
+        attestation: attestationString,
+    });
+}
+
+export const createAttestationFromMessage = async(message: string) => {
+    const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
+    const res = await fetch(url, {
+        method: 'POST',
+        body: message,
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const resp = await res.json();
+    return resp.data;
+}
+
+// deprecated
 export const createCertificationType = async (certifcationName: string, primaryWallet: any) => {
     const client = getSignClient(primaryWallet)
     const res = await client.createSchema({
@@ -77,8 +155,8 @@ export const createCertificationType = async (certifcationName: string, primaryW
 
 export const createCertificationForUser = async (
     primaryWallet: any,
-    schemaId: string,
     name: string,
+    note: string,
     certifcationName: string,
     ceritifcationOrganization: string,
     IssuedToWallet: string,
@@ -86,22 +164,47 @@ export const createCertificationForUser = async (
 ): Promise<any> => {
     const client = getSignClient(primaryWallet)
     let txHash: string | null = null
-
-    //create attestation
-    const attestationInfo = await client.createAttestation({
-        schemaId: schemaId, //schemaInfo.schemaId or other schemaId
+    const message = await createAttestationSignature({
+        schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
+        recipients: [ceritifcationOrganization],
         data: {
-            certifcationName: certifcationName,
-            issuedTo: name,
-            issuedToWallet: IssuedToWallet,
-            issuedBy: ceritifcationOrganization,
-            issuedDate: Math.floor(Date.now()),
-            expirationDate: Math.floor(expirationDate.getTime() / 1000),
+            certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
+            certificate_title: certifcationName,
+            issuer_name: ceritifcationOrganization,
+            issue_date: Math.floor(Date.now()),
+            expiration_date: Math.floor(expirationDate.getTime() / 1000),
+            description: note, // TODO add description, now its empty
+            extra: "",
+            holder_name: name,
+            holder_address: IssuedToWallet,
+            url: "", // TODO: add lookup url
+            metadata: "",
+            signatories: []
         },
-        indexingValue: primaryWallet.address.toLowerCase(),
-    })
+        indexingValue: primaryWallet.address,
+    }, primaryWallet);
+    const attestationInfo = await createAttestationFromMessage(message);    
+    // const attestationInfo = await client.createAttestation({
+    //     schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
+    //     recipients: [ceritifcationOrganization],
+    //     data: {
+    //         certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
+    //         certificate_title: certifcationName,
+    //         issuer_name: ceritifcationOrganization,
+    //         issue_date: Math.floor(Date.now()),
+    //         expiration_date: Math.floor(expirationDate.getTime() / 1000),
+    //         description: note, // TODO add description, now its empty
+    //         extra: "",
+    //         holder_name: name,
+    //         holder_address: IssuedToWallet,
+    //         url: "", // TODO: add lookup url
+    //         metadata: "",
+    //         signatories: []
+    //     },
+    //     indexingValue: primaryWallet.address,
+    // })
     // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
-    // console.log(attestationInfo)
+    console.log(attestationInfo)
     return attestationInfo.attestationId
 }
 

@@ -62,7 +62,7 @@ export default function Certification() {
         }
 
         if (!primaryWallet) return
-        const schemaId = await createCertificationType(certificationName, primaryWallet)
+        const schemaId = process.env.NEXT_SCHEMA_ID;// await createCertificationType(certificationName, primaryWallet)
         setAlert("gen")
 
         let data = {
@@ -103,8 +103,8 @@ export default function Certification() {
         if (!primaryWallet) return
         const attestationId = await createCertificationForUser(
             primaryWallet,
-            schemaId,
             name,
+            note,
             certifcationName,
             ceritifcationOrganization,
             IssuedToWallet,
