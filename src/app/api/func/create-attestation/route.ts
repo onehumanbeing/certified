@@ -1,7 +1,10 @@
 export const dynamic = "force-dynamic";
 import { UserType } from "@/context/userContext";
 import prisma from "@/lib/prisma/db";
-import { ensureSingleSchema, createCertificateAttestation, getSignClient } from "@/lib/sign";
+import { createAndSignAttestation } from "@/lib/sign";
+
+// the schema Id in env variables
+const schemaId = process.env.NEXT_SCHEMA_ID;
 
 export async function POST(request: Request) {
     try {
@@ -40,16 +43,25 @@ export async function POST(request: Request) {
             });
         }
 
-        const { artworkTitle, artistName, yearOfCompletion, templateId, primaryWallet } = await request.json();
+        // API handler parameters
+        const { name, note, certificationName, ceritifcationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput } = await request.json();
 
-        // Initialize the wallet of the client
-        await getSignClient(primaryWallet);
+        let missingFields = [];
 
-        // Initilaize the only schema used for storing all the certificate template
-        await ensureSingleSchema();
+        // check if any request parameter or the schemaId from Env Var is missing
+        if (!name) missingFields.push('name');
+        if (!note) missingFields.push('note');
+        if (!certificationName) missingFields.push('certificationName');
+        if (!ceritifcationOrganization) missingFields.push('ceritifcationOrganization');
+        if (!IssuedToWallet) missingFields.push('IssuedToWallet');
+        if (!expirationDate) missingFields.push('expirationDate');
+        if (!schemaId) missingFields.push('schemaId');
+        if (!extra) missingFields.push('extra');
+        if (!templateId) missingFields.push('templateId');
+        if (!userInput) missingFields.push('userInput');
 
-        if (!artworkTitle || !artistName || !yearOfCompletion) {
-            return new Response(JSON.stringify({ error: "Invalid request" }), {
+        if (missingFields.length > 0) {
+            return new Response(JSON.stringify({ error: `Invalid request, missing fields: ${missingFields.join(', ')}` }), {
                 status: 400,
                 headers: {
                     "Content-Type": "application/json",
@@ -59,13 +71,11 @@ export async function POST(request: Request) {
 
         // the parameter 'templateId' (could be a id or undefined)
         let finalTemplateId = templateId;
-        
-        // the template content which will be used for attestation creation
-        let jsonString;
 
+        // the template content which will be used for attestation creation
+        let extraTemplateString;
 
         if (templateId) {
-
             // If templateId is provided, fetch the template from the DB
             const existingTemplate = await prisma.certificateTemplate.findUnique({
                 where: { id: templateId },
@@ -80,31 +90,61 @@ export async function POST(request: Request) {
                 });
             }
 
-            jsonString = existingTemplate.templateString;
-        
+            extraTemplateString = existingTemplate.templateString;
         } else {
             // If no templateId, create a new template and store it in the DB
-            jsonString = JSON.stringify({
-                artworkTitle,
-                artistName,
-                yearOfCompletion,
-            });
-
             const newTemplate = await prisma.certificateTemplate.create({
                 data: {
-                    templateString: jsonString,
+                    templateString: extra,
                 },
             });
 
             finalTemplateId = newTemplate.id;
+            extraTemplateString = extra;
         }
 
         try {
-            const attestationId = await createCertificateAttestation(primaryWallet, jsonString);
+            // Create attestation object
+            const attestation = {
+                schemaId: schemaId as string,
+                recipients: [ceritifcationOrganization],
+                data: {
+                    certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
+                    certificate_title: certificationName,
+                    issuer_name: ceritifcationOrganization,
+                    issue_date: Math.floor(Date.now()),
+                    expiration_date: Math.floor(new Date(expirationDate).getTime() / 1000),
+                    description: note,
+                    extra: extraTemplateString,
+                    holder_name: name,
+                    holder_address: IssuedToWallet,
+                    url: "", // TODO: add lookup url
+                    metadata: "",
+                    signatories: []
+                },
+                indexingValue: userInput.walletAddress,
+            };
 
+            const attestationInfo = await createAndSignAttestation(attestation, userInput);
 
-            // return the result (attestationId and the tempalteId)
-            return new Response(JSON.stringify({ attestationId, templateId: finalTemplateId }), {
+            // Create a new attestation record using the fetched schema and template
+            const newAttestationRecord = await prisma.attestationRecord.create({
+                data: {
+                    name: userInput.name,
+                    email: userInput.email,
+                    walletAddress: userInput.walletAddress.toLowerCase(),
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    expirationAt: new Date(expirationDate),
+                    schemaId: schemaId as string,
+                    attestationId: attestationInfo.attestationId,
+                    schema: attestation.schemaId, // store the schema ID here
+                    template: extraTemplateString,
+                },
+            });
+
+            // return the result (attestationId and the templateId)
+            return new Response(JSON.stringify({ attestationId: attestationInfo.attestationId, templateId: finalTemplateId }), {
                 status: 200,
                 headers: {
                     "Content-Type": "application/json",
@@ -116,8 +156,6 @@ export async function POST(request: Request) {
         }
     } catch (error) {
         console.error("Error processing request:", error);
-        
-        
         return new Response(JSON.stringify({ error: "Internal Server Error" }), {
             status: 500,
             headers: {
