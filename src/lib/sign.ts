@@ -2,8 +2,6 @@ import { metadata } from "@/app/layout"
 import { SignProtocolClient, SpMode, OffChainSignType, IndexService, Attestation, DataLocationOffChain } from "@ethsign/sp-sdk"
 
 let signClient: SignProtocolClient | null = null
-let schemaId: string | null = null
-
 
 export const getSignClient = (primaryWallet: any) => {
     // for primary wallet: https://docs.dynamic.xyz/react-sdk/examples/sign-a-message
@@ -136,24 +134,6 @@ export const createAttestationFromMessage = async(message: string) => {
     return resp.data;
 }
 
-// deprecated
-export const createCertificationType = async (certifcationName: string, primaryWallet: any) => {
-    const client = getSignClient(primaryWallet)
-    const res = await client.createSchema({
-        name: certifcationName,
-        data: [
-            { name: "certifcationName", type: "string" },
-            { name: "issuedTo", type: "string" },
-            { name: "issuedToWallet", type: "address" },
-            { name: "issuedBy", type: "string" },
-            { name: "issuedDate", type: "number" },
-            { name: "expirationDate", type: "number" },
-        ],
-    })
-    return res.schemaId
-    // {schemaId: 'SPS_kCoVw8Qo_1s4IZKE7eEZT'}schemaId: "SPS_kCoVw8Qo_1s4IZKE7eEZT"[[Prototype]]: Object
-    // for users: https://scan.sign.global/schema/SPS_kCoVw8Qo_1s4IZKE7eEZT
-}
 
 export const createCertificationForUser = async (
     primaryWallet: any,
@@ -162,12 +142,16 @@ export const createCertificationForUser = async (
     certifcationName: string,
     ceritifcationOrganization: string,
     IssuedToWallet: string,
-    expirationDate: Date
+    expirationDate: Date,
+    extra: string,
+    schemaId: any
 ): Promise<any> => {
     const client = getSignClient(primaryWallet)
     let txHash: string | null = null
+
+
     const message = await createAttestationSignature({
-        schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
+        schemaId: schemaId, // TODO: put the schema id in ENV  -> DONE
         recipients: [ceritifcationOrganization],
         data: {
             certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
@@ -176,7 +160,7 @@ export const createCertificationForUser = async (
             issue_date: Math.floor(Date.now()),
             expiration_date: Math.floor(expirationDate.getTime() / 1000),
             description: note, // TODO add description, now its empty
-            extra: "",
+            extra: extra,
             holder_name: name,
             holder_address: IssuedToWallet,
             url: "", // TODO: add lookup url
@@ -186,26 +170,7 @@ export const createCertificationForUser = async (
         indexingValue: primaryWallet.address,
     }, primaryWallet);
     const attestationInfo = await createAttestationFromMessage(message);    
-    // const attestationInfo = await client.createAttestation({
-    //     schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
-    //     recipients: [ceritifcationOrganization],
-    //     data: {
-    //         certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
-    //         certificate_title: certifcationName,
-    //         issuer_name: ceritifcationOrganization,
-    //         issue_date: Math.floor(Date.now()),
-    //         expiration_date: Math.floor(expirationDate.getTime() / 1000),
-    //         description: note, // TODO add description, now its empty
-    //         extra: "",
-    //         holder_name: name,
-    //         holder_address: IssuedToWallet,
-    //         url: "", // TODO: add lookup url
-    //         metadata: "",
-    //         signatories: []
-    //     },
-    //     indexingValue: primaryWallet.address,
-    // })
-    // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
+
     console.log(attestationInfo)
     return attestationInfo.attestationId
 }
@@ -296,50 +261,30 @@ export async function getCertificationFromIndexService(attestationId: string) {
 // TODO: revoke attestation
 
 
-// initialize one schema for creation of all certificate templates
-export const ensureSingleSchema = async () => {
 
-    if (!schemaId) {
-        const client = signClient
-
-        if (!client) {
-            throw new Error("Failed to initialize sign client");
-        }
-        
-        const res = await client.createSchema({
-            name: "theSchema",
-            data: [
-                { name: "extra", type: "string" },
-            ],
-        })
-        schemaId = res.schemaId
-    }
-    return schemaId
-}
-
-// Create a certificate attestation using the template information from the DB
-export const createCertificateAttestation = async (
-    primaryWallet: any,
-    templateInJsonString: string,
-): Promise<any> => {
+// // Create a certificate attestation using the template information from the DB
+// export const createCertificateAttestation = async (
+//     primaryWallet: any,
+//     templateInJsonString: string,
+// ): Promise<any> => {
     
-    const client = signClient
+//     const client = signClient
 
-    if (!client) {
-        throw new Error("Failed to initialize sign client");
-    }
+//     if (!client) {
+//         throw new Error("Failed to initialize sign client");
+//     }
 
-    if (!schemaId) {
-        throw new Error("Schema ID is not initialized");
-    }
+//     if (!schemaId) {
+//         throw new Error("Schema ID is not initialized");
+//     }
 
-    //create attestation
-    const attestationInfo = await client.createAttestation({
-        schemaId: schemaId, //schemaInfo.schemaId or other schemaId
-        data: {
-            extra: templateInJsonString
-        },
-        indexingValue: primaryWallet.address.toLowerCase(),
-    })
-    return attestationInfo.attestationId
-}
+//     //create attestation
+//     const attestationInfo = await client.createAttestation({
+//         schemaId: schemaId, //schemaInfo.schemaId or other schemaId
+//         data: {
+//             extra: templateInJsonString
+//         },
+//         indexingValue: primaryWallet.address.toLowerCase(),
+//     })
+//     return attestationInfo.attestationId
+// }
