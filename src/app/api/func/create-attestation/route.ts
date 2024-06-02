@@ -19,6 +19,7 @@ export async function POST(request: Request) {
                 status: 401,
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
             });
         }
