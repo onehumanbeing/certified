@@ -4,7 +4,13 @@ import prisma from "@/lib/prisma/db";
 import { createAndSignAttestation } from "@/lib/sign";
 
 export async function POST(request: Request) {
+
+    console.log("Create attestation route triggered"); 
+    
     try {
+
+        console.log("POST /api/create_attestation called");
+        
         const userInfoCookie = request.headers
             .get("cookie")
             ?.split("; ")
@@ -21,6 +27,8 @@ export async function POST(request: Request) {
             });
         }
 
+        console.log("User info cookie found");
+        
         // The rest of your handler logic...
 
         return new Response(JSON.stringify({ attestationId: attestationInfo.attestationId, templateId: finalTemplateId }), {
