@@ -144,8 +144,8 @@ export async function POST(request: Request) {
             // Create a new attestation record using the fetched schema and template
             const newAttestationRecord = await prisma.attestationRecord.create({
                 data: {
-                    name: userInput.name,
-                    email: userInput.email,
+                    name: userInput.name || "",
+                    email: userInput.email || "",
                     walletAddress: userInput.walletAddress.toLowerCase(),
                     createdAt: new Date(),
                     updatedAt: new Date(),
