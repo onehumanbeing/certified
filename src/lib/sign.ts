@@ -123,16 +123,6 @@ import { SpMode, IndexService, Attestation, DataLocationOffChain } from "@ethsig
 //     });
 // }
 
-export const createAttestationFromMessage = async(message: string) => {
-    const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
-    const res = await fetch(url, {
-        method: 'POST',
-        body: message,
-        headers: { 'Content-Type': 'application/json' },
-    });
-    const resp = await res.json();
-    return resp.data;
-}
 
 
 // moved to the certified-sdk package
@@ -177,6 +167,22 @@ export const createAttestationFromMessage = async(message: string) => {
 //     return attestationInfo.attestationId
 // }
 
+
+
+export const createAttestationFromMessage = async(message: string) => {
+
+    console.log("createAttestationFromMessage, message:" , message);
+    const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
+    const res = await fetch(url, {
+        method: 'POST',
+        body: message,
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const resp = await res.json();
+
+    console.log("createAttestationFromMessage, resp:" , resp);
+    return resp.data;
+}
 
 // combine functionality of 2 functions 'createAttestationSignature' and 'createAttestationFromMessage'
 export const createAndSignAttestation = async function (attestation: Attestation, primaryWallet:any, inputSigner: any, schemaData:any) {

@@ -1,10 +1,10 @@
 export const dynamic = "force-dynamic";
 import { UserType } from "@/context/userContext";
 import prisma from "@/lib/prisma/db";
-import { createAndSignAttestation } from "@/lib/sign";
+import { createAttestationFromMessage } from "@/lib/sign";
 
 // the schema Id in env variables
-const schemaId = process.env.NEXT_SCHEMA_ID;
+const schemaId = process.env.NEXT_SCHEMA_ID || 'SPS_gQTxfuWWqSWp4eB-D28qF';
 
 export async function POST(request: Request) {
     try {
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
   
         // API handler parameters
         const object = await request.json();
-        const { name, note, certificationName, certificationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput, schemaData, signer}  = object;
+        const { name, note, certificationName, certificationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput, createAttestationMessage}  = object;
         console.log("request.json()", object);
 
         let missingFields = [];
@@ -116,29 +116,31 @@ export async function POST(request: Request) {
 
         try {
             // Create attestation object
-            const attestation = {
-                schemaId: schemaId as string,
-                recipients: [certificationOrganization],
-                data: {
-                    certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
-                    certificate_title: certificationName,
-                    issuer_name: certificationOrganization,
-                    issue_date: Math.floor(Date.now()),
-                    expiration_date: Math.floor(new Date(expirationDate).getTime() / 1000),
-                    description: note,
-                    extra: extraTemplateString,
-                    holder_name: name,
-                    holder_address: IssuedToWallet,
-                    url: "", // TODO: add lookup url
-                    metadata: "",
-                    signatories: []
-                },
-                indexingValue: userInput.walletAddress,
-            };
+            // const attestation = {
+            //     schemaId: schemaId as string,
+            //     recipients: [certificationOrganization],
+            //     data: {
+            //         certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
+            //         certificate_title: certificationName,
+            //         issuer_name: certificationOrganization,
+            //         issue_date: Math.floor(Date.now()),
+            //         expiration_date: Math.floor(new Date(expirationDate).getTime() / 1000),
+            //         description: note,
+            //         extra: extraTemplateString,
+            //         holder_name: name,
+            //         holder_address: IssuedToWallet,
+            //         url: "", // TODO: add lookup url
+            //         metadata: "",
+            //         signatories: []
+            //     },
+            //     indexingValue: userInput.walletAddress,
+            // };
 
-            const attestationInfo = await createAndSignAttestation(attestation, userInput, signer, schemaData);
-
-            console.log("route.ts,attestationInfo:",attestationInfo);
+            // const attestationInfo = await createAndSignAttestation(attestation, userInput, signer, schemaData);
+            
+            const attestationInfo  = await createAttestationFromMessage(createAttestationMessage);
+            console.log("route.ts, attestationInfo:",attestationInfo);
+        
             // Create a new attestation record using the fetched schema and template
             const newAttestationRecord = await prisma.attestationRecord.create({
                 data: {
@@ -150,7 +152,7 @@ export async function POST(request: Request) {
                     expirationAt: new Date(expirationDate),
                     schemaId: schemaId as string,
                     attestationId: attestationInfo.attestationId,
-                    schema: attestation.schemaId, // store the schema ID here
+                    schema: schemaId, // store the schema ID here
                     template: extraTemplateString,
                 },
             });
