@@ -14,38 +14,42 @@ export async function POST(request: Request) {
             .find((row) => row.startsWith("user="))
             ?.split("=")[1];
 
-        if (!userInfoCookie) {
-            return new Response(JSON.stringify({ error: "No user info available" }), {
-                status: 401,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                },
-            });
-        }
+        // if (!userInfoCookie) {
+        //     return new Response(JSON.stringify({ error: "No user info available" }), {
+        //         status: 401,
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             "Access-Control-Allow-Origin": "*"
+        //         },
+        //     });
+        // }
 
-        const userInfo = decodeURIComponent(userInfoCookie);
-        const user: UserType = JSON.parse(userInfo);
+        // const userInfo = decodeURIComponent(userInfoCookie);
+        // const user: UserType = JSON.parse(userInfo);
 
-        const userObject = await prisma.user.findFirst({
-            where: {
-                OR: [{ dynamic_id: user.id }, { email: user.email }].filter(
-                    (item) => Object.values(item)[0] !== undefined
-                ),
-            },
-        });
+        // const userObject = await prisma.user.findFirst({
+        //     where: {
+        //         OR: [{ dynamic_id: user.id }, { email: user.email }].filter(
+        //             (item) => Object.values(item)[0] !== undefined
+        //         ),
+        //     },
+        // });
 
-        if (!userObject) {
-            return new Response(JSON.stringify({ error: "Invalid user info format" }), {
-                status: 400,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-        }
+        // if (!userObject) {
+        //     return new Response(JSON.stringify({ error: "Invalid user info format" }), {
+        //         status: 400,
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             "Access-Control-Allow-Origin": "*"
+        //         },
+        //     });
+        // }
 
+  
         // API handler parameters
-        const { name, note, certificationName, ceritifcationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput } = await request.json();
+        const object = await request.json();
+        const { name, note, certificationName, certificationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput, schemaData}  = object;
+        console.log("request.json()", object);
 
         let missingFields = [];
 
@@ -53,22 +57,27 @@ export async function POST(request: Request) {
         if (!name) missingFields.push('name');
         if (!note) missingFields.push('note');
         if (!certificationName) missingFields.push('certificationName');
-        if (!ceritifcationOrganization) missingFields.push('ceritifcationOrganization');
+        if (!certificationOrganization) missingFields.push('ceritifcationOrganization');
         if (!IssuedToWallet) missingFields.push('IssuedToWallet');
         if (!expirationDate) missingFields.push('expirationDate');
         if (!schemaId) missingFields.push('schemaId');
         if (!extra) missingFields.push('extra');
-        if (!templateId) missingFields.push('templateId');
+        // if (!templateId) missingFields.push('templateId');
         if (!userInput) missingFields.push('userInput');
 
-        if (missingFields.length > 0) {
-            return new Response(JSON.stringify({ error: `Invalid request, missing fields: ${missingFields.join(', ')}` }), {
-                status: 400,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-        }
+        console.log("missingFields", missingFields);
+
+        // if (missingFields.length > 0) {
+        //     return new Response(JSON.stringify({ error: `Invalid request, missing fields: ${missingFields.join(', ')}` }), {
+        //         status: 400,
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             "Access-Control-Allow-Origin": "*"
+        //         },
+        //     });
+        // }
+
+        console.log("passed checking input parameters.");
 
         // the parameter 'templateId' (could be a id or undefined)
         let finalTemplateId = templateId;
@@ -87,6 +96,7 @@ export async function POST(request: Request) {
                     status: 404,
                     headers: {
                         "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
                     },
                 });
             }
@@ -108,11 +118,11 @@ export async function POST(request: Request) {
             // Create attestation object
             const attestation = {
                 schemaId: schemaId as string,
-                recipients: [ceritifcationOrganization],
+                recipients: [certificationOrganization],
                 data: {
                     certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
                     certificate_title: certificationName,
-                    issuer_name: ceritifcationOrganization,
+                    issuer_name: certificationOrganization,
                     issue_date: Math.floor(Date.now()),
                     expiration_date: Math.floor(new Date(expirationDate).getTime() / 1000),
                     description: note,
@@ -126,7 +136,7 @@ export async function POST(request: Request) {
                 indexingValue: userInput.walletAddress,
             };
 
-            const attestationInfo = await createAndSignAttestation(attestation, userInput);
+            const attestationInfo = await createAndSignAttestation(attestation, userInput, schemaData);
 
             // Create a new attestation record using the fetched schema and template
             const newAttestationRecord = await prisma.attestationRecord.create({
@@ -149,6 +159,7 @@ export async function POST(request: Request) {
                 status: 200,
                 headers: {
                     "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
             });
         } catch (error) {
@@ -161,6 +172,7 @@ export async function POST(request: Request) {
             status: 500,
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
             },
         });
     }
