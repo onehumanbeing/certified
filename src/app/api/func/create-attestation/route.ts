@@ -48,7 +48,7 @@ export async function POST(request: Request) {
   
         // API handler parameters
         const object = await request.json();
-        const { name, note, certificationName, certificationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput, schemaData}  = object;
+        const { name, note, certificationName, certificationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput, schemaData, signer}  = object;
         console.log("request.json()", object);
 
         let missingFields = [];
@@ -136,8 +136,9 @@ export async function POST(request: Request) {
                 indexingValue: userInput.walletAddress,
             };
 
-            const attestationInfo = await createAndSignAttestation(attestation, userInput, schemaData);
+            const attestationInfo = await createAndSignAttestation(attestation, userInput, signer, schemaData);
 
+            console.log("route.ts,attestationInfo:",attestationInfo);
             // Create a new attestation record using the fetched schema and template
             const newAttestationRecord = await prisma.attestationRecord.create({
                 data: {

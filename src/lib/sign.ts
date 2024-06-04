@@ -179,7 +179,15 @@ export const createAttestationFromMessage = async(message: string) => {
 
 
 // combine functionality of 2 functions 'createAttestationSignature' and 'createAttestationFromMessage'
-export const createAndSignAttestation = async function (attestation: Attestation, primaryWallet: any, schemaData:any) {
+export const createAndSignAttestation = async function (attestation: Attestation, primaryWallet:any, inputSigner: any, schemaData:any) {
+    
+    
+    console.log("createAndSignAttestation:");
+    console.log("attestation:", attestation);
+    console.log("primaryWallet:", primaryWallet);
+    console.log("inputSigner:", inputSigner);
+    console.log(typeof inputSigner);
+
     // const client = getSignClient(primaryWallet)
     const publicKey = primaryWallet.address;
     const signType = 'eip712';
@@ -200,7 +208,9 @@ export const createAndSignAttestation = async function (attestation: Attestation
     // if (!schema) {
     //     throw new Error('schema not found');
     // }
-    const signer: any = await primaryWallet.connector.getSigner();
+    // const signer: any = await primaryWallet.connector.getSigner();
+    const signer : any = inputSigner;
+
     const signedData = {
         domain: {
             name: "sign.global",
@@ -230,12 +240,22 @@ export const createAndSignAttestation = async function (attestation: Attestation
         },
     }
 
-    const signature = await signer.signTypedData({
+    const signature = await signer.signMessage({
         account: primaryWallet.address,
         ...signedData,
     })   
-    const message = JSON.stringify(signedData); 
+    const tempMessage = JSON.stringify(signedData); 
     
+    const message = JSON.stringify({
+        signType: 'evm-eip712',
+        publicKey,
+        signature,
+        tempMessage,
+        attestation: attestationString,
+    });
+
+
+    // functionality of the func createAttestationSignature()
     const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
     const res = await fetch(url, {
         method: 'POST',
