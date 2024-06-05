@@ -44,7 +44,7 @@ export async function middleware(req: NextRequest) {
 
     const token = req.headers.get("authorization")?.split(" ")[1]
 
-    if(token == "123456###"){
+    if(token == process.env.passToken){
         return response
     }
 
