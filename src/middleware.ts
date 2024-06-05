@@ -5,9 +5,9 @@ const allowedOrigins = [
     "https://www.thecertified.xyz",
     "https://thecerthecertified.xyz",
     "http://localhost:3000",
-    "http://localhost:3001"
+    "http://localhost:3001",
+    "https://sdk.thecertified.xyz",
 ]
-
 
 const corsOptions = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -15,39 +15,38 @@ const corsOptions = {
 }
 
 export async function middleware(req: NextRequest) {
-    console.log('Middleware triggered');
+    console.log("Middleware triggered")
     const origin = req.headers.get("origin") ?? ""
 
     const isAllowedOrigin = allowedOrigins.includes(origin)
 
-    console.log('Origin:', origin);
-    console.log('Is allowed origin:', isAllowedOrigin);
+    console.log("Origin:", origin)
+    console.log("Is allowed origin:", isAllowedOrigin)
 
     const isPreflight = req.method === "OPTIONS"
     if (isPreflight) {
         const preflightHeaders = {
-            "Access-Control-Allow-Origin": '*',
+            "Access-Control-Allow-Origin": "*",
             ...corsOptions,
         }
-        console.log('Preflight request detected');
+        console.log("Preflight request detected")
         return new Response(null, {
             status: 204,
-            headers: preflightHeaders
-        });
+            headers: preflightHeaders,
+        })
     }
     const response = NextResponse.next()
 
     if (isAllowedOrigin) {
-        console.log('Setting CORS headers');
+        console.log("Setting CORS headers")
         response.headers.set("Access-Control-Allow-Origin", origin)
     }
 
     const token = req.headers.get("authorization")?.split(" ")[1]
 
-    if(token == process.env.passToken){
+    if (token == process.env.passToken) {
         return response
     }
-
 
     if (!token) {
         return new Response("Authorization token required", { status: 401 })
@@ -85,7 +84,6 @@ export async function middleware(req: NextRequest) {
 
     return response
 }
-
 
 export const config = {
     matcher: "/api/func/:path*",
