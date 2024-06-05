@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import { UserType } from "@/context/userContext";
 import prisma from "@/lib/prisma/db";
 import { createAttestationFromMessage } from "@/lib/sign";
+import { v4 as uuidv4 } from 'uuid';
 
 // the schema Id in env variables
 const schemaId = process.env.NEXT_SCHEMA_ID || "SPS_gQTxfuWWqSWp4eB-D28qF";
@@ -38,38 +39,31 @@ export async function POST(request: Request) {
     
         //verify the api key
         const apiKey = request.headers.get("api-key");
+        
+        console.log("routes.ts, apiKey", apiKey);
 
-        // if (!apiKey) {
-        //     return new Response(JSON.stringify({ error: "API key is required" }), {
-        //         status: 400,
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //     });
-        // }
+        if (!apiKey) {
+            return new Response(JSON.stringify({ error: "API key is required" }), {
+                status: 400,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+        }
      
 //    // Check if the API key exists in the database
-//    const existingApiKey = await prisma.apiKeyTable.findUnique({
-//         where: { apiKey },
-//     });
+   const existingApiKey = await prisma.apiKeyTable.findUnique({
+        where: { apiKey },
+    });
 
-    // if (!existingApiKey) {
-        // If API key does not exist, create a new one
-        const newApiKey = uuidv4();
-        await prisma.apiKeyTable.create({
-            data: {
-                apiKey: newApiKey,
-            },
-        });
-        console.log("newApiKey, ", newApiKey);
-
-        return new Response(JSON.stringify({ error: "Invalid API key. A new API key has been generated", apiKey: newApiKey }), {
+    if (!existingApiKey) {
+        return new Response(JSON.stringify({ error: "Invalid API key"}), {
             status: 401,
             headers: {
                 "Content-Type": "application/json"
             },
         });
-    // }
+    }
 
         console.log("passed checking input parameters.");
 
@@ -173,8 +167,4 @@ export async function POST(request: Request) {
             },
         });
     }
-}
-
-function uuidv4() {
-    throw new Error("Function not implemented.");
 }

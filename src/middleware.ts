@@ -11,7 +11,7 @@ const allowedOrigins = [
 
 const corsOptions = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization,  api-key",
 }
 
 export async function middleware(req: NextRequest) {
