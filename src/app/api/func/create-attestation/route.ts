@@ -2,8 +2,6 @@ export const dynamic = "force-dynamic";
 import { UserType } from "@/context/userContext";
 import prisma from "@/lib/prisma/db";
 import { createAttestationFromMessage } from "@/lib/sign";
-import { v4 as uuidv4 } from 'uuid';
-
 // the schema Id in env variables
 const schemaId = process.env.NEXT_SCHEMA_ID || "SPS_gQTxfuWWqSWp4eB-D28qF";
 
