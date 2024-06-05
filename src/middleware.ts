@@ -42,15 +42,15 @@ export async function middleware(req: NextRequest) {
         response.headers.set("Access-Control-Allow-Origin", origin)
     }
 
-    const token = req.headers.get("authorization")?.split(" ")[1]
+    // const token = req.headers.get("authorization")?.split(" ")[1]
 
-    if (token == process.env.passToken) {
-        return response
-    }
+    // if (token == process.env.passToken) {
+    //     return response
+    // }
 
-    if (!token) {
-        return new Response("Authorization token required", { status: 401 })
-    }
+    // if (!token) {
+    //     return new Response("Authorization token required", { status: 401 })
+    // }
 
     // const apiResponse = await fetch(`${req.nextUrl.origin}/api/validate`, {
     //     method: "GET",
@@ -86,5 +86,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: "/api/func/:path*",
+    matcher: "/api/:path*",
 }

@@ -1,28 +1,13 @@
-export const dynamic = "force-dynamic"
 import { UserType } from "@/context/userContext"
 import prisma from "@/lib/prisma/db"
 import { createAttestationFromMessage } from "@/lib/sign"
 
 // the schema Id in env variables
-const schemaId = process.env.NEXT_SCHEMA_ID || "SPS_1FrzuMh2iOIHf6X1NFmRo"
+const schemaId = "SPS_gQTxfuWWqSWp4eB-D28qF"
 
 // Set CORS headers for all requests
-const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    "Content-Type": "application/json",
-}
 
 export async function POST(request: Request) {
-    console.log("here")
-    // if (request.method === 'OPTIONS') {
-    //     // For preflight requests, we send a 200 status with the CORS headers
-    //     return new Response(null, {
-    //         status: 200,
-    //         headers,
-    //     });
-    // }
 
     try {
         // API handler parameters
