@@ -12,6 +12,8 @@ export const getKey = (
         },
     }
 
+    console.log("autoHelpers.ts,process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID:", process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID);
+
     fetch(
         `https://app.dynamicauth.com/api/v0/environments/${process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID}/keys`,
         options
@@ -32,6 +34,10 @@ export const getKey = (
 
 export const validateJWT = async (token: string): Promise<JwtPayload | null> => {
     try {
+
+        console.log("autoHelpers.ts,token:", token);
+        console.log("autoHelpers.ts,getkey:", getKey);
+
         return await new Promise((resolve, reject) => {
             jwt.verify(
                 token,

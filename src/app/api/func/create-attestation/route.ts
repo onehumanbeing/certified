@@ -95,8 +95,8 @@ export async function POST(request: Request) {
                 return new Response(JSON.stringify({ error: "Template not found" }), {
                     status: 404,
                     headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
+                        "Content-Type": "application/json"
+                        // "Access-Control-Allow-Origin": "*"
                     },
                 });
             }
@@ -161,8 +161,8 @@ export async function POST(request: Request) {
             return new Response(JSON.stringify({ attestationId: attestationInfo.attestationId, templateId: finalTemplateId }), {
                 status: 200,
                 headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json"
+                    // "Access-Control-Allow-Origin": "*"
                 },
             });
         } catch (error) {
@@ -174,8 +174,8 @@ export async function POST(request: Request) {
         return new Response(JSON.stringify({ error: "Internal Server Error" }), {
             status: 500,
             headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
+                "Content-Type": "application/json"
+                // "Access-Control-Allow-Origin": "*"
             },
         });
     }
