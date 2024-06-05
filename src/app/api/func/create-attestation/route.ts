@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma/db";
 import { createAttestationFromMessage } from "@/lib/sign";
 
 // the schema Id in env variables
-const schemaId = process.env.NEXT_SCHEMA_ID || 'SPS_gQTxfuWWqSWp4eB-D28qF';
+const schemaId = process.env.NEXT_SCHEMA_ID || "SPS_gQTxfuWWqSWp4eB-D28qF";
 
 export async function POST(request: Request) {
     try {
@@ -14,38 +14,6 @@ export async function POST(request: Request) {
             .find((row) => row.startsWith("user="))
             ?.split("=")[1];
 
-        // if (!userInfoCookie) {
-        //     return new Response(JSON.stringify({ error: "No user info available" }), {
-        //         status: 401,
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Access-Control-Allow-Origin": "*"
-        //         },
-        //     });
-        // }
-
-        // const userInfo = decodeURIComponent(userInfoCookie);
-        // const user: UserType = JSON.parse(userInfo);
-
-        // const userObject = await prisma.user.findFirst({
-        //     where: {
-        //         OR: [{ dynamic_id: user.id }, { email: user.email }].filter(
-        //             (item) => Object.values(item)[0] !== undefined
-        //         ),
-        //     },
-        // });
-
-        // if (!userObject) {
-        //     return new Response(JSON.stringify({ error: "Invalid user info format" }), {
-        //         status: 400,
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Access-Control-Allow-Origin": "*"
-        //         },
-        //     });
-        // }
-
-  
         // API handler parameters
         const object = await request.json();
         const { name, note, certificationName, certificationOrganization, IssuedToWallet, expirationDate, extra, templateId, userInput, createAttestationMessage}  = object;
@@ -67,15 +35,41 @@ export async function POST(request: Request) {
 
         console.log("missingFields", missingFields);
 
-        // if (missingFields.length > 0) {
-        //     return new Response(JSON.stringify({ error: `Invalid request, missing fields: ${missingFields.join(', ')}` }), {
+    
+        //verify the api key
+        const apiKey = request.headers.get("api-key");
+
+        // if (!apiKey) {
+        //     return new Response(JSON.stringify({ error: "API key is required" }), {
         //         status: 400,
         //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Access-Control-Allow-Origin": "*"
+        //             "Content-Type": "application/json"
         //         },
         //     });
         // }
+     
+//    // Check if the API key exists in the database
+//    const existingApiKey = await prisma.apiKeyTable.findUnique({
+//         where: { apiKey },
+//     });
+
+    // if (!existingApiKey) {
+        // If API key does not exist, create a new one
+        const newApiKey = uuidv4();
+        await prisma.apiKeyTable.create({
+            data: {
+                apiKey: newApiKey,
+            },
+        });
+        console.log("newApiKey, ", newApiKey);
+
+        return new Response(JSON.stringify({ error: "Invalid API key. A new API key has been generated", apiKey: newApiKey }), {
+            status: 401,
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
+    // }
 
         console.log("passed checking input parameters.");
 
@@ -86,7 +80,6 @@ export async function POST(request: Request) {
         let extraTemplateString;
 
         if (templateId) {
-
             // If templateId is provided, fetch the template from the DB
             const existingTemplate = await prisma.certificateTemplate.findUnique({
                 where: { id: templateId },
@@ -180,4 +173,8 @@ export async function POST(request: Request) {
             },
         });
     }
+}
+
+function uuidv4() {
+    throw new Error("Function not implemented.");
 }

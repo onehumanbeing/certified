@@ -6,7 +6,24 @@ import { createAttestationFromMessage } from "@/lib/sign";
 // the schema Id in env variables
 const schemaId = process.env.NEXT_SCHEMA_ID || 'SPS_1FrzuMh2iOIHf6X1NFmRo';
 
+// Set CORS headers for all requests
+const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Content-Type": "application/json",
+};
+
 export async function POST(request: Request) {
+    
+    if (request.method === 'OPTIONS') {
+        // For preflight requests, we send a 200 status with the CORS headers
+        return new Response(null, {
+            status: 200,
+            headers,
+        });
+    }
+
     try {
         const userInfoCookie = request.headers
             .get("cookie")
@@ -96,8 +113,8 @@ export async function POST(request: Request) {
                 return new Response(JSON.stringify({ error: "Template not found" }), {
                     status: 404,
                     headers: {
-                        "Content-Type": "application/json"
-                        // "Access-Control-Allow-Origin": "*"
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
                     },
                 });
             }
@@ -162,8 +179,8 @@ export async function POST(request: Request) {
             return new Response(JSON.stringify({ attestationId: attestationInfo.attestationId, templateId: finalTemplateId }), {
                 status: 200,
                 headers: {
-                    "Content-Type": "application/json"
-                    // "Access-Control-Allow-Origin": "*"
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 },
             });
         } catch (error) {
@@ -175,8 +192,8 @@ export async function POST(request: Request) {
         return new Response(JSON.stringify({ error: "Internal Server Error" }), {
             status: 500,
             headers: {
-                "Content-Type": "application/json"
-                // "Access-Control-Allow-Origin": "*"
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
             },
         });
     }
