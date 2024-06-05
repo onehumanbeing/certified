@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import CreateCertification from "../Certifcation/createCertificationBar"
 import DisplayCertificationTemplate from "../Certifcation/displayCertifcationTemplate"
-import { createCertificationForUser, createCertificationType } from "@/lib/sign"
+import { createCertificationForUser } from "@/lib/sign"
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core"
 import DisplayCertification from "../Certifcation/displayCertifcation"
 import IssuesCertification from "../Certifcation/IssueCertifcation"

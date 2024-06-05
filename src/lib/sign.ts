@@ -125,6 +125,17 @@ export const createAttestationSignature = async function (attestation: Attestati
 
 
 
+export const createAttestationFromMessage = async(message: string) => {
+    const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
+    const res = await fetch(url, {
+        method: 'POST',
+        body: message,
+        headers: { 'Content-Type': 'application/json' },
+    });
+    const resp = await res.json();
+    return resp.data;
+}
+
 // moved to the certified-sdk package
 
 export const createCertificationForUser = async (
@@ -134,16 +145,12 @@ export const createCertificationForUser = async (
     certifcationName: string,
     ceritifcationOrganization: string,
     IssuedToWallet: string,
-    expirationDate: Date,
-    extra: string,
-    schemaId: any
+    expirationDate: Date
 ): Promise<any> => {
     const client = getSignClient(primaryWallet)
     let txHash: string | null = null
-
-
     const message = await createAttestationSignature({
-        schemaId: schemaId, // TODO: put the schema id in ENV  -> DONE
+        schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
         recipients: [ceritifcationOrganization],
         data: {
             certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
@@ -152,7 +159,7 @@ export const createCertificationForUser = async (
             issue_date: Math.floor(Date.now()),
             expiration_date: Math.floor(expirationDate.getTime() / 1000),
             description: note, // TODO add description, now its empty
-            extra: extra,
+            extra: "",
             holder_name: name,
             holder_address: IssuedToWallet,
             url: "", // TODO: add lookup url
@@ -162,24 +169,28 @@ export const createCertificationForUser = async (
         indexingValue: primaryWallet.address,
     }, primaryWallet);
     const attestationInfo = await createAttestationFromMessage(message);    
-
+    // const attestationInfo = await client.createAttestation({
+    //     schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
+    //     recipients: [ceritifcationOrganization],
+    //     data: {
+    //         certificate_id: "", // TODO: generate a certificate id, get the latest from db and add 1
+    //         certificate_title: certifcationName,
+    //         issuer_name: ceritifcationOrganization,
+    //         issue_date: Math.floor(Date.now()),
+    //         expiration_date: Math.floor(expirationDate.getTime() / 1000),
+    //         description: note, // TODO add description, now its empty
+    //         extra: "",
+    //         holder_name: name,
+    //         holder_address: IssuedToWallet,
+    //         url: "", // TODO: add lookup url
+    //         metadata: "",
+    //         signatories: []
+    //     },
+    //     indexingValue: primaryWallet.address,
+    // })
+    // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
     console.log(attestationInfo)
     return attestationInfo.attestationId
-}
-
-export const createAttestationFromMessage = async(message: string) => {
-
-    console.log("createAttestationFromMessage, message:" , message);
-    const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
-    const res = await fetch(url, {
-        method: 'POST',
-        body: message,
-        headers: { 'Content-Type': 'application/json' },
-    });
-    const resp = await res.json();
-
-    console.log("createAttestationFromMessage, resp:" , resp);
-    return resp.data;
 }
 
 
