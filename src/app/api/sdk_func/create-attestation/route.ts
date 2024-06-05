@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma/db";
 import { createAttestationFromMessage } from "@/lib/sign";
 
 // the schema Id in env variables
-const schemaId = process.env.NEXT_SCHEMA_ID || 'SPS_gQTxfuWWqSWp4eB-D28qF';
+const schemaId = process.env.NEXT_SCHEMA_ID || 'SPS_1FrzuMh2iOIHf6X1NFmRo';
 
 export async function POST(request: Request) {
     try {

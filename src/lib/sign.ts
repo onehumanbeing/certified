@@ -126,14 +126,38 @@ export const createAttestationSignature = async function (attestation: Attestati
 
 
 export const createAttestationFromMessage = async(message: string) => {
+
+    console.log(" createAttestationFromMessage, entry ");
+
     const url = 'https://mainnet-rpc.sign.global/api/sp/attestations';
-    const res = await fetch(url, {
-        method: 'POST',
-        body: message,
-        headers: { 'Content-Type': 'application/json' },
-    });
-    const resp = await res.json();
-    return resp.data;
+    
+    try {
+        console.log("Sending request to URL:", url);
+        console.log("Request body:", message);
+
+        const res = await fetch(url, {
+            method: 'POST',
+            body: message,
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        console.log("Response status:", res.status);
+        console.log("Response headers:", res.headers);
+
+        const resp = await res.json();
+
+        console.log("createAttestationFromMessage, response:", resp);
+
+        if (!res.ok) {
+            console.error("Error response:", resp);
+            throw new Error(`Request failed with status ${res.status}`);
+        }
+
+        return resp.data;
+    } catch (error) {
+        console.error("createAttestationFromMessage, error:", error);
+        throw error;
+    }
 }
 
 // moved to the certified-sdk package
