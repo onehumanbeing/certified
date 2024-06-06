@@ -8,104 +8,30 @@ const schemaId = "SPS_gQTxfuWWqSWp4eB-D28qF"
 // Set CORS headers for all requests
 
 export async function POST(request: Request) {
-
     try {
         // API handler parameters
         const object = await request.json()
         const {
-            name,
-            note,
-            certificationName,
-            certificationOrganization,
-            IssuedToWallet,
-            expirationDate,
-            extra,
-            templateId,
-            userInput,
-            createAttestationMessage,
+            attester,
+            holder_name,
+            metadata,
+            data,
         } = object
-        console.log("request.json()", object)
-
-        let missingFields = []
-
-        // check if any request parameter or the schemaId from Env Var is missing
-        if (!name) missingFields.push("name")
-        if (!note) missingFields.push("note")
-        if (!certificationName) missingFields.push("certificationName")
-        if (!certificationOrganization) missingFields.push("ceritifcationOrganization")
-        if (!IssuedToWallet) missingFields.push("IssuedToWallet")
-        if (!expirationDate) missingFields.push("expirationDate")
-        if (!schemaId) missingFields.push("schemaId")
-        if (!extra) missingFields.push("extra")
-        // if (!templateId) missingFields.push('templateId');
-        if (!userInput) missingFields.push("userInput")
-
-        console.log("missingFields", missingFields)
-
-        // if (missingFields.length > 0) {
-        //     return new Response(JSON.stringify({ error: `Invalid request, missing fields: ${missingFields.join(', ')}` }), {
-        //         status: 400,
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Access-Control-Allow-Origin": "*"
-        //         },
-        //     });
-        // }
-
-        console.log("passed checking input parameters.")
-
-        // the parameter 'templateId' (could be a id or undefined)
-        let finalTemplateId = templateId
-
-        // the template content which will be used for attestation creation
-        let extraTemplateString
-
-        if (templateId) {
-            // If templateId is provided, fetch the template from the DB
-            const existingTemplate = await prisma.certificateTemplate.findUnique({
-                where: { id: templateId },
-            })
-
-            if (!existingTemplate) {
-                return new Response(JSON.stringify({ error: "Template not found" }), {
-                    status: 404,
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                })
-            }
-
-            extraTemplateString = existingTemplate.templateString
-        } else {
-            // If no templateId, create a new template and store it in the DB
-            const newTemplate = await prisma.certificateTemplate.create({
-                data: {
-                    templateString: extra,
-                },
-            })
-
-            finalTemplateId = newTemplate.id
-            extraTemplateString = extra
-        }
-
         try {
-            const attestationInfo = await createAttestationFromMessage(createAttestationMessage)
-            console.log("route.ts, attestationInfo:", attestationInfo)
-
+            const attestationInfo = await createAttestationFromMessage(data)
             // Create a new attestation record using the fetched schema and template
             const newAttestationRecord = await prisma.attestationRecord.create({
                 data: {
-                    name: userInput.name || "",
-                    email: userInput.email || "",
-                    walletAddress: userInput.walletAddress.toLowerCase(),
+                    name: holder_name,
+                    email: "",
+                    walletAddress: attester,
                     createdAt: new Date(),
                     updatedAt: new Date(),
-                    expirationAt: new Date(expirationDate),
+                    expirationAt: "",
                     schemaId: schemaId as string,
                     attestationId: attestationInfo.attestationId,
                     schema: schemaId, // store the schema ID here
-                    template: extraTemplateString,
+                    template: metadata
                 },
             })
 
@@ -113,7 +39,7 @@ export async function POST(request: Request) {
             return new Response(
                 JSON.stringify({
                     attestationId: attestationInfo.attestationId,
-                    templateId: finalTemplateId,
+                    pdf: "",
                 }),
                 {
                     status: 200,
