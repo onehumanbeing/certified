@@ -7,6 +7,7 @@ const allowedOrigins = [
     "http://localhost:3000",
     "http://localhost:3001",
     "https://sdk.thecertified.xyz",
+    "https://certified-sdk-example-git-main-mountex.vercel.app",
 ]
 
 const corsOptions = {
