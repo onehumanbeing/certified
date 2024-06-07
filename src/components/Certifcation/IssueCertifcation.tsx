@@ -255,7 +255,7 @@ const IssuesCertification: React.FC<IssuesCertificationProps> = ({
                     </button>
                     <a
                         className="link"
-                        href={`https://scan.sign.global/schema/${selectedCertification.schemaId}`}
+                        href={`https://scan.sign.global/schema/SPS_gQTxfuWWqSWp4eB-D28qF`}
                         target="_blank"
                     >
                         check this certification issuing activity on chain

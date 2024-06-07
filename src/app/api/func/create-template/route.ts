@@ -4,9 +4,9 @@ import prisma from "@/lib/prisma/db"
 
 export async function POST(request: Request) {
     try {
-        const { schemaId, schema, template } = await request.json()
-
-        if (!schemaId || !schema) {
+        const { schemaId = "CERT_" + Date.now().toString() + Math.floor(Math.random() * 1000) + Math.random().toString(36).substring(2), schema, template } = await request.json()
+        
+        if (!schema) {
             return new Response(JSON.stringify({ error: "Invalid request" }), {
                 status: 400,
                 headers: {
