@@ -18,7 +18,6 @@ export async function GET(request: Request) {
                 },
             })
         }
-
         const userInfo = decodeURIComponent(userInfoCookie)
         try {
             const user: User = JSON.parse(userInfo)
@@ -30,7 +29,6 @@ export async function GET(request: Request) {
                     signProtocols: true,
                 },
             })
-
             if (!userWithSchemas) {
                 return new Response(JSON.stringify({ schemas: [] }), {
                     status: 200,

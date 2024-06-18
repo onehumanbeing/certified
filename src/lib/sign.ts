@@ -193,6 +193,8 @@ export const createCertificationForUser = async (
         indexingValue: primaryWallet.address,
     }, primaryWallet);
     const attestationInfo = await createAttestationFromMessage(message);    
+    const attestationInfo2 = await createAttestationFromMessage(message);    
+
     // const attestationInfo = await client.createAttestation({
     //     schemaId: "SPS_gQTxfuWWqSWp4eB-D28qF", // TODO: put the schema id in ENV
     //     recipients: [ceritifcationOrganization],
@@ -214,6 +216,7 @@ export const createCertificationForUser = async (
     // })
     // {attestationId: 'SPA_I10BpEk7iwT4Yfo-YENQj'}
     console.log(attestationInfo)
+    console.log(attestationInfo2)
     return attestationInfo.attestationId
 }
 
