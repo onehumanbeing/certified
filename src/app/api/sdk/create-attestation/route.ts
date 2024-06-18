@@ -20,23 +20,26 @@ export async function POST(request: Request) {
         try {
             const attestation = JSON.parse(data).attestation;
             const attestationData = JSON.parse( JSON.parse(attestation).data )
+            const extraData = JSON.parse(attestationData.extra)
             console.log("attestation: ", attestationData);
             const attestationInfo = await createAttestationFromMessage(data)
             // Create a new attestation record using the fetched schema and template
-            // const newAttestationRecord = await prisma.attestationRecord.create({
-            //     data: {
-            //         name: holder_name,
-            //         email: "",
-            //         walletAddress: attester,
-            //         createdAt: new Date(),
-            //         updatedAt: new Date(),
-            //         expirationAt: "",
-            //         schemaId: schemaId as string,
-            //         attestationId: attestationInfo.attestationId,
-            //         schema: schemaId, // store the schema ID here
-            //         template: metadata
-            //     },
-            // })
+            /*
+            attestationId      String             @unique
+            attester           String
+            data               String
+            edition            Int                @default(0) 
+             extra: '{"signatureImageUrl":"https://sdk-static.thecertified.xyz/test_signature.png","markerImageUrl":"https://sdk-static.thecertified.xyz/test_markerImage.png","logoImageUrl":"https://sdk-static.thecertified.xyz/test_image.png","editionNumber":10}',
+
+            */
+            const newCOARecord = await prisma.cOARecord.create({
+                data: {
+                    attestationId: attestationInfo.attestationId,
+                    attester: attester,
+                    data: JSON.parse(attestation).data,
+                    edition: extraData.editionNumber,
+                },
+            })
             // return the result (attestationId and the templateId)
             return new Response(
                 JSON.stringify({
