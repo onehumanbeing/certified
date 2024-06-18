@@ -1,6 +1,7 @@
 import { UserType } from "@/context/userContext"
 import prisma from "@/lib/prisma/db"
 import { createAttestationFromMessage } from "@/lib/sign"
+import { parseJSON } from "date-fns"
 
 // the schema Id in env variables
 const schemaId = "SPS_gQTxfuWWqSWp4eB-D28qF"
@@ -18,9 +19,12 @@ export async function POST(request: Request) {
             data
         } = object
         try {
-            const attestation = data.attestation;
-            console.log("Attestation:", attestation)
+            console.log("Request data:", data)
+            const dataObj = JSON.parse(data);
+            const attestation = dataObj.attestation;
+            console.log("attestation: ", attestation);
             const attestationInfo = await createAttestationFromMessage(data)
+
             // Create a new attestation record using the fetched schema and template
             // const newAttestationRecord = await prisma.attestationRecord.create({
             //     data: {
