@@ -7,7 +7,6 @@ import { parseJSON } from "date-fns"
 const schemaId = "SPS_gQTxfuWWqSWp4eB-D28qF"
 
 // Set CORS headers for all requests
-
 export async function POST(request: Request) {
     try {
         // API handler parameters

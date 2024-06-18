@@ -57,6 +57,16 @@ model CertificateTemplate {
   updatedAt      DateTime @updatedAt
 }
 
+model COARecord {
+  id                 Int                @id @default(autoincrement())
+  attestationId      String             @unique
+  attester           String
+  data               String
+  edition            Int                @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
 model ApiKeyTable {
   id      Int    @id @default(autoincrement())
   apiKey  String @unique
