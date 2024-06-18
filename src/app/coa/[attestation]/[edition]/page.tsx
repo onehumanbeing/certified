@@ -28,11 +28,17 @@ async function getItem(attestationId: string): Promise<COARecord | null> {
 }
 
 export default async function Page({ params }: { params: { attestation: string, edition: number } }) {
-    const coa: COARecord | null = await getItem(params.attestation)
-    const data = JSON.parse(coa?.data!);
-    const metadata = JSON.parse(data.metadata);
-    const extra = JSON.parse(data.extra);
+    let coa: COARecord | null = null;
+    let data: any;
+    let metadata: any;
+    let extra: any;
 
+    coa = await getItem(params.attestation);
+    if(coa !== null) {
+        data = JSON.parse(coa?.data!);
+        metadata = JSON.parse(data.metadata);
+        extra = JSON.parse(data.extra);
+    }
     return (
         <>
             {coa !== null ? (
