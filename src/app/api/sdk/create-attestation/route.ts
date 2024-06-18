@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma/db"
 import { createAttestationFromMessage } from "@/lib/sign"
 import { parseJSON } from "date-fns"
 
+
 // the schema Id in env variables
 const schemaId = "SPS_gQTxfuWWqSWp4eB-D28qF"
 
@@ -44,7 +45,7 @@ export async function POST(request: Request) {
             return new Response(
                 JSON.stringify({
                     attestationId: attestationInfo.attestationId,
-                    pdf: "",
+                    pdf: "https://sdk.thecertified.xyz/coa/SPA_yhdPdOsrWeevJy-jgRbhb/",
                 }),
                 {
                     status: 200,

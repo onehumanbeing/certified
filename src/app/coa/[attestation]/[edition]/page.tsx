@@ -4,7 +4,7 @@ import {
     Certificate
 } from "certified-sdk";
 import prisma from "@/lib/prisma/db"
-import { JsonValue } from "@prisma/client/runtime/library"
+import 'certified-sdk/frontend/Certificate.css';
 
 export type COARecord = {
     attestationId: string
