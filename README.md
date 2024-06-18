@@ -14,6 +14,10 @@
 
 Simplifying Certification on Blockchain. Facilitate on-chain certificate issuance and management for customers without a wallet using Sign Protocol. Certificates can be shared to LinkedIn, X, and more platforms effortlessly with one click.
 
+# TODO
+
+* Update db table design, migrate all attestation to Certified Schema V1.
+
 # Introduction
 
 Certifications, especially those verifying professional skills, play a crucial role in employment and professional networking. They serve as third-party validation of an individual's capabilities and previous experience. The application of certifications on the blockchain presents a significant opportunity, as blockchain's decentralization and immutability enhance the authenticity and reliability of these certificates. Furthermore, blockchain can provide ongoing services for certificate holders, such as access to communities and potential income streams, linked to their blockchain addresses. However, we recognize that usability is a major barrier to integrating certifications with blockchain technology. To address this, we cooked Certified, a user-friendly platform that allows individuals to issue their certifications on the blockchain effortlessly, without the need for prior learning or experience.

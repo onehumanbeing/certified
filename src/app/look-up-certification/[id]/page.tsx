@@ -49,7 +49,6 @@ async function getItem(id: string): Promise<AttestationDisplayRecord | null> {
                   day: "numeric",
               }).format(new Date(res.createdAt))
             : ""
-
         const formattedExpirationAt = res.expirationAt
             ? new Intl.DateTimeFormat("en-US", {
                   year: "numeric",

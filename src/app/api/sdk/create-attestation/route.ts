@@ -18,7 +18,8 @@ export async function POST(request: Request) {
             data
         } = object
         try {
-            console.log("Request data:", object)
+            const attestation = data.attestation;
+            console.log("Attestation:", attestation)
             const attestationInfo = await createAttestationFromMessage(data)
             // Create a new attestation record using the fetched schema and template
             // const newAttestationRecord = await prisma.attestationRecord.create({
