@@ -2,7 +2,10 @@
 
 import { COARecord } from "@/app/coa/[attestation]/[edition]/page"
 import { Certificate } from "certified-sdk"
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
+import domtoimage from "dom-to-image"
+import jsPDF from "jspdf"
+import { useRouter } from "next/navigation"
 
 interface DisPlayPdfProps {
     params: { attestation: string; edition: number }
@@ -13,7 +16,8 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
     const [coaRecord, setCoaRecord] = useState<COARecord | null>(null)
     const [metadata, setMetadata] = useState<any>()
     const [extra, setExtra] = useState<any>()
-
+    const certificateRef = useRef<HTMLDivElement>(null)
+    const router = useRouter()
     useEffect(() => {
         if (coa !== null) {
             const parsedData = JSON.parse(coa?.data!)
@@ -23,10 +27,84 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
         }
     }, [coa])
 
+    useEffect(() => {
+        if (certificateRef.current && coaRecord) {
+            domtoimage
+                .toPng(certificateRef.current)
+                .then((dataUrl) => {
+                    const img = new Image()
+                    img.src = dataUrl
+
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas")
+                        canvas.width = img.height
+                        canvas.height = img.width
+
+                        const ctx = canvas.getContext("2d")
+                        if (ctx) {
+                            ctx.translate(img.height / 2, img.width / 2)
+                            ctx.rotate((90 * Math.PI) / 180)
+                            ctx.drawImage(img, -img.width / 2, -img.height / 2)
+
+                            const rotatedDataUrl = canvas.toDataURL("image/png")
+
+                            const rotatedImg = new Image()
+                            rotatedImg.src = rotatedDataUrl
+
+                            rotatedImg.onload = () => {
+                                const croppedCanvas = document.createElement("canvas")
+                                const croppedCtx = croppedCanvas.getContext("2d")
+
+                                if (croppedCtx) {
+                                    const cropWidth = rotatedImg.width
+                                    const cropHeight = certificateRef.current!.clientHeight + 127
+
+                                    croppedCanvas.width = cropWidth
+                                    croppedCanvas.height = cropHeight
+
+                                    croppedCtx.drawImage(
+                                        rotatedImg,
+                                        0,
+                                        0,
+                                        cropWidth,
+                                        cropHeight,
+                                        0,
+                                        0,
+                                        cropWidth,
+                                        cropHeight
+                                    )
+
+                                    const croppedDataUrl = croppedCanvas.toDataURL("image/png")
+
+                                    const pdfWidth = cropWidth
+                                    const pdfHeight = cropHeight
+
+                                    const pdf = new jsPDF({
+                                        unit: "px",
+                                        format: [pdfWidth, pdfHeight],
+                                    })
+
+                                    pdf.addImage(croppedDataUrl, "PNG", 0, 0, pdfWidth, pdfHeight)
+
+                                    const pdfBlob = pdf.output("blob")
+                                    const url = URL.createObjectURL(pdfBlob)
+                                    router.push(url)
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error("DOM to image conversion failed:", error)
+                })
+        }
+    }, [coaRecord, certificateRef])
+
     return (
         <>
-            {coaRecord !== null ? (
-                <div className="w-full h-full">
+            <div className="w-full h-full bg-white fixed z-50"></div>
+            {coaRecord !== null && (
+                <div ref={certificateRef}>
                     <Certificate
                         artworkTitle={metadata.artworkTitle}
                         artistName={metadata.artistName}
@@ -41,26 +119,6 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
                         markerImagePath={extra.markerImageUrl}
                         certificateUrl={`https://scan.sign.global/attestation/${coa?.attestationId}`}
                     />
-                </div>
-            ) : (
-                <div className="hero min-h-screen bg-base-200 text-[12px] w-full overflow-auto px-[50px] flex justify-center gap-4 text-xl font-bold">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-circle-x"
-                    >
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="m15 9-6 6" />
-                        <path d="m9 9 6 6" />
-                    </svg>
-                    COA not exist...
                 </div>
             )}
         </>
