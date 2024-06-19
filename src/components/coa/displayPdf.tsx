@@ -18,16 +18,8 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
     const [extra, setExtra] = useState<any>()
     const certificateRef = useRef<HTMLDivElement>(null)
     const router = useRouter()
-    useEffect(() => {
-        if (coa !== null) {
-            const parsedData = JSON.parse(coa?.data!)
-            setMetadata(JSON.parse(parsedData.metadata))
-            setExtra(JSON.parse(parsedData.extra))
-            setCoaRecord(coa)
-        }
-    }, [coa])
 
-    useEffect(() => {
+    const generatePdf = () => {
         if (certificateRef.current && coaRecord) {
             domtoimage
                 .toPng(certificateRef.current)
@@ -98,12 +90,30 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
                     console.error("DOM to image conversion failed:", error)
                 })
         }
-    }, [coaRecord, certificateRef])
+    }
+
+    useEffect(() => {
+        if (coa !== null) {
+            const parsedData = JSON.parse(coa?.data!)
+            setMetadata(JSON.parse(parsedData.metadata))
+            setExtra(JSON.parse(parsedData.extra))
+            setCoaRecord(coa)
+        }
+    }, [coa])
+
+    useEffect(() => {
+        const certificateElement = certificateRef.current
+        if (certificateElement && coaRecord) {
+            requestAnimationFrame(() => {
+                generatePdf()
+            })
+        }
+    }, [certificateRef, coaRecord])
 
     return (
         <>
             <div className="w-full h-full bg-white fixed z-50"></div>
-            {coaRecord !== null && (
+            {coaRecord && (
                 <div ref={certificateRef}>
                     <Certificate
                         artworkTitle={metadata.artworkTitle}
