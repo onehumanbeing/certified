@@ -105,7 +105,9 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
         const certificateElement = certificateRef.current
         if (certificateElement && coaRecord) {
             requestAnimationFrame(() => {
-                generatePdf()
+                setTimeout(() => {
+                    generatePdf()
+                }, 1000)
             })
         }
     }, [certificateRef, coaRecord])
