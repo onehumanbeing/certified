@@ -80,7 +80,8 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
 
                                     const pdfBlob = pdf.output("blob")
                                     const url = URL.createObjectURL(pdfBlob)
-                                    router.push(url)
+                                    pdf.save("certificate.pdf")
+                                    window.location.href = url
                                 }
                             }
                         }
