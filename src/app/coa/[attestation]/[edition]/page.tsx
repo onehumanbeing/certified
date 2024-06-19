@@ -4,7 +4,6 @@ import {
     Certificate
 } from "certified-sdk";
 import prisma from "@/lib/prisma/db"
-import 'certified-sdk/frontend/Certificate.css';
 
 export type COARecord = {
     attestationId: string
@@ -42,22 +41,20 @@ export default async function Page({ params }: { params: { attestation: string, 
     return (
         <>
             {coa !== null ? (
-                <div className="hero min-h-screen bg-base-200 text-[12px] w-full overflow-auto px-[50px]">
-                    <Certificate 
-                        artworkTitle={metadata.artworkTitle}
-                        artistName={metadata.artistName}
-                        yearOfCompletion={metadata.yearOfCompletion}
-                        dimensions={metadata.dimensions}
-                        editionNumber={`${params.edition}/${extra.editionNumber}`}
-                        medium={metadata.medium}
-                        registrationNumber={metadata.registrationNumber}
-                        dateOfCertification="21/12/2025"
-                        signatureImagePath={extra.signatureImageUrl}
-                        artworkImagePath={extra.imageUrl}
-                        markerImagePath={extra.markerImageUrl}
-                        certificateUrl={`https://scan.sign.global/attestation/${coa.attestationId}`}
-                    />
-                </div>
+                <Certificate 
+                    artworkTitle={metadata.artworkTitle}
+                    artistName={metadata.artistName}
+                    yearOfCompletion={metadata.yearOfCompletion}
+                    dimensions={metadata.dimensions}
+                    editionNumber={`${params.edition}/${extra.editionNumber}`}
+                    medium={metadata.medium}
+                    registrationNumber={metadata.registrationNumber}
+                    dateOfCertification="21/12/2025"
+                    signatureImagePath={extra.signatureImageUrl}
+                    artworkImagePath={extra.imageUrl}
+                    markerImagePath={extra.markerImageUrl}
+                    certificateUrl={`https://scan.sign.global/attestation/${coa.attestationId}`}
+                />
             ) : (
                 <div className="hero min-h-screen bg-base-200 text-[12px] w-full overflow-auto px-[50px] flex justify-center gap-4 text-xl font-bold">
                     <svg

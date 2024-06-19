@@ -2,8 +2,6 @@ import { UserType } from "@/context/userContext"
 import prisma from "@/lib/prisma/db"
 import { createAttestationFromMessage } from "@/lib/sign"
 import { parseJSON } from "date-fns"
-
-
 // the schema Id in env variables
 const schemaId = "SPS_gQTxfuWWqSWp4eB-D28qF"
 
