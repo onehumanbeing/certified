@@ -100,7 +100,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
             const extraData = JSON.parse(parsedData.extra)
             setExtra(extraData)
             if(params.edition > extraData.editionNumber || params.edition < 1) {
-                // return error page
+                console.log("edition number out of range")
                 return
             }
             setCoaRecord(coa)
