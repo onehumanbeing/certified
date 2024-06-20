@@ -21,69 +21,57 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
 
     const generatePdf = () => {
         if (certificateRef.current && coaRecord) {
+            var scale = 2;
+            const w = 702 * scale;
+            const h = certificateRef.current.offsetHeight * scale;
+            console.log(w, h)
             domtoimage
-                .toPng(certificateRef.current)
+                .toPng(certificateRef.current, {
+                    width: w,
+                    height: h,
+                    style: {
+                        transform: 'scale('+scale+')',
+                        transformOrigin: 'top left'
+                    }
+                })
                 .then((dataUrl) => {
                     const img = new Image()
                     img.src = dataUrl
 
                     img.onload = () => {
                         const canvas = document.createElement("canvas")
-                        canvas.width = img.height
-                        canvas.height = img.width
-
+                        canvas.width = w
+                        canvas.height = h
                         const ctx = canvas.getContext("2d")
                         if (ctx) {
-                            ctx.translate(img.height / 2, img.width / 2)
-                            ctx.rotate((90 * Math.PI) / 180)
-                            ctx.drawImage(img, -img.width / 2, -img.height / 2)
+                            // Define the source rectangle
+                            const sourceX = 0
+                            const sourceY = 0
+                            const sourceWidth = img.width
+                            const sourceHeight = img.height
 
-                            const rotatedDataUrl = canvas.toDataURL("image/png")
+                            // Define the destination rectangle
+                            const destX = 0
+                            const destY = 0
+                            const destWidth = w
+                            const destHeight = h
 
-                            const rotatedImg = new Image()
-                            rotatedImg.src = rotatedDataUrl
+                            ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight)
+                            const dataUrl = canvas.toDataURL("image/png")
 
-                            rotatedImg.onload = () => {
-                                const croppedCanvas = document.createElement("canvas")
-                                const croppedCtx = croppedCanvas.getContext("2d")
-
-                                if (croppedCtx) {
-                                    const cropWidth = rotatedImg.width
-                                    const cropHeight = certificateRef.current!.clientHeight + 127
-
-                                    croppedCanvas.width = cropWidth
-                                    croppedCanvas.height = cropHeight
-
-                                    croppedCtx.drawImage(
-                                        rotatedImg,
-                                        0,
-                                        0,
-                                        cropWidth,
-                                        cropHeight,
-                                        0,
-                                        0,
-                                        cropWidth,
-                                        cropHeight
-                                    )
-
-                                    const croppedDataUrl = croppedCanvas.toDataURL("image/png")
-
-                                    const pdfWidth = cropWidth
-                                    const pdfHeight = cropHeight
-
-                                    const pdf = new jsPDF({
-                                        unit: "px",
-                                        format: [pdfWidth, pdfHeight],
-                                    })
-
-                                    pdf.addImage(croppedDataUrl, "PNG", 0, 0, pdfWidth, pdfHeight)
-
-                                    const pdfBlob = pdf.output("blob")
-                                    const url = URL.createObjectURL(pdfBlob)
-                                    pdf.save("certificate.pdf")
-                                    window.location.href = url
-                                }
-                            }
+                            const imgWidth = w
+                            const imgHeight = h
+                            const orientation = imgWidth > imgHeight ? 'landscape' : 'portrait';
+                            const pdf = new jsPDF({
+                                orientation,
+                                unit: "px",
+                                format: [imgWidth, imgHeight],
+                            })
+                            pdf.addImage(dataUrl, "PNG", 0, 0, imgWidth, imgHeight)
+                            const pdfBlob = pdf.output("blob")
+                            const url = URL.createObjectURL(pdfBlob)
+                            pdf.save("certificate.pdf")
+                            window.location.href = url
                         }
                     }
                 })
