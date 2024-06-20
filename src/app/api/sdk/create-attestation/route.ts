@@ -43,7 +43,7 @@ export async function POST(request: Request) {
             return new Response(
                 JSON.stringify({
                     attestationId: attestationInfo.attestationId,
-                    pdf: "https://sdk.thecertified.xyz/coa/SPA_yhdPdOsrWeevJy-jgRbhb/",
+                    pdf: `https://sdk.thecertified.xyz/coa/${attestationInfo.attestationId}/`,
                 }),
                 {
                     status: 200,
