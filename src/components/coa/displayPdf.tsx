@@ -97,7 +97,12 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
         if (coa !== null) {
             const parsedData = JSON.parse(coa?.data!)
             setMetadata(JSON.parse(parsedData.metadata))
-            setExtra(JSON.parse(parsedData.extra))
+            const extraData = JSON.parse(parsedData.extra)
+            setExtra(extraData)
+            if(params.edition > extraData.editionNumber || params.edition < 1) {
+                // return error page
+                return
+            }
             setCoaRecord(coa)
         }
     }, [coa])
