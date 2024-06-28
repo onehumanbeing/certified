@@ -20,18 +20,20 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
     const router = useRouter()
 
     const generatePdf = () => {
+        console.log(certificateRef.current, coaRecord);
         if (certificateRef.current && coaRecord) {
             // Create an array to store all the image load promises
             const imageLoadPromises: Promise<any>[] = [];
             // Add a promise for each image in the Certificate component
             certificateRef.current.querySelectorAll('img').forEach((imgElement) => {
+                console.log(imgElement.src)
                 imageLoadPromises.push(new Promise((resolve, reject) => {
                     imgElement.onload = resolve;
                     imgElement.onerror = reject;
                 }));
             });
             // Wait for all images to load
-            Promise.all(imageLoadPromises).then(() => {
+            // Promise.all(imageLoadPromises).then(() => {
             var scale = 2;
             const w = 702 * scale;
             const h = certificateRef.current!.offsetHeight * scale;
@@ -89,7 +91,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
                 .catch((error) => {
                     console.error("DOM to image conversion failed:", error)
                 })
-            })
+            // })
         }
     }
 
