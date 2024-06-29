@@ -35,7 +35,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
             // Wait for all images to load
             // Promise.all(imageLoadPromises).then(() => {
             var scale = 2;
-            const w = 702 * scale;
+            const w = 864 * scale;
             const h = certificateRef.current!.offsetHeight * scale;
             console.log(w, h)
             domtoimage
