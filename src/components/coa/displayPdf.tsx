@@ -131,7 +131,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
                         yearOfCompletion={metadata.yearOfCompletion}
                         dimensions={metadata.dimensions}
                         editionNumber={`${params.edition}/${extra.editionNumber}`}
-                        medium={metadata.medium}
+                        materials={metadata.materials}
                         registrationNumber={metadata.registrationNumber}
                         dateOfCertification={metadata.dateOfCertification}
                         signatureImagePath={extra.signatureImageUrl}
