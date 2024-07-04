@@ -41,6 +41,8 @@ const CertificateTemplate: React.FC<CertificateTemplateProps> = ({
   const { width, height } = parseDimensions(dimensions)
   const aspectRatio = height / width
 
+  const materialsText = materials.replace(/\\n/g, '<br>')
+
   return (
     <div className="certificate-template">
       <div className="certificate-template-left">
@@ -70,7 +72,7 @@ const CertificateTemplate: React.FC<CertificateTemplateProps> = ({
           </div>
           <div className="detail">
             <strong>MEDIUM AND MATERIALS</strong>
-            <p>{materials}</p>
+            <p dangerouslySetInnerHTML={{ __html: materialsText }} />
             <span>
               This document certifies that the accompanying artwork, titled{' '}
               <span className="deepen-text">{artworkTitle}</span>, is an
@@ -84,7 +86,7 @@ const CertificateTemplate: React.FC<CertificateTemplateProps> = ({
 
         <div className="footer">
           <div className="footer-detail">
-            <strong >REGISTRATION NUMBER</strong>
+            <strong>REGISTRATION NUMBER</strong>
             <p>{registrationNumber}</p>
           </div>
           <div className="footer-detail">
