@@ -2828,10 +2828,10 @@ caseless@~0.12.0:
   resolved "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
-certified-sdk@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.npmjs.org/certified-sdk/-/certified-sdk-1.0.13.tgz#bd2cd39a39aad08c749fe9e68f963bc7a3f65a02"
-  integrity sha512-17KbHVZTVwiHN8C9+/dvgEyx9KlPcwNjJHFBkzg4LmZkFwz2Zzl5ZSt9hHmnfn9m/kOUFr2esrv/4BCO+ki0Rw==
+certified-sdk@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/certified-sdk/-/certified-sdk-1.0.20.tgz#ebb2c62ec80215c6e8ff22be56cc7fd784467955"
+  integrity sha512-rUleIVgUi2VYgeE9fzs4va9fSlgilwK68teW3lphMS+8saN0C834epXXYaMtGGXUqUSHieEfzMR1mKJPHrVyZQ==
   dependencies:
     "@ethsign/sp-sdk" "^0.3.31"
     "@prisma/client" "^5.14.0"

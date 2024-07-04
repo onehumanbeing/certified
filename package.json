@@ -14,7 +14,7 @@
         "@prisma/client": "5.14.0",
         "@types/html-pdf": "^3.0.3",
         "@vercel/analytics": "^1.2.2",
-        "certified-sdk": "^1.0.13",
+        "certified-sdk": "^1.0.20",
         "daisyui": "^4.10.1",
         "date-fns": "^3.6.0",
         "dom-to-image": "^2.6.0",

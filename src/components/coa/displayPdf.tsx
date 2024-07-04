@@ -1,7 +1,8 @@
 "use client"
 
 import { COARecord } from "@/app/coa/[attestation]/[edition]/page"
-import { Certificate } from "certified-sdk"
+// import { Certificate, CertificateTemplate } from "certified-sdk"
+import CertificateTemplate from './CertificateTemplate'
 import { FC, useEffect, useRef, useState } from "react"
 import domtoimage from "dom-to-image"
 import jsPDF from "jspdf"
@@ -31,9 +32,9 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
                     imgElement.onload = resolve;
                     imgElement.onerror = reject;
                 }));
-            });
-            // Wait for all images to load
-            // Promise.all(imageLoadPromises).then(() => {
+         });
+        // Wait for all images to load
+        Promise.all(imageLoadPromises).then(() => {
             var scale = 2;
             const w = 864 * scale;
             const h = certificateRef.current!.offsetHeight * scale;
@@ -91,7 +92,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
                 .catch((error) => {
                     console.error("DOM to image conversion failed:", error)
                 })
-            // })
+            })
         }
     }
 
@@ -125,7 +126,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
             <div className="w-full h-full bg-white fixed z-50"></div>
             {coaRecord && (
                 <div ref={certificateRef}>
-                    <Certificate
+                    <CertificateTemplate
                         artworkTitle={metadata.artworkTitle}
                         artistName={metadata.artistName}
                         yearOfCompletion={metadata.yearOfCompletion}
