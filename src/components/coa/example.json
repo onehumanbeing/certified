@@ -1,0 +1,14 @@
+{
+    "certificate_id": "4de5f668-fc5c-4466-bc8d-366d29243b17",
+    "certificate_title": "Certificate of Authenticity for Artwork: TIH",
+    "issuer_name": "MarkMaker",
+    "issue_date": 1720118579068,
+    "expiration_date": 0,
+    "description": "120\n\nThis document certifies that the accompanying artwork, titled TIH, is an original work created by TIH. This certificate is provided to affirm the authenticity of the aforementioned artwork.",
+    "extra": "{\"signatureImageUrl\":\"https://vtsmmvswozwkskktkllw.supabase.co/storage/v1/object/public/seeds/signature-image.svg\",\"markerImageUrl\":\"https://vtsmmvswozwkskktkllw.supabase.co/storage/v1/object/public/seeds/COA_STAMP_01_OUTLINE.png?t=2024-07-02T19%3A12%3A59.824Z\",\"imageUrl\":\"\",\"editionNumber\":1}",
+    "holder_name": "TIH",
+    "holder_address": "0x3A0829839B5b77AcF811AaC2b9b0508c4C64A4Da",
+    "url": [],
+    "metadata": "{\"artworkTitle\":\"TIH\",\"artistName\":\"TIH\",\"yearOfCompletion\":\"2019\",\"dateOfCertification\":\"06/04/2024\",\"dimensions\":\"200x500px\",\"materials\":\"120\\n\\nThis document certifies that the accompanying artwork, titled TIH, is an original work created by TIH. This certificate is provided to affirm the authenticity of the aforementioned artwork.\",\"registrationNumber\":\"4de5f668-fc5c-4466-bc8d-366d29243b17\"}",
+    "signatories": []
+}
