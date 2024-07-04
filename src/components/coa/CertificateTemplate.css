@@ -67,7 +67,7 @@ body {
 
 .detail span {
   font-size: 13px !important;
-  font-weight: 400 !important;
+  font-weight: 400;
   line-height: 20.54px !important;
 }
 
