@@ -75,7 +75,7 @@ export async function POST(request: Request, { params }: { params: { attestation
         const existingRecord = await prisma.editionCOA.findFirst({
             where: {
                 attestationId: params.attestation,
-                edition: edition,
+                edition: params.edition,
             },
         });
 
