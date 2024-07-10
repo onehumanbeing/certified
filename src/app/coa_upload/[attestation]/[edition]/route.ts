@@ -75,7 +75,7 @@ export async function POST(request: Request, { params }: { params: { attestation
         const existingRecord = await prisma.editionCOA.findFirst({
             where: {
                 attestationId: params.attestation,
-                edition: parseInt(params.edition, 10),
+                edition: edition,
             },
         });
 
@@ -90,7 +90,7 @@ export async function POST(request: Request, { params }: { params: { attestation
             const newRecord = await prisma.editionCOA.create({
                 data: {
                 attestationId: params.attestation,
-                edition: parseInt(params.edition, 10),
+                edition: params.edition,
                 url: url,
                 },
             });

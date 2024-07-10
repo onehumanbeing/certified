@@ -16,7 +16,7 @@ async function getItem(attestationId: string, edition: number): Promise<COARecor
     const res = await prisma.editionCOA.findFirst({
         where: {
             attestationId: attestationId,
-            edition: parseInt(edition, 10)
+            edition: edition
         },
     })
     if (!res) {
