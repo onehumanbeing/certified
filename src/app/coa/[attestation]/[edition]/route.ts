@@ -12,10 +12,11 @@ export type COARecord = {
 }
 
 async function getItem(attestationId: string, edition: number): Promise<COARecord | null> {
+    const editionNumber = typeof edition === 'string' ? parseInt(edition, 10) : edition;
     const res = await prisma.editionCOA.findFirst({
         where: {
             attestationId: attestationId,
-            edition: edition
+            edition: editionNumber
         },
     })
     if (!res) {

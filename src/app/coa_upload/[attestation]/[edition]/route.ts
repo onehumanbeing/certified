@@ -58,7 +58,8 @@ export async function POST(request: Request, { params }: { params: { attestation
                 },
             });
         }
-        if(params.edition <= 0) {
+        const edition = typeof params.edition === 'string' ? parseInt(params.edition, 10) : params.edition;
+        if(edition <= 0) {
             return new Response(JSON.stringify({status: 1, msg: "edition number not unvalid"}), {
                 status: 200,
                 headers: {
@@ -75,7 +76,7 @@ export async function POST(request: Request, { params }: { params: { attestation
         const existingRecord = await prisma.editionCOA.findFirst({
             where: {
                 attestationId: params.attestation,
-                edition: params.edition,
+                edition: edition,
             },
         });
 
@@ -90,7 +91,7 @@ export async function POST(request: Request, { params }: { params: { attestation
             const newRecord = await prisma.editionCOA.create({
                 data: {
                 attestationId: params.attestation,
-                edition: params.edition,
+                edition: edition,
                 url: url,
                 },
             });
