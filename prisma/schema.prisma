@@ -67,6 +67,15 @@ model COARecord {
   updatedAt      DateTime @updatedAt
 }
 
+model editionCOA {
+  id                 Int                @id @default(autoincrement())
+  attestationId      String             
+  edition            Int                @default(0)
+  url                String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
 model ApiKeyTable {
   id      Int    @id @default(autoincrement())
   apiKey  String @unique
