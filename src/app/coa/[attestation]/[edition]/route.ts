@@ -1,7 +1,6 @@
 "use server"
 
 import prisma from "@/lib/prisma/db"
-import DisPlayPdf from "@/components/coa/displayPdf"
 import { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import path from 'path'
