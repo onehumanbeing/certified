@@ -27,6 +27,9 @@ body {
   padding: 20px 47px;
   max-width: 547px;
   flex: 1;
+  @media (max-width: 400px) {
+    min-width: auto !important;
+  }
 }
 
 .certificate-template-right {
@@ -39,6 +42,13 @@ body {
   min-width: 317px;
   background-color: #140f1b;
   color: white;
+  @media (max-width: 1488px) {
+    min-width: auto !important;
+    padding: 30px 20px 0 20px !important;
+  }
+  @media (max-width: 1355px) {
+    display: none !important;
+  }
 }
 
 .certificate-template-left h1 {
@@ -87,6 +97,9 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 9px !important;
+  @media (max-width: 490px) {
+    flex-wrap: wrap !important;
+  }
 }
 
 .left_shading {
@@ -106,7 +119,7 @@ body {
 }
 
 .footer p {
-  margin-top: 0px;
+  margin-top: 4px;
 }
 
 .footer-detail {
@@ -122,8 +135,7 @@ body {
   font-weight: 500 !important;
   color: #7e7e8c;
   display: block;
-  margin-bottom: -6px;
-  white-space: nowrap;
+  margin-bottom: 5px;
 }
 
 .signature {
