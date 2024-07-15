@@ -2,7 +2,10 @@
 
 import { COARecord } from "@/app/coa/[attestation]/[edition]/page"
 import CertificateTemplate from './CertificateTemplate';
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useState, useRef } from "react"
+
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas-pro';
 
 interface DisPlayPdfProps {
     params: { attestation: string; edition: number }
@@ -13,6 +16,26 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
     const [coaRecord, setCoaRecord] = useState<COARecord | null>(null)
     const [metadata, setMetadata] = useState<any>()
     const [extra, setExtra] = useState<any>()
+
+    const contentArea = useRef(null);
+    const downloadPdf = () => {
+    const input = contentArea.current;
+    // Increase the scale for a higher resolution canvas
+    html2canvas(input!, { scale: 2 }) // Adjust scale as needed
+        .then((canvas) => {
+        const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: "px",
+            format: [864, 553]
+        });
+        // Use a higher quality image but with potentially better compression settings
+        const imgData = canvas.toDataURL("image/jpeg", 0.9); // Using JPEG for better compression
+
+        // Adjust the dimensions if needed based on the new scale
+        pdf.addImage(imgData, 'JPEG', 0, 0, 864, 553, undefined, 'FAST');
+        pdf.save("download.pdf");
+        });
+    }
 
     useEffect(() => {
         if (coa !== null) {
@@ -26,7 +49,7 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
     return (
         <>
             {coaRecord !== null ? (
-                <div className="w-full h-full">
+                <div style={{ width: '864px', height: '553px' }} ref={contentArea} onClick={downloadPdf}>
                     <CertificateTemplate
                         artworkTitle={metadata.artworkTitle}
                         artistName={metadata.artistName}
