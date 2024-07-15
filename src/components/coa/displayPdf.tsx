@@ -21,18 +21,17 @@ const DisPlayPdf: FC<DisPlayPdfProps> = ({ params, coa }) => {
     const downloadPdf = () => {
     const input = contentArea.current;
     // Increase the scale for a higher resolution canvas
-    html2canvas(input!, { scale: 2 }) // Adjust scale as needed
+    html2canvas(input!, { scale: 2, useCORS: true }) // Adjust scale as needed
         .then((canvas) => {
         const pdf = new jsPDF({
             orientation: 'landscape',
             unit: "px",
-            format: [864, 553]
+            format: [830, 553]
         });
         // Use a higher quality image but with potentially better compression settings
         const imgData = canvas.toDataURL("image/jpeg", 0.9); // Using JPEG for better compression
-
         // Adjust the dimensions if needed based on the new scale
-        pdf.addImage(imgData, 'JPEG', 0, 0, 864, 553, undefined, 'FAST');
+        pdf.addImage(imgData, 'JPEG', 0, 0, 830, 553, undefined, 'FAST');
         pdf.save("download.pdf");
         });
     }
